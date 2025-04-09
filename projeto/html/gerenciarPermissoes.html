@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="verUsuarios()">
+    <div id="users">
+
+    </div>
+    <div></div>
+</body>
+<script>
+async function verUsuarios() {
+
+res = await fetch('../php/api/usuario.php', {
+
+    method: "GET",
+    credentials: "include"
+
+});
+
+    console.log(await res.json())
+    for (i in res) {
+
+        
+
+    }
+}
+
+</script>
+</html>

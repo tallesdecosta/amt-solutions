@@ -1,0 +1,25 @@
+btnEntrar = document.getElementById('btn-entrar');
+
+btnEntrar.addEventListener('click', async () => {
+
+    user = document.getElementById('username').value;
+    senha = document.getElementById('senha').value;
+    body = new URLSearchParams();
+    body.append("user", user);
+    body.append("senha", senha);
+
+    data = await fetch("../php/login.php", {
+
+        method: "POST",
+        body: body
+
+    });
+
+    if (data.ok) {
+
+        window.location = "moduloVendas.html";
+    } else {
+
+        alert("Senha ou usuário incorretos. Por favor, tente novamente e, caso necessite de troca, converse com seu administrador.")
+    }
+});
