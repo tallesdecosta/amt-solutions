@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
-
+    <script src="../js/estaLogado.js"></script>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +12,15 @@
 
         <link rel="stylesheet" href="../css/moduloVendas.css">
 
-        <title>Vendas</title>
+        <link rel="stylesheet" href="../css/all.css">
+
+        <link rel="stylesheet" href="../css/gerenciarPermissoes.css">
+
+        <title>Gerenciar Permissões</title>
     </head>
 
-    <body onload="esta_logado()">
+
+    <body onload="esta_logado(); verUsuarios();">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -89,29 +94,8 @@
                 </div>
             </div>
 
-            <div class="app">
-                <div class="fundo" id="fundo">
-                    <p id="pfunc">Funcionalidades</p>
-                    <div class="modulosVendas" id="modulosVendas1">
-                        <div class="func func1" id="func1" onmouseover="modhover(1)" onmouseleave="modfora(1)" onclick="window.location = 'gerenciarPermissoes.html'">
-                            <i class="bi bi-database-lock"></i>
-                            <p>Gerenciar permissões</p>
-                        </div>
-                        <div class="func func2" id="func2" onmouseover="modhover(2)" onmouseleave="modfora(2)">
-                            <i class="bi bi-cash-coin"></i>
-                            <p></p>
-                        </div>
-                    </div>
-
-                    <div class="modulosVendas" id="modulosVendas2" >
-                        <div class="func func3" id="func3" onmouseover="modhover(3)" onmouseleave="modfora(3)">
-
-                        </div>
-                        <div class="func func4" id="func4" onmouseover="modhover(4)" onmouseleave="modfora(4)">
-
-                        </div>
-                    </div>
-                </div>
+            <div class="">
+                <h2>landing page temporaria</h2>
             </div>
 
         </section>
@@ -122,8 +106,6 @@
 
 <script src="../js/nav.js"></script>
 
-<script src="../js/moduloVendas.js"></script>
 
-<script src="../js/estaLogado.js"></script>
 
 <script src="../js/podeAcessar.js"></script>

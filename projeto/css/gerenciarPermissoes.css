@@ -1,0 +1,28 @@
+
+
+.btn-user {
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+
+}
+
+.btn-user-clicked {
+
+    font-weight: 500;
+
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 62px;
+
+}
+
+#users {
+
+    max-width: fit-content;
+}

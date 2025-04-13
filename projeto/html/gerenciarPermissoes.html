@@ -1,16 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body onload="verUsuarios()">
-    <div id="users">
+<html lang="pt">
+    <script src="../js/estaLogado.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </div>
-    <div></div>
-</body>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+        <link id="link1" rel="stylesheet" href="../css/nav.css">
+
+        <link rel="stylesheet" href="../css/moduloVendas.css">
+
+        <link rel="stylesheet" href="../css/all.css">
+
+        <link rel="stylesheet" href="../css/gerenciarPermissoes.css">
+
+        <title>Gerenciar Permissões</title>
+    </head>
+
+
+    <body onload="esta_logado(); verUsuarios();">
+
+        <div class="container1" id="container1">
+            <div class="logo">
+                <img src="../img/account.png" width="80px" height="30px" alt>
+            </div>
+
+            <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
+
+            <!-- <div class="perfil" id="perfil">
+                <div class="topo">
+                    <div class="username" id="username">
+                        <p class="p1" id="p1">Atendente</p>
+                        <p class="p2" id="p2">Matheus Lucas da Silva</p>
+                    </div>
+                    <i class="bi bi-person-circle usericon" id="usericon"
+                        onclick="abrirperfil()"></i>
+                </div>
+                <div class="conteudo" id="conteudosair">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <a href>Sair</a>
+                </div>
+            </div>  -->
+
+        </div>
+
+        <!-- <div class="perfil" id="perfil">
+                <div class="topo">
+                    <div class="username" id="username">
+                        <p class="p1" id="p1">Atendente</p>
+                        <p class="p2" id="p2">Matheus Lucas da Silva</p>
+                    </div>
+                    <i class="bi bi-person-circle usericon" id="usericon"
+                        onclick="abrirperfil()"></i>
+                </div>
+                <div class="conteudo" id="conteudosair">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <a href>Sair</a>
+                </div>
+            </div> -->
+
+        <section class="secall">
+            <nav class="navegation">
+                <div class="modulos alinha">
+                    <i class="bi bi-boxes"></i>
+                </div>
+                <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)"
+                    onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
+                    <i class="bi bi-cash-coin"></i>
+                </div>
+                <div class="icone alinha" id="icon2" nome="estoque"
+                onclick="podeAcessar(this)">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="icone alinha" id="icon3"  nome="financeiro"
+                onclick="podeAcessar(this)">
+                    <i class="bi bi-piggy-bank"></i>
+                </div>
+                <div class="icone alinha" id="icon4"  nome="gestao"
+                onclick="podeAcessar(this)">
+                    <i class="bi bi-clipboard2-data"></i>
+                </div>
+            </nav>
+            <div class="tooltips">
+                <div class="top"></div>
+                <div class="tool" id="tool1">
+                    <div class="ponta aparecer"></div>
+                    <div class="balao aparecer">
+                        <p>Vendas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="main-content" id="fundo">
+                   <div id="users">
+                        <h2>Usuários cadastrados</h2>
+
+                   </div>
+                    <div id="acessos">
+                        <input type="checkbox" name="gestao" id="gestao">
+                        <label for="gestao">Gestão</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="vendas" id="vendas">
+                        <label for="vendas">Vendas</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="financeiro" id="financeiro">
+                        <label for="financeiro">Financeiro</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="estoque" id="estoque">
+                        <label for="Estoque">Estoque</label>
+                        <br>
+                        <br>
+                        <button id_usuario="" id="btn-atualizar"  onclick="updatePermissoes(this);">Atualizar</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </body>
+
+</html>
+
+<script src="../js/nav.js"></script>
+
+
+
+<script src="../js/podeAcessar.js"></script>
+
 <script>
 async function verUsuarios() {
 
@@ -21,13 +143,97 @@ res = await fetch('../php/api/usuario.php', {
 
 });
 
-    console.log(await res.json())
+    res = await res.json();
+
     for (i in res) {
 
+
+        btn = document.createElement("button");
+        btn.classList.add("btn-user");
+        btn.textContent = res[i].username;
+        btn.id = res[i].id_usuario;
+        attBtn = document.getElementById('btn-atualizar');
         
+        btn.addEventListener('click', function a () {
+
+            getPermissoes(this);
+
+        });
+
+        btn.addEventListener('click', function a ()  {
+
+            mudarBtnCor(this);
+            
+        });
+        div = document.getElementById('users');
+        div.append(btn);
 
     }
 }
 
+async function getPermissoes(a) {
+    
+    res = await fetch(`../php/api/permissoes.php?id=${a.getAttribute('id')}`, {
+
+        method: "GET",
+        credentials: "include"
+
+    });
+
+    attBtn.setAttribute('id_usuario', a.getAttribute('id'));
+
+    res = await res.json();
+
+    estoque = document.getElementById('estoque');
+    vendas = document.getElementById('vendas');
+    financeiro = document.getElementById('financeiro');
+    gestao = document.getElementById('gestao');
+
+    estoque.checked = res.estoque === '1';
+    vendas.checked = res.vendas === '1';
+    financeiro.checked = res.financeiro === '1';
+    gestao.checked = res.gestao === '1';
+
+}
+
+async function updatePermissoes(id) {
+
+    estoque = document.getElementById('estoque');
+    vendas = document.getElementById('vendas');
+    financeiro = document.getElementById('financeiro');
+    gestao = document.getElementById('gestao');
+
+    res = await fetch(`../php/api/permissoes.php?id=${id.getAttribute('id_usuario')}&estoque=${estoque.checked ? 1 : 0}&vendas=${vendas.checked ? 1 : 0}&financeiro=${financeiro.checked ? 1 : 0}&gestao=${gestao.checked ? 1 : 0}`, {
+
+        method: "PUT",
+        credentials: "include"
+
+    });
+
+    if(res.ok) {
+
+        location.reload();
+    }
+
+
+}
+
+function mudarBtnCor(btn) {
+    div = document.getElementById('users');
+    for (i in div.childNodes) {
+        
+        thisNode = div.childNodes[i];
+
+        if(thisNode.tagName == "BUTTON" && thisNode.id != btn.getAttribute("id")) {
+
+           thisNode.style.fontWeight = "400";
+        } else if (thisNode.tagName == "BUTTON" && thisNode.id == btn.getAttribute("id")) {
+
+            thisNode.style.fontWeight = "500";
+        }
+
+    }
+
+}
 </script>
 </html>
