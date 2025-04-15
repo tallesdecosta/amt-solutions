@@ -1,0 +1,41 @@
+
+
+.btn-user {
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+
+}
+
+.btn-user-clicked {
+
+    font-weight: 500;
+
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 62px;
+
+}
+
+#users {
+
+    max-width: fit-content;
+}
+
+.popup {
+
+    width: 500px;
+    height: 500px;
+    background-color: beige;
+    position: absolute;
+    right: 500px;
+    top: auto;
+    border: 1px solid black;
+    display: none;
+
+}
