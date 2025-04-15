@@ -1,85 +1,286 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <link id="link1" rel="stylesheet" href="../css/nav.css">
+    <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/registrarVendas.css">
+    <link rel="stylesheet" href="../css/registrarVendas.css">
 
-        <title>Registrar Vendas</title>
-    </head>
+    <title>Vendas</title>
+</head>
 
-    <body onload="esta_logado()">
+<body>
 
-        <div class="container1" id="container1">
-            <div class="logo">
-                <img src="../img/account.png" width="80px" height="30px" alt>
+    <div class="container1" id="container1">
+        <div class="logo">
+            <img src="../img/account.png" width="80px" height="30px" alt>
+        </div>
+
+        <div class="perfil" id="perfil">
+            <div class="topo">
+                <div class="username" id="username">
+                    <p class="p1" id="p1">Atendente</p>
+                    <p class="p2" id="p2">Matheus Lucas da Silva</p>
+                </div>
+                <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
+            </div>
+            <div class="conteudo" id="conteudosair">
+                <i class="bi bi-box-arrow-left"></i>
+                <a href>Sair</a>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="secall">
+        <nav class="navegation">
+            <div class="modulos alinha">
+                <i class="bi bi-boxes"></i>
+            </div>
+            <div class="icone alinha" id="icon1" onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
+                <i class="bi bi-cash-coin"></i>
+            </div>
+            <div class="icone alinha" id="icon2">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <div class="icone alinha" id="icon3">
+                <i class="bi bi-piggy-bank"></i>
+            </div>
+            <div class="icone alinha" id="icon4">
+                <i class="bi bi-clipboard2-data"></i>
+            </div>
+        </nav>
+        <div class="tooltips">
+            <div class="top"></div>
+            <div class="tool" id="tool1">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Vendas</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="app">
+            <div class="conteudos">
+                <div class="container">
+                    <div class="fundovendas" id="fundovendas" >
+                        <div class="divesq">
+                            <div class="pcomanda">
+                                <p>Comanda</p>
+                                <p>#</p>
+                            </div>
+                            <div class="fundotable">
+                                <p class="pitem">Itens</p>
+                                <table class="fundoitem" id="fundoitem">
+                                   
+                                        <thead>
+                                            <tr class="legenda">
+                                                <th class="th1"></th>
+                                                <th class="th1"></th>
+                                                <th class="qnt">Qnt</th>
+                                                <th class="produto">Produto</th>
+                                                <th class="subtotal">Sub Total</th>
+                                            </tr>
+                                        </thead>
+
+                                    <tbody id="tbodyitens">
+                                        <!-- <tr id="lineitem">
+                                            <td class="tdicon"><i class="bi bi-trash exc"></i></td>
+                                            <td class="tdicon"><i class="bi bi-pen edit"></i></i></td>
+                                            <td class="qnt" id="qntitem">2</td>
+                                            <td onclick="abrirprod()" class="nomeprod" id="nomeitem">Macarrão quatro queijos</td>
+                                            <td id="valoritem">R$ 12,00</td>
+                                        </tr> -->
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <i class="bi bi-plus-circle-fill adc" id="adc1" onclick="abrirprods()" ></i>
+                            <div class="valor">
+                                <p class="p1">Total: R$</p>
+                                <p class="p2">100,00</p>
+                            </div>
+                        </div>
+                        <div class="divdir">
+                            <div class="divtrash"><i class="bi bi-trash"></i></div>
+                            <div class="alinhardir">
+                                <div>
+                                    <p>Nº da comanda</p>
+                                    <input type="number" name="numcomanda" id="numcomanda" min="0">
+                                </div>
+                                <div>
+                                    <p>Nome do cliente</p>
+                                    <input type="text" name="nocliente" id="nocliente">
+                                </div>
+                                <div>
+                                    <p>Data de emissão</p>
+                                    <p class="dataemissao" id="dataemiss">09/04/2025</p>
+                                </div>
+                                <div>
+                                    <p>Forma de pagamento</p>
+                                    <select name="formpag" id="formpag">
+                                        <option value=""></option>
+                                        <option value="Débito">Débito</option>
+                                        <option value="Crédito">Crédito</option>
+                                        <option value="Dinheiro">Dinheiro</option>
+                                        <option value="Pix">Pix</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="buts">
+                                <button class="bt1" id="btnsalvar1" onclick="salvarcmd()">Salvar</button>
+                                <button class="bt2" id="btnsalvar2">Finalizar comanda</button>
+                            </div>
+                        </div>
+                    </div>  
+                    <button class="criarcmd" id="criarcmd" onclick="criarcomd()">Criar comanda</button>
+                </div>
+                <div class="comandas">
+                    <p class="titulocom">Comandas Ativas</p>
+                    <div class="fundotable">
+                        <div class="divinp">
+                            <div class="lupa">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <input type="text" name="" id="" placeholder="Nº da comanda">
+                        </div>
+                        <div class="fundotabela">
+                            <table class="fundocomandas">
+                                <thead>
+                                    <tr>
+                                        <th>Nº</th>
+                                        <th>Cliente</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodycmd">
+                                    <!-- <tr id="trcmd" onclick="abrircmd()">
+                                        <td id="numcmd">1</td>
+                                        <td id="nocmd">Matheus</td>
+                                        <td id="datacmd">08/04/2025</td>
+                                    </tr> -->
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-             <div class="perfil" id="perfil">
-                <div class="topo">
-                    <div class="username" id="username">
-                        <p class="p1" id="p1">Atendente</p>
-                        <p class="p2" id="p2">Matheus Lucas da Silva</p>
+            <div class="fundopreto" id="fundopreto">
+                <div class="popup">
+                    <p>Adicionar itens</p>
+                    <div class="agrupar">
+                        <div class="fundopesq">
+                            <div class="divinp2">
+                                <input type="text" name="" id="" placeholder="Pesquisar produto">
+                                <div class="divlupa2">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fundotabela">
+                            <table class="produtos" id="produtos">
+                                <thead>
+                                    <tr class="tr1">
+                                        <th class="th1">Selecionar</th>
+                                        <th class="th2">Id</th>
+                                        <th class="th3">Produto</th>
+                                        <th class="th4">Qntd</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    <!-- <tr class="tritem">
+                                        <td class="check">
+                                            <input type="checkbox" name="" id="check1" >
+                                        </td>
+                                        <td class="id">1</td>
+                                        <td class="prod">Coca-Cola</td>
+                                        <td class="qntd">
+                                            <input type="number" name="qnt1" id=" qnt1" min="1">
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
-                    <i class="bi bi-person-circle usericon" id="usericon"
-                        onclick="abrirperfil()"></i>
+                    <div class="buts">
+                        <button class="adcbut" id="adcbut">Adicionar</button>
+                        <button class="cancelar" id="cancelar" onclick="cancelar()">Cancelar</button>
+                    </div>
                 </div>
-                <div class="conteudo" id="conteudosair">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <a href>Sair</a>
+
+            </div>
+            
+            <div class="fundopreto2" id="fundopreto2">
+                <div class="popupprod">
+                    <div class="topo">
+                        <i class="bi bi-plus" onclick="fecharprod()"></i>
+                    </div>
+
+                    <div class="descricao">
+                        <img src="../img/pudim.jfif" alt="" width="160px" height="110px">
+                        <div class="info">
+                            <p class="p1">Nome</p>
+                            <p class="p2">Pudim de leite</p>
+                        </div>
+                        <div class="info">
+                            <p class="p1">Classificação</p>
+                            <p class="p2">Sobremesa</p>
+                        </div>
+                    </div>
+                    <div class="ingredientes"> 
+                        <div class="titulo">
+                            <img src="../img/image 6.png" alt="">
+                            <p>Ingredientes</p>
+                        </div>
+                        <div class="conteudo">
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                            <p>* Água</p>
+                        </div>
+                    </div>
+                    <div class="alergias">
+                        <div class="divicon">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </div>
+                        <div class="conteudo">
+                            <p>* Contém Lactose</p>
+                            <p>* Contém Gluten</p>
+                            <p>* Contém Lactose</p>
+                        </div>
+                    </div>
                 </div>
-            </div>  
+            </div>
+
 
         </div>
 
-        <section class="secall">
-            <nav class="navegation">
-                <div class="modulos alinha">
-                    <i class="bi bi-boxes"></i>
-                </div>
-                <div class="icone alinha" id="icon1"
-                    onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
-                    <i class="bi bi-cash-coin"></i>
-                </div>
-                <div class="icone alinha" id="icon2">
-                    <i class="bi bi-box-seam"></i>
-                </div>
-                <div class="icone alinha" id="icon3">
-                    <i class="bi bi-piggy-bank"></i>
-                </div>
-                <div class="icone alinha" id="icon4">
-                    <i class="bi bi-clipboard2-data"></i>
-                </div>
-            </nav>
-            <div class="tooltips">
-                <div class="top"></div>
-                <div class="tool" id="tool1">
-                    <div class="ponta aparecer"></div>
-                    <div class="balao aparecer">
-                        <p>Vendas</p>
-                    </div>
-                </div>
-            </div>
+    </section>
 
-            <div class="app">
-                
-            </div>
-
-        </section>
-
-    </body>
+</body>
 
 </html>
 
 <script src="../js/nav.js"></script>
 
 <script src="../js/registrarVendas.js"></script>
-
-<script src="../js/estaLogado.js"></script>
