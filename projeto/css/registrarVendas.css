@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-*{
+* {
     font-family: "Inter";
 }
 
-.navegation{
+.navegation {
     background-color: white;
     width: 4vw;
     height: 92vh;
@@ -12,23 +12,23 @@
 }
 
 
-.navegation .icone{
+.navegation .icone {
     height: 50px;
     font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: black;   
+    color: black;
     cursor: pointer;
 }
 
-.alinha{
+.alinha {
     color: #00000050 !important;
     cursor: default !important;
 }
 
 
-.navegation .modulos{
+.navegation .modulos {
     height: 100px;
     font-size: 20px;
     display: flex;
@@ -37,20 +37,840 @@
     color: #00000059;
 }
 
-#icon1{
+#icon1 {
     color: black !important;
     cursor: pointer !important;
 }
 
 /*      SECTION DO CONTEUDO      */
 
-.secall .app{
+.secall .app {
     width: 96vw;
     height: 92vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    background-color: #EDEDED;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.secall .app .conteudos {
+    display: flex;
+    gap: 30px;
+}
+
+
+.secall .app .fundovendas {
+    background-color: white;
+    display: flex;
+    max-height: 400px;
+    min-height: 400px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    border: 1px solid #0000003d;
+}
+
+
+.secall .app .fundovendas .divesq {
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.secall .app .fundovendas .divesq .fundotable {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.secall .app .fundovendas .divesq .pitem {
+    font-size: 13px;
+    color: 4E4E4E;
+    margin: 0;
+    text-indent: 10px;
+}
+
+.secall .app .fundovendas .divesq .pcomanda {
+    display: flex;
+    gap: 5px;
+}
+
+.secall .app .fundovendas .divesq .pcomanda p {
+    margin: 0;
+}
+
+
+.secall .app .fundovendas .divesq .fundoitem {
+    background-color: #00000013;
+    border-radius: 10px;
+    padding: 0px 10px;
+    min-height: 200px;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    border-spacing: 1px 10px;
+    overflow-y: auto;
+    min-width: 350px;
+}
+
+
+.secall .app .fundovendas .divesq .fundoitem::-webkit-scrollbar {
+    background-color: #c8c8c877;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.secall .app .fundovendas .divesq .fundoitem::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+}
+
+
+.secall .app .fundovendas .divesq .fundoitem th {
+    text-align: left;
+    padding: 10px 10px;
+}
+
+
+.secall .app .fundovendas .divesq .fundoitem .legenda .th1 {
+    text-align: left;
+    min-width: 20px;
+    max-width: 20px; 
+    padding: 10px 10px; 
+}
+.secall .app .fundovendas .divesq .fundoitem .legenda .produto {
+    min-width: 150px;
+    max-width: 150px;  
+}
+
+.secall .app .fundovendas .divesq .fundoitem td {
+    text-align: left;
+    padding: 0px 10px;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.788);
+    min-width: 30px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.secall .app .fundovendas .divesq .fundoitem .nomeprod {
+    cursor: pointer;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.secall .app .fundovendas .divesq .fundoitem .tdicon {
+    min-width: fit-content;
+    text-align: center;
+}
+
+.secall .app .fundovendas .divesq .fundoitem .exc {
+    color: #900B09;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.secall .app .fundovendas .divesq .fundoitem .edit {
+    color: #1E1E1E;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.secall .app .fundovendas .divesq .fundoitem .qnt {
+    text-align: center;
+    width: 30px;
+}
+
+
+.secall .app .fundovendas .divesq .fundoitem .legenda {
+    font-size: 13px;
+    font-weight: lighter;
+    color: #4e4e4ea6;
+    min-width: 100%;
+}
+
+.secall .app .fundovendas .divesq .adc {
+    color: rgba(0, 0, 0, 0.658);
+    font-size: 28px;
+    cursor: pointer;
+    width: 30px;
+    transform: translateY(-60%);
+}
+
+.secall .app .fundovendas .divesq .valor {
+    display: flex;
+    gap: 5px;
+    text-align: right;
 
 }
 
+.secall .app .fundovendas .divesq .valor p {
+    display: flex;
+    gap: 10px;
+    margin: 0;
+
+}
+
+.secall .app .fundovendas .divesq .valor .p1 {
+    font-size: 14px;
+    display: flex;
+    align-items: end;
+    padding-bottom: 1.5px;
+}
+
+.secall .app .fundovendas .divesq .valor .p2 {
+    font-size: 20px;
+    display: flex;
+    align-items: end;
+    font-weight: 600;
+}
+
+.secall .app .fundovendas .buts {
+    display: flex;
+    gap: 30px;
+}
+
+
+
+.secall .app .fundovendas .divdir {
+    border-left: 1px solid #0000003d;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+
+.secall .app .fundovendas .divdir .alinhardir {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.secall .app .fundovendas .divdir .alinhardir div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0px 40px;
+}
+
+.secall .app .fundovendas .divdir .divtrash {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin: 0px 20px;
+    overflow: visible;
+    height: 0px;
+}
+
+.secall .app .fundovendas .divdir .divtrash i {
+    font-size: 18px;
+    background-color: #FF9B9B;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1.5px solid #e76f6f;
+    color: rgba(0, 0, 0, 0.808);
+    width: fit-content;
+    display: flex;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.secall .app .fundovendas .divdir p {
+    font-size: 12px;
+    color: #4E4E4E;
+    margin: 0;
+}
+
+.secall .app .fundovendas .divdir div .dataemissao {
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+}
+
+.secall .app .fundovendas .divdir div input {
+    min-height: 26px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.774);
+    padding: 0px 10px;
+    max-width: 150px;
+
+}
+
+#numcomanda {
+    max-width: 40px;
+}
+
+.secall .app .fundovendas .divdir div select {
+    min-height: 26px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.774);
+    padding: 0px 10px;
+    max-width: 100px;
+    cursor: pointer;
+}
+
+.secall .app .fundovendas .divdir .buts {
+    display: flex;
+    margin: 0px 10px;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: center;
+    padding: 0px 20px;
+}
+
+.secall .app .fundovendas .divdir .buts button {
+    display: flex;
+    padding: 5px 15px;
+    max-width: fit-content;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px #00000023;
+}
+
+
+.secall .app .fundovendas .divdir .buts .bt1 {
+    background-color: #C0FFAD;
+    border: 1.5px solid #9F9F9F;
+
+}
+
+.secall .app .fundovendas .divdir .buts .bt2 {
+    background-color: #C0E3FF;
+    border: 1.5px solid #9F9F9F;
+}
+
+
+.secall .app .container .criarcmd {
+    background-color: #DCE2E8;
+    border: 1.5px solid #828283;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.397);
+    color: #202020;
+    border-radius: 20px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
+.secall .app .comandas {
+    border-bottom-left-radius: 10px;
+    width: fit-content;
+    min-width: 300px;
+}
+
+.secall .app .comandas .titulocom {
+    background-color: #EDEDED;
+    font-size: 18px;
+    text-align: center;
+    padding: 0px 0px 20px 0px;
+    margin: 0;
+}
+
+.secall .app .comandas .fundotable {
+    min-height: 400px;
+    max-height: 400px;
+    border-radius: 10px;
+    border: 1px solid #0000003d;
+}
+
+
+
+.secall .app .comandas .divinp {
+    display: flex;
+    min-height: 30px;
+    background-color: #d4d4d4;
+    padding: 10px 0px;
+    /* position: absolute; */
+    width: auto;
+    border-radius: 10px 0px 0px 0px;
+    min-width: 300px;
+}
+
+.secall .app .comandas .divinp .lupa {
+    background-color: #F1F1F1;
+    height: 30px;
+    width: 40px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #00000069;
+    box-shadow: 2px 2px 4px #00000052;
+    margin-left: 20px;
+}
+
+.secall .app .comandas .divinp .lupa i {
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.767);
+}
+
+.secall .app .comandas .divinp input {
+    background-color: white;
+    height: 28px;
+    width: 100px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid #00000069;
+    margin: 0px;
+    padding-left: 10px;
+    border-left: 0px;
+    box-shadow: 2px 2px 4px #00000052;
+}
+
+.secall .app .comandas .divinp input::placeholder {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.452);
+}
+
+.secall .app .comandas .fundotabela {
+    overflow: auto;
+    height: 100%;
+    min-height: 346px;
+    max-height: 346px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+
+.secall .app .comandas .fundotabela::-webkit-scrollbar {
+    background-color: #c8c8c877;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.secall .app .comandas .fundotabela::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+}
+
+.secall .app .comandas .fundocomandas {
+    border-spacing: 0px 0px;
+    max-height: 330px;
+    min-width: 330px;
+}
+
+.secall .app .comandas .fundocomandas td {
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.secall .app .comandas .fundocomandas tr:nth-child(even) {
+    background-color: #F5F5F5;
+}
+
+.secall .app .comandas .fundocomandas tr:nth-child(odd) {
+    background-color: white;
+}
+
+
+
+.secall .app .comandas .fundocomandas th {
+    background-color: #d4d4d4;
+    padding: 10px 20px;
+    color: rgba(0, 0, 0, 0.479);
+    font-size: 13px;
+    font-weight: 400;
+    position: sticky;
+    top: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.secall .app .fundopreto {
+    width: 96vw;
+    height: 92vh;
+    z-index: 2;
+    position: absolute;
+    background-color: #00000093;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.secall .app .fundopreto .popup {
+    width: 50%;
+    height: 80%;
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.secall .app .fundopreto .popup .agrupar {
+    width: 80%;
+    border-radius: 10px;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+
+.secall .app .fundopreto .popup .divinp2 {
+    display: flex;
+    width: 100%;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.secall .app .fundopreto .popup .divlupa2 {
+    width: 10%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 10px 10px 0px;
+    background-color: #e7e7e7;
+    border: 1px solid #00000060;
+    cursor: pointer;
+}
+
+.secall .app .fundopreto .popup input {
+    width: 90%;
+    padding-left: 5%;
+    border-radius: 10px 0px 0px 10px;
+    border: 1px solid #00000060;
+    border-right: none;
+}
+
+.secall .app .fundopreto .popup input::placeholder {
+    text-align: center;
+}
+
+.secall .app .fundopreto .popup .fundotabela {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    border-radius: 10px;
+    position: relative;
+    border: 1px solid #00000060;
+    min-height: 250px;
+    max-height: 250px;
+}
+
+
+.secall .app .fundopreto .popup .fundotabela::-webkit-scrollbar {
+    background-color: #e7e7e7ce;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.secall .app .fundopreto .popup .fundotabela::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+}
+
+
+
+.secall .app .fundopreto .popup .produtos {
+    min-width: 100%;
+    border-spacing: 0px;
+    position: relative;
+}
+
+.secall .app .fundopreto .popup .produtos .tr1 th{
+    background-color: #dbdbdb;
+    font-size: 13px;
+    padding: 10px 10px;
+    color: rgba(0, 0, 0, 0.822);
+    font-weight: 500;
+    text-align: center;
+    border-bottom: 1px solid #00000060;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+
+.secall .app .fundopreto .popup .produtos .tr1 .th3{
+    text-align: left;
+    padding: 10px 0px;
+    text-indent: 20px;
+}
+
+
+
+.secall .app .fundopreto .popup .produtos .tritem{
+    min-width: 100%;
+    background-color: white;
+}
+
+
+.secall .app .fundopreto .popup .produtos .tritem td{
+    border-bottom: 0.5px solid #00000060;
+    font-size: 14px;
+    padding: 10px 20px;
+    color: #000000e0;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+
+.secall .app .fundopreto .popup .produtos .tritem .check{ 
+    width: 15%;
+}
+
+.secall .app .fundopreto .popup .produtos .tritem .id{ 
+    width: 5%;
+    text-align: center;
+}
+
+.secall .app .fundopreto .popup .produtos .tritem .prod{ 
+    max-width: 200px;
+    min-width: 65%;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.secall .app .fundopreto .popup .produtos .tritem .qntd{ 
+    width: 15%;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.secall .app .fundopreto .popup .produtos .tritem .qntd input{ 
+    height: 30px;
+    width: 40px;
+    border-radius: 5px;
+    border: 1px solid #000000b7;
+    padding-left: 10px;
+
+}
+
+
+
+
+
+.secall .app .fundopreto .popup .buts{
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    width: 80%;
+}
+
+.secall .app .fundopreto .popup .buts button{ 
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: 1px solid rgb(161, 161, 161);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px #a3a3a3;
+}
+
+.secall .app .fundopreto .popup .buts .adcbut{ 
+    background-color: white;
+    color: #33ad0d;
+    border: 1.5px solid #33ad0d;
+}
+
+.secall .app .fundopreto .popup .buts .cancelar{ 
+    background-color: white;
+    color: #525252;
+    border: 1.5px solid #525252;
+}
+
+.secall .app .fundopreto .popup .buts .adcbut:hover{ 
+    color: white;
+    background-color: #33ad0d;
+    border: 1.5px solid #33ad0d;
+}
+
+.secall .app .fundopreto .popup .buts .cancelar:hover{ 
+    color: white;
+    background-color: #525252;
+    border: 1.5px solid #525252;
+}
+
+
+
+
+
+.secall .app .fundopreto2 {
+    width: 96vw;
+    height: 92vh;
+    z-index: 2;
+    position: absolute;
+    background-color: #00000093;
+    right: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.secall .app .fundopreto2 .popupprod {
+    width: 50%;
+    min-height: 70%;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.secall .app .fundopreto2 .popupprod .topo{
+    width: 100%;
+    max-height: 0px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    overflow: visible;
+    
+}
+
+.secall .app .fundopreto2 .popupprod .topo i{
+    margin-right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    translate: 0px 50px;
+    transform: rotate(45deg);
+}
+
+.secall .app .fundopreto2 .popupprod .descricao{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: end;
+}
+
+.secall .app .fundopreto2 .popupprod .descricao .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+    gap: 10px;
+}
+
+.secall .app .fundopreto2 .popupprod .descricao img{
+    border-radius: 10px;
+    border: 2px solid rgb(221, 221, 221);
+}
+
+.secall .app .fundopreto2 .popupprod .descricao .info .p1{
+    font-size: 13px;
+    margin: 0;
+    color: #000000bd;
+}
+
+
+.secall .app .fundopreto2 .popupprod .descricao .info .p2{
+    font-size: 16px;
+    margin: 0;
+}
+
+.secall .app .fundopreto2 .popupprod .ingredientes{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0px auto;
+    max-height: 160px;
+    overflow-y: auto;
+}
+
+.secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar {
+    background-color: #e7e7e7ce;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+}
+
+
+.secall .app .fundopreto2 .popupprod .ingredientes .titulo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.secall .app .fundopreto2 .popupprod .ingredientes .titulo img{
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+
+.secall .app .fundopreto2 .popupprod .ingredientes .conteudo{
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+
+.secall .app .fundopreto2 .popupprod .ingredientes .conteudo p{
+    min-width: 33%;
+    max-width: 33%;
+    overflow: hidden;
+    margin: 10px 0px;
+}
+
+
+
+.secall .app .fundopreto2 .popupprod .alergias{
+    background-color: #E6FF56;
+    padding: 5px 0px;
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+}
+
+.secall .app .fundopreto2 .popupprod .alergias .divicon{
+    display: flex;
+    font-size: 30px;
+    width: 30px;
+    margin-left: 20px;
+    min-height: 100%;
+    align-items: center;
+}
+
+.secall .app .fundopreto2 .popupprod .alergias .conteudo{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: auto;
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+.secall .app .fundopreto2 .popupprod .alergias .conteudo p{
+    margin: 0;
+    max-width: 30%;
+    font-size: 14px;
+}
