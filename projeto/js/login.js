@@ -18,6 +18,7 @@ btnEntrar.addEventListener('click', async () => {
     if (data.ok) {
 
         window.location = "startPage.html";
+        
     } else {
 
         alert("Senha ou usuário incorretos. Por favor, tente novamente e, caso necessite de troca, converse com seu administrador.")

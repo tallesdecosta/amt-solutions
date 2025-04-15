@@ -94,9 +94,59 @@
             </div>
 
             <div class="">
+                <div class="popup" id="popup">
+                    <div>
+                        <button onclick="fecharPopup();">X</button>
+                    </div>
+                    <div>
+                        <h3>Informações</h3>
+                        <label for="nome">Nome do funcionário</label>
+                        <br>
+                        <input type="text" name="nome" id="nome">
+                        <br>
+                        <label for="user">Usuário do funcionário</label>
+                        <br>
+                        <input type="text" name="user" id="user">
+                        <br>
+                        <label for="senha">Senha do funcionário</label>
+                        <br>
+                        <input type="password" name="senha" id="senha">
+                        <br>
+                        <h3>Permissões</h3>
+                        <input type="checkbox" name="gestao" id="gestao-novo">
+                        <label for="gestao">Gestão</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="vendas" id="vendas-novo">
+                        <label for="vendas">Vendas</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="financeiro" id="financeiro-novo">
+                        <label for="financeiro">Financeiro</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="Estoque" id="estoque-novo">
+                        <label for="Estoque">Estoque</label>
+                        <br>
+                        <br>
+                        <input type="text" name="cargo" id="cargo">
+                        <label for="cargo">Cargo</label>
+                        <br>
+                        <br>
+                        <input type="number" name="contato" id="contato">
+                        <label for="contato">Contato</label>
+                        <br>
+                        <br>
+                        <input type="checkbox" name="admin" id="admin">
+                        <label for="admin">É administrador?</label>
+                        <br>
+                        <br>
+                        <button onclick="addUser();">Criar usuario</button>
+                    </div>
+                </div>
                 <div class="main-content" id="fundo">
                    <div id="users">
-                        <h2>Usuários cadastrados</h2>
+                        <h2>Usuários cadastrados  <button onclick="abrirPopup();">+</button></h2>
 
                    </div>
                     <div id="acessos">
@@ -153,6 +203,9 @@ res = await fetch('../php/api/usuario.php', {
         btn.textContent = res[i].username;
         btn.id = res[i].id_usuario;
         attBtn = document.getElementById('btn-atualizar');
+        deleteBtn = document.createElement("button");
+        deleteBtn.setAttribute("id", res[i].id_usuario);
+        deleteBtn.textContent = "-";
         
         btn.addEventListener('click', function a () {
 
@@ -165,8 +218,18 @@ res = await fetch('../php/api/usuario.php', {
             mudarBtnCor(this);
             
         });
+
+        deleteBtn.addEventListener('click', function a ()  {
+
+deleteUser(this);
+
+});
+
+        btnDiv = document.createElement('div');
+        btnDiv.appendChild(btn);
+        btnDiv.appendChild(deleteBtn);
         div = document.getElementById('users');
-        div.append(btn);
+        div.appendChild(btnDiv);
 
     }
 }
@@ -235,5 +298,81 @@ function mudarBtnCor(btn) {
     }
 
 }
+
+function abrirPopup() {
+
+    popup = document.getElementById('popup');
+    popup.style.display = "block";
+
+    
+}
+
+function fecharPopup() {
+
+popup = document.getElementById('popup');
+popup.style.display = "none";
+
+
+}
+
+async function addUser() {
+
+    nome = document.getElementById('nome').value;
+    user = document.getElementById('user').value;
+    senha = document.getElementById('senha').value;
+    cargo = document.getElementById('cargo').value;
+    contato = document.getElementById('contato').value;
+
+    estoque = document.getElementById('estoque-novo');
+    vendas = document.getElementById('vendas-novo');
+    financeiro = document.getElementById('financeiro-novo');
+    gestao = document.getElementById('gestao-novo');
+    adminValue = document.getElementById('admin');
+
+
+
+    estoquePermissao = estoque.checked == true ? 1 : 0; 
+    vendasPermissao = vendas.checked == true ? 1 : 0; 
+    financeiroPermissao = financeiro.checked == true ? 1 : 0; 
+    gestaoPermissao = gestao.checked == true ? 1 : 0;
+    admin = adminValue.checked == true ? 1 : 0;
+    
+    body = new URLSearchParams();
+    body.append("user", user);
+    body.append("senha", senha);
+    body.append("nome", nome);
+    body.append("estoque", estoquePermissao);
+    body.append("vendas", vendasPermissao);
+    body.append("financeiro", financeiroPermissao);
+    body.append("gestao", gestaoPermissao);
+    body.append("cargo", cargo);
+    body.append("contato", contato);
+    body.append("admin", admin);
+
+    data = await fetch("../php/api/usuario.php", {
+
+    method: "POST",
+    body: body
+
+    });
+
+    if (data.ok) {
+
+        location.reload();
+
+    }
+}
+
+async function deleteUser(btn) {
+
+    res = await fetch(`../php/api/usuario.php?id=${btn.getAttribute('id')}`, {
+
+        method: "DELETE",
+        credentials: "include"
+
+});
+    location.reload();
+}
+
 </script>
 </html>

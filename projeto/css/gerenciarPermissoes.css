@@ -26,3 +26,16 @@
 
     max-width: fit-content;
 }
+
+.popup {
+
+    width: 500px;
+    height: 500px;
+    background-color: beige;
+    position: absolute;
+    right: 500px;
+    top: auto;
+    border: 1px solid black;
+    display: none;
+
+}
