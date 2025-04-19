@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS venda_produto(
     id_venda INT NOT NULL,
     qntd INT NOT NULL,
     FOREIGN KEY(id_produto) REFERENCES produto(id_produto),
-	FOREIGN KEY(id_venda) REFERENCES produto(id)
+	FOREIGN KEY(id_venda) REFERENCES venda(id)
 );
 
 CREATE TABLE IF NOT EXISTS insumo(
