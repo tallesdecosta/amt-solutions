@@ -97,6 +97,7 @@ button:hover{
 }
 
 .secall .app .descricaoItem input:disabled{
+    min-width: 182px;
     border: none;
     background-color: transparent;
     color: black;
@@ -105,6 +106,7 @@ button:hover{
 }
 
 .secall .app .descricaoItem input:enabled{
+    min-width: 182px;
     border: none;
     background-color: rgb(227, 227, 227);
     color: black;
