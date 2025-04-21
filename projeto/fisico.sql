@@ -12,8 +12,9 @@ CREATE TABLE IF NOT EXISTS venda(
 CREATE TABLE IF NOT EXISTS produto(
 id_produto INT AUTO_INCREMENT,
  nome VARCHAR(255) NOT NULL,
- valor FLOAT NOT NULL,
  categoria VARCHAR(255) NOT NULL,
+ valor FLOAT NOT NULL,
+ quantidade FLOAT NOT NULL,
  lote VARCHAR(255),
  vencimento DATE,
  PRIMARY KEY (id_produto)
