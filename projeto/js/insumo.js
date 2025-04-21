@@ -1,7 +1,11 @@
 function chamarPHP() {
-  fetch('../php/insumo.php')
+  const filtro = document.getElementById('inputPesquisa').value;
+
+  let url = `../php/insumo.php?filtro=${filtro}`;
+
+  fetch(url)
     .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro na resposta do servidor');
+      if (!resposta.ok) throw new Error('Erro no servidor');
       return resposta.json();
     })
     .then(dados => {
@@ -31,30 +35,26 @@ function chamarPHP() {
           document.getElementById('qntMinima').value = item.qntMinima || '';
           document.getElementById('lote').value = item.lote || '';
           document.getElementById('vencimento').value = item.vencimento || '';
-          document.getElementById('inspRecebimento').value = item.inspReceb == 1 ? "Sim" : "Não";
+          document.getElementById('inspReceb').value = item.inspReceb || '';
           document.getElementById('fornecedor').value = item.fornecedor || '';
           document.getElementById('localizacao').value = item.localizacao || '';
           document.getElementById('quantidade').value = item.quantidade || '';
-
-          document.querySelectorAll('.descricaoItem input').forEach(input => {
-            input.setAttribute('disabled', true);
-          });
         });
 
         tbody.appendChild(linha);
       });
     })
-    .catch(erro => {
-      console.error('Erro ao buscar dados:', erro);
-    });
+    .catch(error => console.error('Erro:', error));
 }
+
+document.getElementById('buttonPesquisa').addEventListener('click', chamarPHP);
 
 // Botão ADICIONAR
 document.getElementById('btn-adicionar').addEventListener('click', () => {
   window.adicionandoNovo = true;
   window.itemSelecionado = null;
 
-  const campos = ['nome', 'classificacao', 'qntMinima', 'lote', 'vencimento', 'inspRecebimento', 'fornecedor', 'localizacao', 'quantidade'];
+  const campos = ['nome', 'classificacao', 'qntMinima', 'lote', 'vencimento', 'inspReceb', 'fornecedor', 'localizacao', 'quantidade'];
   campos.forEach(id => document.getElementById(id).value = '');
 
   document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
@@ -71,7 +71,6 @@ document.getElementById('btn-editar').addEventListener('click', () => {
 });
 
 // Botão SALVAR
-
 document.getElementById('btn-salvar').addEventListener('click', () => {
   const inputs = document.querySelectorAll('.descricaoItem input');
 
@@ -83,7 +82,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       qntMinima: inputs[2].value,
       lote: inputs[3].value,
       vencimento: inputs[4].value,
-      inspReceb: (inputs[5].value.toLowerCase() === "sim") ? 1 : 0,
+      inspReceb: inputs[5].value,
       fornecedor: inputs[6].value,
       localizacao: inputs[7].value,
       quantidade: inputs[8].value
@@ -109,7 +108,6 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       })
       .catch(err => console.error('Erro ao inserir:', err));
   }
-
   // Quando for editar
   else if (window.itemSelecionado) {
     const dadosAtualizados = {
@@ -119,7 +117,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       qntMinima: inputs[2].value,
       lote: inputs[3].value,
       vencimento: inputs[4].value,
-      inspReceb: (inputs[5].value.toLowerCase() === "sim") ? 1 : 0,
+      inspReceb: inputs[5].value,
       fornecedor: inputs[6].value,
       localizacao: inputs[7].value,
       quantidade: inputs[8].value
@@ -143,11 +141,8 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         window.itemSelecionado = null;
       })
       .catch(err => console.error('Erro ao salvar:', err));
-  } else {
-    alert('Nenhuma ação ativa. Clique em "Editar" ou "Adicionar" primeiro.');
   }
 });
-
 
 // Botão DELETAR
 document.getElementById('btn-deletar').addEventListener('click', () => {
@@ -177,4 +172,4 @@ document.getElementById('btn-deletar').addEventListener('click', () => {
     .catch(err => console.error('Erro ao deletar:', err));
 });
 
-chamarPHP();
+window.onload = chamarPHP;
