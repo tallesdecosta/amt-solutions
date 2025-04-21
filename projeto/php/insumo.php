@@ -4,7 +4,22 @@ include 'conectar_bd.php';
 $conn = conectar();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $resultado = $conn->query('SELECT * FROM insumo');
+    $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : '';
+    $query = 'SELECT * FROM insumo WHERE 1=1';
+
+    if ($filtro) {
+        $query .= " AND (id_insumo LIKE ? OR nome LIKE ? OR classificacao LIKE ? OR vencimento LIKE ?)";
+    }
+
+    $stmt = $conn->prepare($query);
+
+    if ($filtro) {
+        $param = "%$filtro%";
+        $stmt->bind_param('ssss', $param, $param, $param, $param);
+    }
+
+    $stmt->execute();
+    $resultado = $stmt->get_result();
     $dados = [];
 
     while ($linha = $resultado->fetch_assoc()) {
@@ -13,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     header('Content-Type: application/json');
     echo json_encode($dados);
+
+    $stmt->close();
 }
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,7 +38,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($dados['id'])) {
         $stmt = $conn->prepare("UPDATE insumo SET nome=?, classificacao=?, qntMinima=?, lote=?, vencimento=?, inspReceb=?, fornecedor=?, localizacao=?, quantidade=? WHERE id_insumo=?");
         $stmt->bind_param(
-            "sssssissii", 
+            "ssssssssii", 
             $dados['nome'],
             $dados['classificacao'],
             $dados['qntMinima'],
@@ -36,7 +53,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $stmt = $conn->prepare("INSERT INTO insumo (nome, classificacao, qntMinima, lote, vencimento, inspReceb, fornecedor, localizacao, quantidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param(
-            "sssssissi", 
+            "ssssssssi", 
             $dados['nome'],
             $dados['classificacao'],
             $dados['qntMinima'],
@@ -60,8 +77,6 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt->close();
 }
-
-
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     parse_str($_SERVER['QUERY_STRING'], $params);
