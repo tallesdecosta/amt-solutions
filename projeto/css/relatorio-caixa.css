@@ -1,0 +1,57 @@
+.bento {
+
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.434);
+
+}
+
+.filter-wrapper {
+    display: flex;
+    gap: 25px;
+    width: 64.63vw;
+    height: 8.24vh;
+}
+
+.report-wrapper {
+
+    height: 60.74vh;
+    width: 64.63vw;
+}
+
+.line-header {
+    display: flex;
+    gap: 171px;
+    width: 64.63vw;
+}
+
+.report {
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    
+}
+
+.saved-reports {
+    width: 265px;
+    height: 72.314vh;
+}
+
+main {
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    
+}
+
+.main-wrapper {
+    display: flex;
+    gap: 63px;
+}
+
+h1 {
+
+    margin-left: 21.25vw;
+}
