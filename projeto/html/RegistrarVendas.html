@@ -72,7 +72,7 @@
                         <div class="divesq">
                             <div class="pcomanda">
                                 <p>Comanda</p>
-                                <p>#</p>
+                                <p id="numerocmd">#</p>
                             </div>
                             <div class="fundotable">
                                 <p class="pitem">Itens</p>
@@ -89,10 +89,20 @@
                                         </thead>
 
                                     <tbody id="tbodyitens">
-                                        <!-- <tr id="lineitem">
-                                            <td class="tdicon"><i class="bi bi-trash exc"></i></td>
-                                            <td class="tdicon"><i class="bi bi-pen edit"></i></i></td>
-                                            <td class="qnt" id="qntitem">2</td>
+
+                                        <!-- <tr id="lineitem10">
+                                            <td class="tdicon" id="tdicon">
+                                                <i class="bi bi-plus-circle-fill cancitem" onclick=""></i>
+                                            </td>
+                                            <td class="tdicon" id="tdicon">
+                                                <i class="bi bi-check-circle-fill checkitem" onclick=""></i>
+                                            </td>
+
+
+                                            <td class="qnt" id="qntitem10">
+                                                <input type="number" name="inpqnt" id="inpqnt">
+                                            </td>
+
                                             <td onclick="abrirprod()" class="nomeprod" id="nomeitem">Macarrão quatro queijos</td>
                                             <td id="valoritem">R$ 12,00</td>
                                         </tr> -->
@@ -100,18 +110,22 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <i class="bi bi-plus-circle-fill adc" id="adc1" onclick="abrirprods()" ></i>
+
+                            <button class="adc" id="butadc" onclick="abrirprods()">
+                                <i class="bi bi-plus-circle-fill" id="adc1"  ></i>
+                            </button>
+
                             <div class="valor">
                                 <p class="p1">Total: R$</p>
-                                <p class="p2">100,00</p>
+                                <p class="p2" id="valorTotal"></p>
                             </div>
                         </div>
                         <div class="divdir">
-                            <div class="divtrash"><i class="bi bi-trash"></i></div>
+                            <button class="divtrash" id="divtrash" onclick="resDeletarCmd()"><i class="bi bi-trash" onclick="ativarbotao()"></i></button>
                             <div class="alinhardir">
                                 <div>
                                     <p>Nº da comanda</p>
-                                    <input type="number" name="numcomanda" id="numcomanda" min="0">
+                                    <input type="number" name="numcomanda" id="numcomanda" min="0" onchange="numcmd()">
                                 </div>
                                 <div>
                                     <p>Nome do cliente</p>
@@ -124,17 +138,17 @@
                                 <div>
                                     <p>Forma de pagamento</p>
                                     <select name="formpag" id="formpag">
-                                        <option value=""></option>
-                                        <option value="Débito">Débito</option>
-                                        <option value="Crédito">Crédito</option>
-                                        <option value="Dinheiro">Dinheiro</option>
-                                        <option value="Pix">Pix</option>
+                                        <option value="0" selected></option>
+                                        <option value="1">Débito</option>
+                                        <option value="2">Crédito</option>
+                                        <option value="3">Dinheiro</option>
+                                        <option value="4">Pix</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="buts">
                                 <button class="bt1" id="btnsalvar1" onclick="salvarcmd()">Salvar</button>
-                                <button class="bt2" id="btnsalvar2">Finalizar comanda</button>
+                                <button class="bt2" id="btnsalvar2" onclick="finalizar()">Finalizar comanda</button>
                             </div>
                         </div>
                     </div>  
@@ -147,7 +161,7 @@
                             <div class="lupa">
                                 <i class="bi bi-search"></i>
                             </div>
-                            <input type="text" name="" id="" placeholder="Nº da comanda">
+                            <input type="text" name="" id="filtrocmd" placeholder="Nº da comanda" oninput="filtrarcmd()">
                         </div>
                         <div class="fundotabela">
                             <table class="fundocomandas">
@@ -163,7 +177,9 @@
                                         <td id="numcmd">1</td>
                                         <td id="nocmd">Matheus</td>
                                         <td id="datacmd">08/04/2025</td>
+                                    
                                     </tr> -->
+                                    
                                 </tbody>
                                 
                             </table>
@@ -178,7 +194,7 @@
                     <div class="agrupar">
                         <div class="fundopesq">
                             <div class="divinp2">
-                                <input type="text" name="" id="" placeholder="Pesquisar produto">
+                                <input type="text" name="filtroprod" id="filtroprod" placeholder="Pesquisar produto" oninput="filtrarprod()">
                                 <div class="divlupa2">
                                     <i class="bi bi-search"></i>
                                 </div>
@@ -191,20 +207,26 @@
                                         <th class="th1">Selecionar</th>
                                         <th class="th2">Id</th>
                                         <th class="th3">Produto</th>
+                                        <th class="th5">Valor</th>
                                         <th class="th4">Qntd</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    <!-- <tr class="tritem">
+
+
+                                     <!-- <tr class="tritem">
                                         <td class="check">
                                             <input type="checkbox" name="" id="check1" >
                                         </td>
                                         <td class="id">1</td>
-                                        <td class="prod">Coca-Cola</td>
+                                        <td class="prod">Coca-Cola Lata Zero Coca-Cola Lata Zero Coca-Cola Lata Zero</td>
+                                        <td class="valor">R$ 200,00</td>
                                         <td class="qntd">
                                             <input type="number" name="qnt1" id=" qnt1" min="1">
                                         </td>
-                                    </tr> -->
+                                    </tr>  -->
+
+
                                 </tbody>
 
                             </table>
