@@ -19,7 +19,7 @@ async function salvar() {
 
 async function registrarop(dado1, dado2, dado3) {
 
-    let list = { "resp": dado1, "valor": dado2, "obs": dado3 }
+    let list = { "resp": dado1, "nome": "Entrada de caixa", "valor": dado2, "obs": dado3 }
 
     let data = await fetch("../php/entradaDeCaixa.php", {
         method: "POST",
@@ -30,4 +30,55 @@ async function registrarop(dado1, dado2, dado3) {
     if (data) {
         return await data.json()
     }
+}
+
+
+
+async function verifacess() {
+
+    let user = document.getElementById('usuario').value
+    let pass = document.getElementById('senha').value
+
+    if ((user != '' && user != false) && (pass != '' && user != false)) {
+        
+        let response = await validaracess(user,pass)
+
+        if(response){
+            if(response.acesso == 'autorizado'){
+                let element = document.getElementById('verifacess')
+
+                element.style.display = 'none'
+            }else{
+                alert("Para acessar o módulo de Entrada de Caixa a conta deve conter privilegio de gestor")
+            }
+        }
+
+    } else {
+        alert("O login precisa conter o Username e a Senha do usuário")
+    }
+
+}
+
+
+async function validaracess(user,senha) {
+    
+    let values = {"user":user, "senha": senha}
+
+    let data = await fetch("../php/entradaDeCaixa.php",{
+
+        method: "POST",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+
+    })
+
+    if(data){
+        return data.json()
+    }
+
+}
+
+function voltar(){
+    window.location.href = '../html/moduloVendas.html'
 }
