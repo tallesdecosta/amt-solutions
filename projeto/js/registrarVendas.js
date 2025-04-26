@@ -11,6 +11,8 @@ function semcomanda() {
     let element10 = document.getElementById('valorTotal')
     let element11 = document.getElementById('numerocmd')
 
+    document.getElementById('hidvenda').value = 0
+
 
     element1.value = ''
     element2.value = ''
@@ -29,6 +31,8 @@ function semcomanda() {
     element11.innerHTML = '#'
 
     element7.style.opacity = '0.7'
+
+
 }
 
 semcomanda();
@@ -45,6 +49,8 @@ function criarcomd() {
     let element9 = document.getElementById('tbodyitens')
     let element10 = document.getElementById('valorTotal')
     let element11 = document.getElementById('numerocmd')
+
+    document.getElementById('hidvenda').value = 0
 
     let select = document.getElementById('formpag')
     let formpag = select.options[select.selectedIndex].value;
@@ -87,6 +93,10 @@ async function salvarcmd() {
                     let numcmd = document.getElementById('numcomanda')
 
                     numcmd.disabled = true
+
+
+                } else if (data.resposta == 1) {
+                    alert("Ja existe uma comanda com este número!")
                 }
             }
         }
@@ -132,7 +142,7 @@ async function adccmdativas() {
         estruturacmd(x, cmd, nome, data, id)
 
         x++
-        
+
     }
 }
 
@@ -146,6 +156,8 @@ async function registrovenda(op, filtro, tabela, id) {
     let dataemiss = document.getElementById('dataemiss').innerText
     let select = document.getElementById('formpag')
 
+    let idvenda = document.getElementById('hidvenda').value
+
 
     let formpag = select.options[select.selectedIndex].value;
 
@@ -153,14 +165,14 @@ async function registrovenda(op, filtro, tabela, id) {
 
     let tbody = document.getElementById('tbodyitens')
 
-    cont = { "op": op, "filtro": filtro, "tabela": tabela, "id": id, "numcmd": ncmd, "ncliente": ncliente, "dataemiss": dataemiss, "formpag": formpag }
+    cont = { "op": op, "filtro": filtro, "tabela": tabela, "id": id, "numcmd": ncmd, "ncliente": ncliente, "dataemiss": dataemiss, "formpag": formpag, "id_venda": idvenda }
 
     x = 1;
 
     rows.forEach(row => {
 
         let hidd = row.querySelector("input[type='hidden']").value
-        let qntd = 1
+        let qntd = row.querySelector(".qnt").innerText
 
         if (hidd && qntd) {
 
@@ -258,9 +270,18 @@ async function abrirprods() {
                     let valor = '<td class="valoritem" id="valoritem' + hidd + '">R$ ' + subtotal2 + '</td>'
                     let hidden = ' <input type="hidden" name="hidden' + hidd + '" id="' + hidd + '" value="' + hidd + '"> '
 
-                    tbody.innerHTML += tr
-                    line = document.getElementById("lineitem" + hidd)
-                    line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
+                    if (document.getElementById("lineitem" + hidd)) {
+
+                        line = document.getElementById("lineitem" + hidd)
+                        line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
+
+                    }else{
+                        tbody.innerHTML += tr
+                        line = document.getElementById("lineitem" + hidd)
+                        line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
+                    }
+
+
 
                     valores.push(valorfinal)
                 }
@@ -410,6 +431,9 @@ async function visucmd(x) {
             let element3 = document.getElementById('formpag')
 
             element1.value = result[i].numComanda
+
+            document.getElementById('hidvenda').value = element1.value
+
             element2.value = result[i].nomeCliente
 
             element1.disabled = true
@@ -431,6 +455,7 @@ async function visucmd(x) {
 
 
         }
+
 
 
     }
