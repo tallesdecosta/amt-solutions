@@ -20,7 +20,7 @@
 
     </head>
 
-    <body onload="esta_logado()">
+    <body onload="esta_logado(); checarAcesso('financeiro');">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -93,6 +93,9 @@
                                 <br>
                                 <input name="fim" id="fim" type="date">
                             </div>
+                            <div>
+                                <i onclick="mostrarDfc();" class="bi bi-search" style="cursor: pointer;"></i>
+                            </div>
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
                             <div class="line-header">
@@ -122,3 +125,7 @@
 <script src="../js/estaLogado.js"></script>
 
 <script src="../js/podeAcessar.js"></script>
+
+<script src="../js/dfc.js"></script>
+
+<script src="../js/checarAcesso.js"></script>
