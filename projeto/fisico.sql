@@ -130,3 +130,26 @@ id_despesa INT,
  FOREIGN KEY (id_despesa) REFERENCES despesa(id_despesa)
  
 );
+
+CREATE TABLE IF NOT EXISTS operacao(
+	id INT AUTO_INCREMENT,
+	id_respon INT NOT NULL,
+ 	valor FLOAT NOT NULL,
+	PRIMARY KEY(id),
+ 	FOREIGN KEY (id_respon) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE IF NOT EXISTS alergia(
+	id INT AUTO_INCREMENT,
+	nome VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS produto_alergia(
+	id_produto INT NOT NULL,
+	id_alergia INT NOT NULL,
+ 	FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
+	FOREIGN KEY (id_alergia) REFERENCES alergia(id_alergia)
+);
+
+
