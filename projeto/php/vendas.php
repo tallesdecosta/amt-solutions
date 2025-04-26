@@ -155,58 +155,70 @@ if (isset($_POST)) {
             }
 
             echo json_encode(["resposta" => 200]);
+
         } else if ($resultadoA->num_rows != 0) {
 
-            if ($formpag == 0) {
-                $formpag = "";
-            } else if ($formpag == 1) {
-                $formpag = "Débito";
-            } else if ($formpag == 2) {
-                $formpag = "Crédito";
-            } else if ($formpag == 3) {
-                $formpag = "Dinheiro";
-            } else if ($formpag == 4) {
-                $formpag = "Pix";
-            }
 
-            while ($linha = $resultadoA->fetch_assoc()) {
 
-                $idvenda = $linha["id"];
-            }
+            if($_POST["id_venda"] == 0){
 
-            $conn = conectar();
-            $query = "UPDATE venda SET numComanda = '$ncmd', nomeCliente = '$ncliente', formaPagamento = '$formpag' WHERE id = '$idvenda'";
-            $resultado = $conn->query($query);
+                echo json_encode(["resposta" => 1]);
 
-            if ($resultado) {
+            }else if($_POST["id_venda"] != 0){
 
+                if ($formpag == 0) {
+                    $formpag = "";
+                } else if ($formpag == 1) {
+                    $formpag = "Débito";
+                } else if ($formpag == 2) {
+                    $formpag = "Crédito";
+                } else if ($formpag == 3) {
+                    $formpag = "Dinheiro";
+                } else if ($formpag == 4) {
+                    $formpag = "Pix";
+                }
+    
+                while ($linha = $resultadoA->fetch_assoc()) {
+    
+                    $idvenda = $linha["id"];
+                }
+    
                 $conn = conectar();
-                $query = "DELETE FROM venda_produto WHERE id_venda = '$idvenda';";
+                $query = "UPDATE venda SET numComanda = '$ncmd', nomeCliente = '$ncliente', formaPagamento = '$formpag' WHERE id = '$idvenda'";
                 $resultado = $conn->query($query);
-
+    
                 if ($resultado) {
-
-                    for ($x = 0; $x < count($_POST); $x++) {
-
-                        if (isset($_POST["valor" . $x])) {
-
-                            $idprod = intval($_POST["valor" . $x]);
-
-                            $qnt = intval($_POST["qnt" . $x]);
-
-                            $query1 = "INSERT INTO venda_produto(id_produto,id_venda,qntd) VALUES ('$idprod','$idvenda','$qnt')";
-
-                            $resultado1 = $conn->query($query1);
-
-                            if ($resultado1) {
-                                echo json_encode(["Resultado" => "Deu boa no venda_prod update"]);
-                            } else {
-                                echo json_encode(["Resultado" => "deu ruim no venda_prod update"]);
+    
+                    $conn = conectar();
+                    $query = "DELETE FROM venda_produto WHERE id_venda = '$idvenda';";
+                    $resultado = $conn->query($query);
+    
+                    if ($resultado) {
+    
+                        for ($x = 0; $x < count($_POST); $x++) {
+    
+                            if (isset($_POST["valor" . $x])) {
+    
+                                $idprod = intval($_POST["valor" . $x]);
+    
+                                $qnt = intval($_POST["qnt" . $x]);
+    
+                                $query1 = "INSERT INTO venda_produto(id_produto,id_venda,qntd) VALUES ('$idprod','$idvenda','$qnt')";
+    
+                                $resultado1 = $conn->query($query1);
+    
+                                if ($resultado1) {
+                                    echo json_encode(["Resultado" => "Deu boa no venda_prod update"]);
+                                } else {
+                                    echo json_encode(["Resultado" => "deu ruim no venda_prod update"]);
+                                }
                             }
                         }
                     }
                 }
             }
+
+            
         }
     } else if ($_POST["op"] == "select" && isset($_POST["filtro"]) && isset($_POST["tabela"]) && isset($_POST["id"])) {
 
@@ -248,6 +260,7 @@ if (isset($_POST)) {
 
                     echo json_encode($retorno);
                 }
+
             } else if ($_POST["tabela"] == "venda_produto") {
 
                 $id = $_POST["id"];
@@ -280,6 +293,7 @@ if (isset($_POST)) {
         if ($resultado1) {
 
             echo json_encode(["resposta" => 200]);
+            
         } else {
             echo json_encode(["resposta" => 0]);
         }
