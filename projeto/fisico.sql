@@ -23,10 +23,10 @@ id_produto INT AUTO_INCREMENT,
 
 CREATE TABLE IF NOT EXISTS venda_produto(
 	id_produto INT NOT NULL,
-    id_venda INT NOT NULL,
-    qntd INT NOT NULL,
-    FOREIGN KEY(id_produto) REFERENCES produto(id_produto),
-	FOREIGN KEY(id_venda) REFERENCES venda(id)
+	id_venda INT NOT NULL,
+	qntd INT NOT NULL,
+	FOREIGN KEY(id_produto) REFERENCES produto(id_produto) ON DELETE CASCADE,
+	FOREIGN KEY(id_venda) REFERENCES venda(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS insumo(
