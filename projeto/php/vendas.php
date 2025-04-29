@@ -1,95 +1,119 @@
 <?php
+
 include 'conectar_bd.php';
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
+switch ($_POST) {
+    case isset($_POST["finalizar"]):
 
-if (isset($_POST)) {
+        echo json_encode(finalizarcmd());
+        break;
 
-    if (isset($_POST["finalizar"])) {
+    case $_POST["filtro"] == "uma comanda":
+        echo json_encode(filtrarumacmd());
+        break;
 
-        $numCmd = $_POST["finalizar"];
+    case ($_POST["op"] == "insert" && $_POST["filtro"] == "" && $_POST["tabela"] == "venda" && $_POST["id"] == ""):
+        echo json_encode(registrarcmd());
+        break;
+
+    case ($_POST["op"] == "select" && isset($_POST["filtro"]) && isset($_POST["tabela"]) && isset($_POST["id"])):
+        echo json_encode(retornarcmd());
+        break;
+
+    case ($_POST["op"] == "delete" && $_POST["filtro"] == "one" && $_POST["tabela"] == "venda" && isset($_POST["id"])):
+        echo json_encode(deletarcmd());
+        break;
+
+    default:
+        # code...
+        break;
+}
+
+
+function finalizarcmd()
+{
+
+    $numCmd = $_POST["finalizar"];
+
+    $conn = conectar();
+    $query = "SELECT id FROM venda WHERE numComanda = '$numCmd' AND statuscmd = 'A'";
+    $resultado = $conn->query($query);
+
+    if ($resultado) {
+        while ($linha = $resultado->fetch_assoc()) {
+
+            $idvenda = intval($linha["id"]);
+
+            $conn = conectar();
+            $query1 = "UPDATE venda SET statuscmd = 'F' WHERE id = '$idvenda'";
+            $resultado1 = $conn->query($query1);
+
+            if ($resultado1) {
+                return ["response" => 200];
+            } else {
+                return ["response" => 0];
+            }
+        }
+    }
+}
+
+
+function filtrarumacmd()
+{
+    $id = $_POST["id"];
+
+    if (is_numeric($id)) {
 
         $conn = conectar();
-        $query = "SELECT id FROM venda WHERE numComanda = '$numCmd' AND statuscmd = 'A'";
-        $resultado = $conn->query($query);
+        $queryA = "SELECT * FROM venda WHERE numComanda = '$id' AND statuscmd = 'A'";
+        $resultadoA = $conn->query($queryA);
 
-        if ($resultado) {
-            while ($linha = $resultado->fetch_assoc()) {
+        if ($resultadoA) {
+            if ($resultadoA->num_rows == 0) {
+                return (["response" => "none"]);
+            } else {
 
-                $idvenda = intval($linha["id"]);
+                $retorno = [];
 
-                $conn = conectar();
-                $query1 = "UPDATE venda SET statuscmd = 'F' WHERE id = '$idvenda'";
-                $resultado1 = $conn->query($query1);
+                while ($linha = $resultadoA->fetch_assoc()) {
 
-                if ($resultado1) {
-                    echo json_encode(["response" => 200]);
-                } else {
-                    echo json_encode(["response" => 0]);
+                    $retorno[] = $linha;
                 }
+
+                return ($retorno);
             }
         }
-    } else if ($_POST["filtro"] == "uma comanda") {
+    } else if (is_string($id)) {
 
-        $id = $_POST["id"];
+        $conn = conectar();
+        $queryA = "SELECT * FROM venda WHERE nomeCliente = '$id' AND statuscmd = 'A'";
+        $resultadoA = $conn->query($queryA);
 
-        if (is_numeric($id)) {
+        if ($resultadoA) {
+            if ($resultadoA->num_rows == 0) {
+                return (["response" => "none"]);
+            } else {
 
-            $conn = conectar();
-            $queryA = "SELECT * FROM venda WHERE numComanda = '$id' AND statuscmd = 'A'";
-            $resultadoA = $conn->query($queryA);
+                $retorno = [];
 
-            if ($resultadoA) {
-                if ($resultadoA->num_rows == 0) {
-                    echo json_encode(["response" => "none"]);
 
-                } else {
 
-                    $retorno = [];
+                while ($linha = $resultadoA->fetch_assoc()) {
 
-                    while ($linha = $resultadoA->fetch_assoc()) {
-
-                        $retorno[] = $linha;
-                    }
-
-                    echo json_encode($retorno);
+                    $retorno[] = $linha;
                 }
+
+                return ($retorno);
             }
-        }else if(is_string($id)){
-
-            $conn = conectar();
-            $queryA = "SELECT * FROM venda WHERE nomeCliente = '$id' AND statuscmd = 'A'";
-            $resultadoA = $conn->query($queryA);
-
-            if ($resultadoA) {
-                if ($resultadoA->num_rows == 0) {
-                    echo json_encode(["response" => "none"]);
-
-                } else {
-
-                    $retorno = [];
-
-                    
-
-                    while ($linha = $resultadoA->fetch_assoc()) {
-
-                        $retorno[] = $linha;
-                    }
-
-                    echo json_encode($retorno);
-                }
-            }
-
         }
+    }
+}
 
+function registrarcmd(){
 
-
-
-
-    } else if ($_POST["op"] == "insert" && $_POST["filtro"] == "" && $_POST["tabela"] == "venda" && $_POST["id"] == "") {
-
-        $ncmd = intval($_POST["numcmd"]);
+    $ncmd = intval($_POST["numcmd"]);
         $ncliente = $_POST["ncliente"];
         $dataemiss = $_POST["dataemiss"];
         $formpag = $_POST["formpag"];
@@ -121,7 +145,7 @@ if (isset($_POST)) {
 
             if ($resultado) {
             } else {
-                echo json_encode(["resposta" => "Deu erro aqui"]);
+                return ["resposta" => "Deu erro aqui"];
             }
 
 
@@ -147,14 +171,14 @@ if (isset($_POST)) {
 
                             if ($resultado1) {
                             } else {
-                                echo json_encode(["resposta" => "deu ruim no venda_prod"]);
+                                return ["resposta" => "deu ruim no venda_prod"];
                             }
                         }
                     }
                 }
             }
 
-            echo json_encode(["resposta" => 200]);
+            return["resposta" => 200];
 
         } else if ($resultadoA->num_rows != 0) {
 
@@ -162,7 +186,7 @@ if (isset($_POST)) {
 
             if($_POST["id_venda"] == 0){
 
-                echo json_encode(["resposta" => 1]);
+                return["resposta" => 1];
 
             }else if($_POST["id_venda"] != 0){
 
@@ -208,9 +232,9 @@ if (isset($_POST)) {
                                 $resultado1 = $conn->query($query1);
     
                                 if ($resultado1) {
-                                    echo json_encode(["Resultado" => "Deu boa no venda_prod update"]);
+                                    return["Resultado" => "Deu boa no venda_prod update"];
                                 } else {
-                                    echo json_encode(["Resultado" => "deu ruim no venda_prod update"]);
+                                    return["Resultado" => "deu ruim no venda_prod update"];
                                 }
                             }
                         }
@@ -220,12 +244,38 @@ if (isset($_POST)) {
 
             
         }
-    } else if ($_POST["op"] == "select" && isset($_POST["filtro"]) && isset($_POST["tabela"]) && isset($_POST["id"])) {
 
-        if ($_POST["tabela"] == "venda" && $_POST["filtro"] == "all" && $_POST["id"] == "") {
+}
+
+
+function retornarcmd()
+{
+
+    if ($_POST["tabela"] == "venda" && $_POST["filtro"] == "all" && $_POST["id"] == "") {
+
+        $conn = conectar();
+        $query = "SELECT * FROM venda WHERE statuscmd = 'A'";
+        $resultado = $conn->query($query);
+
+        if ($resultado) {
+
+            $retorno = [];
+
+            while ($linha = $resultado->fetch_assoc()) {
+
+                $retorno[] = $linha;
+            }
+
+            return ($retorno);
+        }
+    } else if ($_POST["filtro"] == "one") {
+
+        if ($_POST["tabela"] == "venda") {
+
+            $id = $_POST["id"];
 
             $conn = conectar();
-            $query = "SELECT * FROM venda WHERE statuscmd = 'A'";
+            $query = "SELECT * FROM venda WHERE id = '$id' AND statuscmd = 'A'";
             $resultado = $conn->query($query);
 
             if ($resultado) {
@@ -237,52 +287,37 @@ if (isset($_POST)) {
                     $retorno[] = $linha;
                 }
 
-                echo json_encode($retorno);
+                return ($retorno);
             }
-        } else if ($_POST["filtro"] == "one") {
+        } else if ($_POST["tabela"] == "venda_produto") {
 
-            if ($_POST["tabela"] == "venda") {
+            $id = $_POST["id"];
 
-                $id = $_POST["id"];
+            $conn = conectar();
+            $query1 = "SELECT * FROM venda_produto AS vp JOIN produto AS p ON vp.id_produto = p.id_produto WHERE vp.id_venda = '$id';";
+            $resultado1 = $conn->query($query1);
 
-                $conn = conectar();
-                $query = "SELECT * FROM venda WHERE id = '$id' AND statuscmd = 'A'";
-                $resultado = $conn->query($query);
+            if ($resultado1) {
 
-                if ($resultado) {
+                $retorno1 = [];
 
-                    $retorno = [];
+                while ($linha1 = $resultado1->fetch_assoc()) {
 
-                    while ($linha = $resultado->fetch_assoc()) {
-
-                        $retorno[] = $linha;
-                    }
-
-                    echo json_encode($retorno);
+                    $retorno1[] = $linha1;
                 }
 
-            } else if ($_POST["tabela"] == "venda_produto") {
-
-                $id = $_POST["id"];
-
-                $conn = conectar();
-                $query1 = "SELECT * FROM venda_produto AS vp JOIN produto AS p ON vp.id_produto = p.id_produto WHERE vp.id_venda = '$id';";
-                $resultado1 = $conn->query($query1);
-
-                if ($resultado1) {
-
-                    $retorno1 = [];
-
-                    while ($linha1 = $resultado1->fetch_assoc()) {
-
-                        $retorno1[] = $linha1;
-                    }
-
-                    echo json_encode($retorno1);
-                }
+                return ($retorno1);
             }
         }
-    } else if ($_POST["op"] == "delete" && $_POST["filtro"] == "one" && $_POST["tabela"] == "venda" && isset($_POST["id"])) {
+    }
+}
+
+
+
+function deletarcmd()
+{
+
+    if ($_POST["op"] == "delete" && $_POST["filtro"] == "one" && $_POST["tabela"] == "venda" && isset($_POST["id"])) {
 
         $id = $_POST["id"];
 
@@ -292,10 +327,12 @@ if (isset($_POST)) {
 
         if ($resultado1) {
 
-            echo json_encode(["resposta" => 200]);
-            
+            return ["resposta" => 200];
         } else {
-            echo json_encode(["resposta" => 0]);
+            return ["resposta" => 0];
         }
     }
 }
+
+
+?>
