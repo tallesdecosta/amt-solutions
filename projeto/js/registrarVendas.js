@@ -136,7 +136,13 @@ async function adccmdativas() {
 
         let cmd = resultado[i].numComanda
         let nome = resultado[i].nomeCliente
-        let data = resultado[i].data_emissao
+
+        
+        let data_americana = resultado[i].data_emissao;
+        let data_brasileira = data_americana.split('-').reverse().join('/');
+        
+
+        let data = data_brasileira
         let id = resultado[i].id
 
         estruturacmd(x, cmd, nome, data, id)
@@ -275,7 +281,7 @@ async function abrirprods() {
                         line = document.getElementById("lineitem" + hidd)
                         line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
 
-                    }else{
+                    } else {
                         tbody.innerHTML += tr
                         line = document.getElementById("lineitem" + hidd)
                         line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
@@ -429,6 +435,7 @@ async function visucmd(x) {
             let element1 = document.getElementById('numcomanda')
             let element2 = document.getElementById('nocliente')
             let element3 = document.getElementById('formpag')
+            let element4 = document.getElementById('dataemiss')
 
             element1.value = result[i].numComanda
 
@@ -437,6 +444,11 @@ async function visucmd(x) {
             element2.value = result[i].nomeCliente
 
             element1.disabled = true
+
+            let data_americana = result[i].data_emissao;
+            let data_brasileira = data_americana.split('-').reverse().join('/');
+
+            element4.innerText = data_brasileira
 
             element11.innerHTML = result[i].numComanda
 
@@ -479,7 +491,8 @@ async function visucmd(x) {
             let nome = '<td onclick="abrirprod()" class="nomeprod" id="nomeitem' + result2[i].id_produto + '">' + result2[i].nome + '</td>'
 
             let valorini = parseFloat(result2[i].valor)
-            let valor2 = valorini.toFixed(2)
+            let valor1 = valorini * result2[i].qntd
+            let valor2 = valor1.toFixed(2)
             let valor3 = valor2.replace(".", ",")
 
             let valor = '<td class="valoritem" id="valoritem' + result2[i].id_produto + '">R$ ' + valor3 + '</td>'
@@ -640,17 +653,20 @@ async function deletarcmd() {
         semcomanda()
     } else {
 
-        list = { "op": "delete", "filtro": "one", "tabela": "venda", "id": numcmd }
+        if (confirm("Deseja mesmo sair?")) {
 
-        let data = await fetch("../php/vendas.php", {
-            method: "POST",
-            credentials: "include",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(list)
-        })
+            list = { "op": "delete", "filtro": "one", "tabela": "venda", "id": numcmd }
 
-        if (data) {
-            return await data.json()
+            let data = await fetch("../php/vendas.php", {
+                method: "POST",
+                credentials: "include",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(list)
+            })
+
+            if (data) {
+                return await data.json()
+            }
         }
     }
 }
