@@ -11,10 +11,22 @@ async function pesquisar() {
 
 }
 
+async function pesquisarDespesa() {
+
+    
+    res = await fetch(`../php/api/despesa.php?inicio=${document.getElementById('inicio').value}&fim=${document.getElementById('fim').value}`, {
+        method: "GET"
+    });
+
+    return await res.json();
+
+}
+
 
 async function mostrarDfc() {
 
     data = await pesquisar();
+
 
     while (document.getElementById('report-wrapper').firstChild && document.getElementById('report-wrapper').childElementCount != 1) {
 
@@ -45,6 +57,41 @@ async function mostrarDfc() {
     linha.style.display = "flex";
     linha.style.gap = "30px";
     document.getElementById('report-wrapper').appendChild(linha);
+
+
+}
+
+async function mostrarDespesa() {
+
+    data = await pesquisarDespesa();
+    
+
+    for (i in data) {
+
+        linha = document.createElement('div');
+        valor = 0;
+
+
+        
+        valor = parseFloat(data[i].valor);
+        console.log(data[i].valor);
+
+        titulo = document.createElement('p'); 
+    titulo.textContent = data[i].descritivo;
+    tipo = document.createElement('p'); 
+    tipo.textContent = 'Saída (-)';
+    valorText = document.createElement('p'); 
+    valorText.textContent = `R$${valor.toFixed(2)}`;
+    valorText.textContent = valorText.textContent.replace(".", ",");
+    linha.appendChild(titulo);
+    linha.appendChild(tipo);
+    linha.appendChild(valorText);
+    linha.style.display = "flex";
+    linha.style.gap = "30px";
+    document.getElementById('report-wrapper').appendChild(linha);
+
+        
+    }
 
 
 }
