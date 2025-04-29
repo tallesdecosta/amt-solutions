@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $user_form = $_POST['user'];
     $senha_form = $_POST['senha'];
 
-    $query = "SELECT senha, id_usuario FROM usuario WHERE username = '".$user_form."'";
+    $query = "SELECT senha, id_usuario, nome FROM usuario WHERE username = '".$user_form."'";
     $res = $conn -> query($query);
     $data = $res -> fetch_object();
     if($data != null) {
@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($senha_certa == $senha_form) {
 
             $_SESSION['id'] = $data -> id_usuario;
+            $_SESSION['nome'] = $data -> nome;
             http_response_code(200);
 
         } else {

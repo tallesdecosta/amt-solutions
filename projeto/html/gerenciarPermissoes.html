@@ -19,7 +19,7 @@
         <title>Gerenciar Permissões</title>
     </head>
 
-
+    <script src="../js/logout.js"></script>
     <body onload="esta_logado(); verUsuarios();">
 
         <div class="container1" id="container1">
@@ -35,7 +35,7 @@
                     </div>
                     <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
                 </div>
-                <div class="conteudo" id="conteudosair">
+                <div class="conteudo" id="conteudosair"  style="position: relative;z-index: 1000;" onclick="logout();">
                     <i class="bi bi-box-arrow-left"></i>
                     <a href>Sair</a>
                 </div>

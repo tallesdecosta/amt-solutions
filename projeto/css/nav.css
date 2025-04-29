@@ -35,6 +35,7 @@ body{
     box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.37);
     border: 1px solid #0000006c;
     visibility: hidden;
+    pointer-events: all;
 }
 
 
@@ -92,6 +93,7 @@ body{
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    pointer-events: all;
 }
 
 /*        SECTION NAV/CONTEUDO        */

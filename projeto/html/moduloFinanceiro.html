@@ -23,8 +23,6 @@
                 <img src="../img/account.png" width="80px" height="30px" alt>
             </div>
 
-            <button onclick="logout()">Logout</button>
-
             <div class="perfil" id="perfil">
                 <div class="topo">
                     <div class="username" id="username">
@@ -33,9 +31,9 @@
                     </div>
                     <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
                 </div>
-                <div class="conteudo" id="conteudosair">
+                <div class="conteudo" id="conteudosair" style="position: relative;z-index: 1000;">
                     <i class="bi bi-box-arrow-left"></i>
-                    <a href>Sair</a>
+                    <a   onclick="logout();">Sair</a>
                 </div>
             </div>
 

@@ -1,8 +1,12 @@
 async function logout() { 
 
-    await fetch('../php/logout.php', {
-        method: "GET",
-        credentials: "include"
-    }); 
-    location.reload();
+    if(confirm("Deseja mesmo sair?")) {
+        await fetch('../php/logout.php', {
+            method: "GET",
+            credentials: "include"
+        }); 
+        location.reload();
+
+    } 
+    
 }
