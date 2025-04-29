@@ -28,4 +28,4 @@ async function esta_logado() {
 
 }
 
-estaLogado();
+esta_logado();

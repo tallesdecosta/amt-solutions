@@ -20,20 +20,18 @@
 
     </head>
 
-    <body onload="esta_logado(); checarAcesso('financeiro');">
+    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo();">
 
         <div class="container1" id="container1">
             <div class="logo">
                 <img src="../img/account.png" width="80px" height="30px" alt>
-            </div>
-
-            
+            </div>    
 
             <div class="perfil" id="perfil" >
                 <div class="topo">
                     <div class="username" id="username">
-                        <p class="p1" id="p1">Atendente</p>
-                        <p class="p2" id="p2">Matheus Lucas da Silva</p>
+                        <p class="p1" id="p1"></p>
+                        <p class="p2" id="p2"></p>
                     </div>
                     <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
                 </div>
@@ -129,3 +127,5 @@
 <script src="../js/dfc.js"></script>
 
 <script src="../js/checarAcesso.js"></script>
+
+<script src="../js/perfil.js"></script>

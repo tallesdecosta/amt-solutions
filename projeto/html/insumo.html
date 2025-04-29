@@ -12,10 +12,10 @@
 
         <link rel="stylesheet" href="../css/insumo.css?v=2">
 
-        <title>Vendas</title>
+        <title>Estoque de insumos</title>
     </head>
 
-    <body onload="esta_logado(), chamarPHP()">
+    <body onload="getInfo(), esta_logado(), chamarPHP();">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -26,8 +26,8 @@
             <div class="perfil" id="perfil">
                 <div class="topo">
                     <div class="username" id="username">
-                        <p class="p1" id="p1">Atendente</p>
-                        <p class="p2" id="p2">Matheus Lucas da Silva</p>
+                        <p class="p1" id="p1"></p>
+                        <p class="p2" id="p2"></p>
                     </div>
                     <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
                 </div>
@@ -193,3 +193,4 @@
 <script src="../js/podeAcessar.js"></script>
 
 <script src="../js/insumo.js"></script>
+<script defer src="../js/perfil.js"></script>
