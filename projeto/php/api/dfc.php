@@ -8,7 +8,12 @@
             echo json_encode(retornarDfc());
             break;
         
-        case "PUT":
+        case "POST":
+            echo json_encode(salvarDfc());
+            break;
+
+        case "DELETE":
+            echo json_encode(deletarDfc());
             break;
 
         default:
@@ -47,5 +52,44 @@
         }
 
     }
+
+function salvarDfc() {
+
+    $sql = "INSERT INTO dfc(titulo, id_usuario, dataInicio, dataFinal) VALUES('".$_POST['titulo']."','".$_SESSION['id']."','".$_POST['data-inicio']."', '".$_POST['data-fim']."')";
+
+    $conn = conectar();
+                    
+
+    $res = $conn->query($sql);
+
+    if($res) {
+
+        return ['status' => 'ok'];
+    } else {
+
+        return ['status' => 'erro'];
+
+    }
+
+}
+
+function deletarDfc() {
+
+    $sql = "DELETE FROM dfc WHERE id_dfc = '".$_GET['id']."'";
+
+    $conn = conectar();
+
+    $res = $conn->query($sql);
+
+    if($res) {
+
+        return ['status' => 'ok'];
+    } else {
+
+        return ['status' => 'erro'];
+
+    }
+
+}
 
 ?>

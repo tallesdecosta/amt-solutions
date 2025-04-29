@@ -20,7 +20,7 @@
 
     </head>
 
-    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo();">
+    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); getDfcs();">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -78,7 +78,7 @@
                 <main>
                     <h1>Demonstração de fluxo de caixa</h1>
                     <div class="main-wrapper">
-                        <section class="saved-reports bento"></section>
+                        <section class="saved-reports bento" id="saved-reports"></section>
                     <section class="report">
                         <div class="filter-wrapper bento">
                             <div>
@@ -93,6 +93,9 @@
                             </div>
                             <div>
                                 <i onclick="mostrarDfc();" class="bi bi-search" style="cursor: pointer;"></i>
+                            </div>
+                            <div>
+                                <button onclick="saveDfc();">Salvar</button>
                             </div>
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
