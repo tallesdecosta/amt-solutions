@@ -152,4 +152,5 @@ CREATE TABLE IF NOT EXISTS produto_alergia(
 	FOREIGN KEY (id_alergia) REFERENCES alergia(id_alergia)
 );
 
-
+INSERT INTO `usuario`(`nome`, `contato`, `username`, `senha`, `cargo`, `ehAdm`) VALUES ('admin','22','admin.adm','1234','administrador',1);
+INSERT INTO `permissao`(`id_usuario`, `vendas`, `estoque`, `financeiro`, `gestao`) VALUES (1,1,1,1,1);
