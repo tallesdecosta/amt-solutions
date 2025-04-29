@@ -9,10 +9,9 @@ if (isset($_POST["resp"])) {
     $resp = intval($_POST["resp"]);
     $val = floatval($_POST["valor"]);
     $obs = $_POST["obs"];
-    $nome = $_POST["nome"];
 
     $conn = conectar();
-    $query = "INSERT INTO operacao(id_respon,nome,valor,obs) VALUES ('$resp','$nome','$val','$obs')";
+    $query = "INSERT INTO operacao(id_respon,valor,obs) VALUES ('$resp','$val','$obs')";
     $resultado = $conn->query($query);
 
     if ($resultado) {
@@ -20,7 +19,6 @@ if (isset($_POST["resp"])) {
     } else {
         echo json_encode(["result" => 0]);
     }
-
 } else if (isset($_POST["user"])) {
 
     $user = $_POST["user"];
@@ -32,35 +30,50 @@ if (isset($_POST["resp"])) {
 
     if ($resultado) {
 
-        if($resultado->num_rows > 0){
+        if ($resultado->num_rows > 0) {
 
             while ($linha = $resultado->fetch_assoc()) {
 
                 $id = $linha["id_usuario"];
-    
+
                 $conn = conectar();
                 $query = "SELECT gestao FROM permissao WHERE id_usuario = '$id'";
                 $resultado = $conn->query($query);
-    
-    
+
+
                 if ($resultado) {
-    
+
                     while ($linha = $resultado->fetch_assoc()) {
-    
-                        if($linha["gestao"] == 1){
+
+                        if ($linha["gestao"] == 1) {
                             echo json_encode(["acesso" => "autorizado"]);
-                        }else if($linha["gestao"] == 0){
+                        } else if ($linha["gestao"] == 0) {
                             echo json_encode(["acesso" => "negado"]);
                         }
                     }
                 }
             }
-        }else{
+        } else {
             echo json_encode(["acesso" => "negado"]);
         }
-
-        
     } else {
         echo json_encode(["result" => 401]);
+    }
+} else if (isset($_GET)) {
+
+    $conn = conectar();
+    $query = "SELECT id_usuario, nome FROM usuario";
+    $resultado = $conn->query($query);
+
+    if ($resultado) {
+
+        $retorno = [];
+
+        while ($linha = $resultado->fetch_assoc()) {
+
+            $retorno[] = $linha;
+        }
+
+        echo json_encode($retorno);
     }
 }
