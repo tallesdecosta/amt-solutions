@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS operacao(
 	id INT AUTO_INCREMENT,
 	id_respon INT NOT NULL,
  	valor FLOAT NOT NULL,
+	obs VARCHAR(300) NOT NULL,
 	PRIMARY KEY(id),
  	FOREIGN KEY (id_respon) REFERENCES usuario(id_usuario)
 );
