@@ -14,8 +14,9 @@
 
         <title>Estoque de insumos</title>
     </head>
-
-    <body onload="getInfo(), esta_logado(), chamarPHP();">
+    <script src="../js/checarAcesso.js"></script>
+    <script src="../js/estaLogado.js"></script>
+    <body onload="getInfo(), esta_logado(), chamarPHP(); checarAcesso('estoque')">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -194,3 +195,8 @@
 
 <script src="../js/insumo.js"></script>
 <script defer src="../js/perfil.js"></script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", checarAcesso('estoque'))
+</script>

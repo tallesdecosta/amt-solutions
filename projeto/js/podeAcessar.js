@@ -19,7 +19,7 @@ async function podeAcessar(ref) {
 
         } else if (i == modulo && arr[i] == 0) {
 
-            alert("vish pia sem acesso");
+            alert("Você não tem acesso a esse módulo. Caso precise de acesso, converse com o seu gestor.");
         }
 
     }

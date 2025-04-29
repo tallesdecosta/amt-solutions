@@ -20,7 +20,8 @@
     </head>
     <script src="../js/perfil.js"></script>
     <script src="../js/logout.js"></script>
-    <body onload="getInfo();esta_logado(); verUsuarios();">
+    <script src="../js/checarAcesso.js"></script>
+    <body onload="getInfo();esta_logado(); verUsuarios(); checarAcesso('gestao')">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -164,6 +165,8 @@
 
 
 <script src="../js/podeAcessar.js"></script>
+
+
 
 <script>
 async function verUsuarios() {

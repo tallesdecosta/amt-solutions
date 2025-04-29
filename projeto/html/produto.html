@@ -15,8 +15,10 @@
         <title>Produto</title>
     </head>
     <script src="../js/perfil.js"></script>
+    <script src="../js/checarAcesso.js"></script>
 
-    <body onload="esta_logado(), chamarPHP(); getInfo();">
+
+    <body onload="esta_logado(), chamarPHP(); getInfo(); checarAcesso('estoque');">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -179,3 +181,8 @@
 <script src="../js/podeAcessar.js"></script>
 
 <script src="../js/produto.js"></script>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", checarAcesso('estoque'))
+</script>
