@@ -1,0 +1,77 @@
+.bento {
+
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.434);
+
+}
+
+.filter-wrapper {
+    display: flex;
+    gap: 25px;
+    width: 64.63vw;
+    height: 50%;
+}
+
+.report-wrapper {
+
+    height: 50%;
+    width: 64.63vw;
+}
+
+.line-header {
+    display: flex;
+    gap: 171px;
+    width: 64.63vw;
+}
+
+.report {
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    
+}
+
+.saved-reports {
+    width: 265px;
+    height: 86%;
+}
+
+.total-despesas {
+
+    width: 265px;
+    height: 10%;
+
+}
+
+main {
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 92vh;
+    
+}
+
+.main-wrapper {
+    display: flex;
+    height: 80%;
+    gap: 63px;
+}
+
+h1 {
+
+    font-weight: 500;
+
+}
+
+h2 {
+
+    font-size: 16px;
+}
+
+.t-header {
+
+    font-weight: 500;
+}
