@@ -16,11 +16,11 @@
 
         <link rel="stylesheet" href="../css/despesas.css">
 
-        <title>DFC</title>
+        <title>Gestão de despesas</title>
 
     </head>
 
-    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); getDfcs();">
+    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); iniciar();">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -82,10 +82,15 @@
                             <section class="total-despesas bento">
                                 <h2>Resumo de despesas</h2>
                                 <div>
-                                    <p>R$em despesas abertas</p>
+                                    <p id="resumo"></p>
                                 </div>
                             </section>
-                            <section class="saved-reports bento" id="saved-reports"></section>
+                            <section class="tipos-despesas-container bento">
+                                <h2>Tipos de despesas cadastradas <button><img src="../img/add_circle.svg" alt=""></button></h2>
+                                <section class="tipos-despesas" id="tipos-despesas">
+
+                                </section>
+                            </section>
                         </div>
                         <section class="report">
                         
@@ -96,6 +101,7 @@
                                 <p class="t-header">Data de aquisição</p>
                                 <p class="t-header">Data de pagamento</p>
                             </div>
+                            <div id="despesas-abertas"></div>
                             
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
@@ -105,6 +111,7 @@
                                 <p class="t-header">Data de aquisição</p>
                                 <p class="t-header">Data de pagamento</p>
                             </div>
+                            <div id="despesas-fechadas"></div>
                         </div>
                         </section>
                     </div>
@@ -128,7 +135,7 @@
 
 <script src="../js/podeAcessar.js"></script>
 
-<script src="../js/dfc.js"></script>
+<script src="../js/despesas.js"></script>
 
 <script src="../js/checarAcesso.js"></script>
 

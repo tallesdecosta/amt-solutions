@@ -5,7 +5,7 @@
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
-            echo json_encode(retornarDespesa(), JSON_UNESCAPED_UNICODE);
+            echo json_encode(retornarTipoDespesa());
             break;
         
         case "POST":
@@ -19,25 +19,25 @@
             break;
     }
 
-    function retornarDespesa() {
+    function retornarTipoDespesa() 
+    {
 
-        $sql = "SELECT * FROM despesa WHERE dataInicio BETWEEN '" . $_GET['inicio'] . "' AND '" . $_GET['fim'] . "'";
+        $sql = "SELECT * FROM tipodespesa";
 
-            $conn = conectar();
+        $conn = conectar();
                     
+        $res = $conn -> query($sql);
 
-            $res = $conn->query($sql);
+        $tipos_despesa = [];
 
-            $id_produto = [];
+        while ($linha = $res -> fetch_assoc()) {
 
-            while ($linha = $res->fetch_assoc()) {
-
-                $id_produto[] = $linha;
+            $tipos_despesa[] = $linha;
                 
-            }
-
-            return $id_produto;
         }
+
+        return $tipos_despesa;
+    }
 
     
 

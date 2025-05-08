@@ -11,6 +11,7 @@
     gap: 25px;
     width: 64.63vw;
     height: 50%;
+    flex-direction: column;
 }
 
 .report-wrapper {
@@ -33,7 +34,7 @@
     
 }
 
-.saved-reports {
+.tipos-despesas-container {
     width: 265px;
     height: 86%;
 }
