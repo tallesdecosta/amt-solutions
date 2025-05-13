@@ -37,6 +37,12 @@ async function adcfunc() {
 async function salvar() {
    let element1 = document.getElementById("respon").value
    let element2 = document.getElementById("valor").value
+
+    if(element2 > 0){
+        let x = element2
+        element2 = x * (-1)
+    }
+
    let element3 = document.getElementById("obs").value 
 
    if(element1 != 0){
@@ -45,7 +51,10 @@ async function salvar() {
        for (i in response) {
    
            if (response.result = 200) {
-               alert("A operação de entrada de caixa foi realizada com sucesso!")
+
+               let h1 = document.querySelector('h1').innerText
+
+               alert('A operação de '+ h1 +' foi realizada com sucesso!')
    
                window.location.href = '../html/moduloVendas.html'
            } else if (response.result = 0) {
@@ -53,7 +62,9 @@ async function salvar() {
            }
        }
    }else if(element1 == 0){
-       alert('Para salvar a entrada de caixa é preciso preencher o campo "Responsável"')
+       let h1 = document.querySelector('h1').innerText
+
+       alert('Para salvar a '+ h1 +' é preciso preencher o campo "Responsável"')
    }
 
    
@@ -61,7 +72,7 @@ async function salvar() {
 
 async function registrarop(dado1, dado2, dado3) {
 
-   let list = { "resp": dado1, "op": "entrada", "nome": "Entrada de caixa", "valor": dado2, "obs": dado3 }
+   let list = { "resp": dado1, "op": "insert", "nome": "Entrada de caixa", "valor": dado2, "obs": dado3 }
 
    let data = await fetch("../php/operacao.php", {
        method: "POST",
@@ -94,7 +105,9 @@ async function verifacess() {
                adcfunc()
 
            }else{
-               alert("Para acessar o módulo de Entrada de Caixa a conta deve conter privilegio de gestor")
+               let h1 = document.querySelector('h1').innerText
+               
+               alert('Para acessar o módulo de '+ h1 +' a conta deve conter privilegio de gestor')
            }
        }
 
