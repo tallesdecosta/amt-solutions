@@ -61,19 +61,14 @@
     gap: 6px;
 }
 
+
+
+
 .secall .app .fundo .alinhar .div1 .element1{
     margin-left: 30px;
 }
 .secall .app .fundo .alinhar .div1 .element2{
     margin-right: 30px;
-}
-
-
-.secall .app .fundo .alinhar .div1  div input{
-    width: 200px;
-    height: 30px;
-    border-radius: 10px;
-    border: 1px solid black;
 }
 
 .secall .app .fundo .alinhar .div1  div input{
@@ -143,7 +138,7 @@ label{
 
 
 .secall .app .verifacess{
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
     position: absolute;
