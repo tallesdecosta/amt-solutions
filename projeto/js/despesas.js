@@ -2,8 +2,6 @@ async function iniciar() {
 
     despesas = await pesquisarDespesas();
 
-    atualizarResumo(despesas);
-
     tiposDespesa = await pesquisarTiposDespesas();
 
     atualizarTiposDespesas(tiposDespesa);
@@ -58,32 +56,62 @@ function atualizarDespesas(despesas) {
 
     containerFechadas = document.getElementById('despesas-fechadas');
     containerAbertas = document.getElementById('despesas-abertas');
-    count = 1;
+    countAbertas = 1;
+    countFechadas = 1;
 
     for (despesa in despesas) {
 
-        linha = document.createElement('div');
+        linha = document.createElement('tr');
 
-        if (count % 2 != 0) {
+        if (countAbertas % 2 != 0 && despesas[despesa].estaPago == '0') {
 
             linha.style.backgroundColor = '#F2F2F2';
 
+        } else if (countFechadas % 2 != 0 && despesas[despesa].estaPago == '1') {
+            linha.style.backgroundColor = '#F2F2F2';
         }
 
-        btn = document.createElement('button');
-        btn.textContent = despesas[despesa].descritivo;
-        btn.setAttribute('td-id', despesas[despesa].id_despesa)
+        colaborador = document.createElement('button');
+        colaborador.textContent = despesas[despesa].nome;
+        colaborador.setAttribute('td-id', despesas[despesa].id_despesa);
+        colaborador_td = document.createElement('td');
+        colaborador_td.appendChild(colaborador);
 
-        linha.appendChild(btn);
+        descritivo = document.createElement('button');
+        descritivo.textContent = despesas[despesa].descritivo;
+        descritivo.setAttribute('td-id', despesas[despesa].id_despesa);
+        descritivo_td = document.createElement('td');
+        descritivo_td.appendChild(descritivo);
+
+        valor = document.createElement('button');
+        valor.textContent = despesas[despesa].valor;
+        valor.setAttribute('td-id', despesas[despesa].id_despesa);
+        valor_td = document.createElement('td');
+        valor_td.appendChild(valor);
+
+        dataInicio = document.createElement('button');
+        dataInicio.textContent = despesas[despesa].dataInicio;
+        dataInicio.setAttribute('td-id', despesas[despesa].id_despesa);
+        dataInicio_td = document.createElement('td');
+        dataInicio_td.appendChild(dataInicio);
+        
+        linha.appendChild(colaborador_td);
+        linha.appendChild(dataInicio_td);
+        linha.appendChild(descritivo_td);
+        linha.appendChild(valor_td);
+        
 
         if (despesas[despesa].estaPago == '0') {
             containerAbertas.appendChild(linha);
+            countAbertas += 1;
+
 
         } else {
 
             containerFechadas.appendChild(linha);
+            countFechadas += 1;
         }
-        count += 1;
+        
 
     };
 

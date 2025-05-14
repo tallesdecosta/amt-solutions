@@ -21,7 +21,10 @@
 
     function retornarDespesa() {
 
-        $sql = "SELECT * FROM despesa WHERE dataInicio BETWEEN '" . $_GET['inicio'] . "' AND '" . $_GET['fim'] . "'";
+        $sql = "SELECT despesa.*, usuario.nome 
+        FROM despesa 
+        JOIN usuario ON despesa.id_usuario = usuario.id_usuario 
+        WHERE despesa.dataInicio BETWEEN '" . $_GET['inicio'] . "' AND '" . $_GET['fim'] . "'";
 
             $conn = conectar();
                     
