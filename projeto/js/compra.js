@@ -1,3 +1,31 @@
+function limparCampos(){
+  const inputs = document.querySelectorAll('.descricaoItem input');
+  const select = document.querySelectorAll('.descricaoItem select');
+  const textarea = document.querySelectorAll('.observacaoItem textarea');
+
+  inputs.forEach(inputs => {
+    inputs.value = '';
+    inputs.setAttribute('disabled', true);
+  });
+
+  select.forEach(select => {
+      select.value = '';
+      select.setAttribute('disabled', true);
+  });
+  
+  
+  textarea.forEach(textarea => {
+    textarea.value = '';
+    textarea.setAttribute('disabled', true);
+  });
+}
+
+function habilitarCampos(){
+  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
+  document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
+  document.querySelectorAll('.observacaoItem textarea').forEach(textarea => textarea.removeAttribute('disabled'));
+}
+
 function chamarPHP() {
     const filtro = document.getElementById('inputPesquisa').value;
   
@@ -40,12 +68,7 @@ function chamarPHP() {
   
           tbody.appendChild(linha);
         });
-
-        const select = document.querySelectorAll('.descricaoItem select');
-        select.forEach(select => {
-            select.value = '';
-            select.setAttribute('disabled', true);
-          });
+        limparCampos();
       })
 
       .catch(error => console.error('Erro:', error));
@@ -53,7 +76,10 @@ function chamarPHP() {
 }
 
   
-document.getElementById('buttonPesquisa').addEventListener('click', chamarPHP);
+document.getElementById('buttonPesquisa').addEventListener('click', () => {
+  chamarPHP();
+  limparCampos();
+});
   
 // Botão ADICIONAR
 document.getElementById('btn-adicionar').addEventListener('click', () => {
@@ -62,9 +88,7 @@ document.getElementById('btn-adicionar').addEventListener('click', () => {
   
   const campos = ['id_insumo', 'id_usuario', 'dataEmissao', 'pedido_status', 'qntComprar', 'observacao'];
   campos.forEach(id => document.getElementById(id).value = '');  
-  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
-  document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
-  document.querySelectorAll('.observacaoItem textarea').forEach(textarea => textarea.removeAttribute('disabled'));
+  habilitarCampos();
 });
 
 // Botão EDITAR
@@ -73,18 +97,12 @@ document.getElementById('btn-editar').addEventListener('click', () => {
     alert('Selecione um item para editar');
     return;
   }
-  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
-  document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
-  document.querySelectorAll('.observacaoItem textarea').forEach(textarea => textarea.removeAttribute('disabled'));
+  habilitarCampos();
   window.adicionandoNovo = false;
 });
   
 // Botão SALVAR
 document.getElementById('btn-salvar').addEventListener('click', () => {
-  const inputs = document.querySelectorAll('.descricaoItem input');
-  const select = document.querySelectorAll('.descricaoItem select');
-  const textarea = document.querySelectorAll('.observacaoItem textarea');
-
   // Quando for adicionar
   if (window.adicionandoNovo) {
     const novoItem = {
@@ -105,20 +123,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       .then(res => {
         alert('Inserido com sucesso!');
         chamarPHP();
-
-        inputs.forEach(input => {
-          input.value = '';
-          input.setAttribute('disabled', true);
-        });
-        select.forEach(select => {
-          select.value = '';
-          select.setAttribute('disabled', true);
-        });
-        textarea.forEach(textarea => {
-          textarea.value = '';
-          textarea.setAttribute('disabled', true);
-        });
-        
+        limparCampos();        
         window.adicionandoNovo = false;
         window.itemSelecionado = null;
       })
@@ -145,22 +150,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         .then(res => {
           alert('Salvo com sucesso!');
           chamarPHP();
-  
-          inputs.forEach(input => {
-            input.value = '';
-            input.setAttribute('disabled', true);
-          });
-
-          select.forEach(select => {
-            select.value = '';
-            select.setAttribute('disabled', true);
-          });
-
-          textarea.forEach(textarea => {
-            textarea.value = '';
-            textarea.setAttribute('disabled', true);
-          });
-  
+          limparCampos();            
           window.itemSelecionado = null;
         })
         .catch(err => console.error('Erro ao salvar:', err));
@@ -183,22 +173,7 @@ document.getElementById('btn-deletar').addEventListener('click', () => {
     .then(res => {
       alert('Excluído com sucesso!');
       chamarPHP();
-
-      const inputs = document.querySelectorAll('.descricaoItem input');
-      inputs.forEach(input => {
-        input.value = '';
-        input.setAttribute('disabled', true);
-      });
-      const select = document.querySelectorAll('.descricaoItem select');
-      select.forEach(select => {
-          select.value = '';
-          select.setAttribute('disabled', true);
-        });
-      const textarea = document.querySelectorAll('.observacaoItem textarea');
-      textarea.forEach(textarea => {
-          textarea.value = '';
-          textarea.setAttribute('disabled', true);
-        });
+      limparCampos();
       window.itemSelecionado = null;
     })
     .catch(err => console.error('Erro ao deletar:', err));
@@ -230,5 +205,5 @@ fetch('../php/get_usuarios.php')
     });
   });
 
+
 window.onload = chamarPHP;
-  
