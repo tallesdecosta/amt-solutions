@@ -13,7 +13,6 @@ function limparCampos(){
       select.setAttribute('disabled', true);
   });
   
-  
   textarea.forEach(textarea => {
     textarea.value = '';
     textarea.setAttribute('disabled', true);
@@ -70,12 +69,9 @@ function chamarPHP() {
         });
         limparCampos();
       })
-
       .catch(error => console.error('Erro:', error));
-
 }
 
-  
 document.getElementById('buttonPesquisa').addEventListener('click', () => {
   chamarPHP();
   limparCampos();
@@ -85,9 +81,7 @@ document.getElementById('buttonPesquisa').addEventListener('click', () => {
 document.getElementById('btn-adicionar').addEventListener('click', () => {
   window.adicionandoNovo = true;
   window.itemSelecionado = null;
-  
-  const campos = ['id_insumo', 'id_usuario', 'dataEmissao', 'pedido_status', 'qntComprar', 'observacao'];
-  campos.forEach(id => document.getElementById(id).value = '');  
+  limparCampos();
   habilitarCampos();
 });
 
@@ -104,14 +98,21 @@ document.getElementById('btn-editar').addEventListener('click', () => {
 // Botão SALVAR
 document.getElementById('btn-salvar').addEventListener('click', () => {
   // Quando for adicionar
-  if (window.adicionandoNovo) {
+  let itemInsumo = document.getElementById('id_insumo').value;
+  let itemUsuario = document.getElementById('id_usuario').value;
+  let itemDataEmissao = document.getElementById('dataEmissao').value;
+  let itemPedido_status = document.getElementById('pedido_status').value;
+  let itemQntComprar = document.getElementById('qntComprar').value;
+  let itemObservacao = document.getElementById('observacao').value;
+
+  if (window.adicionandoNovo && itemInsumo !="" && itemUsuario !="" && itemDataEmissao !="" && itemPedido_status !="" && itemQntComprar !="") {
     const novoItem = {
-      id_insumo: document.getElementById('id_insumo').value,
-      id_usuario: document.getElementById('id_usuario').value,
-      dataEmissao: document.getElementById('dataEmissao').value,
-      pedido_status: document.getElementById('pedido_status').value,
-      qntComprar: document.getElementById('qntComprar').value,
-      observacao: document.getElementById('observacao').value
+      id_insumo: itemInsumo,
+      id_usuario: itemUsuario,
+      dataEmissao: itemDataEmissao,
+      pedido_status: itemPedido_status,
+      qntComprar: itemQntComprar,
+      observacao: itemObservacao
     };
 
     fetch('../php/compra.php', {
@@ -130,15 +131,15 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       .catch(err => console.error('Erro ao inserir:', err));
   }
     // Quando for editar
-    else if (window.itemSelecionado) {
+    else if (window.itemSelecionado && itemInsumo !="" && itemUsuario !="" && itemDataEmissao !="" && itemPedido_status !="" && itemQntComprar !="") {
       const dadosAtualizados = {
         id: window.itemSelecionado.id_pedido,
-        id_insumo: document.getElementById('id_insumo').value,
-        id_usuario: document.getElementById('id_usuario').value,
-        dataEmissao: document.getElementById('dataEmissao').value,
-        pedido_status: document.getElementById('pedido_status').value,
-        qntComprar: document.getElementById('qntComprar').value,
-        observacao: document.getElementById('observacao').value
+        id_insumo: itemInsumo,
+        id_usuario: itemUsuario,
+        dataEmissao: itemDataEmissao,
+        pedido_status: itemPedido_status,
+        qntComprar: itemQntComprar,
+        observacao: itemObservacao
       };
   
       fetch('../php/compra.php', {
@@ -154,6 +155,8 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
           window.itemSelecionado = null;
         })
         .catch(err => console.error('Erro ao salvar:', err));
+    }else{
+      alert("Com exceção do campo 'Observação', o preenchimento dos demais campos é obrigatório.");
     }
 });
   
@@ -204,6 +207,4 @@ fetch('../php/get_usuarios.php')
       selectUsuario.appendChild(option);
     });
   });
-
-
 window.onload = chamarPHP;
