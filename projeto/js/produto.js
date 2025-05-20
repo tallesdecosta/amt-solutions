@@ -1,3 +1,15 @@
+function limparCampos(){
+  const inputs = document.querySelectorAll('.descricaoItem input');
+  inputs.forEach(input => {
+    input.value = '';
+    input.setAttribute('disabled', true);
+  });
+}
+
+function habilitarCampos(){
+  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
+}
+
 function chamarPHP() {
   const filtro = document.getElementById('inputPesquisa').value;
 
@@ -40,11 +52,15 @@ function chamarPHP() {
 
         tbody.appendChild(linha);
       });
+      limparCampos();
     })
     .catch(error => console.error('Erro:', error));
 }
 
-document.getElementById('buttonPesquisa').addEventListener('click', chamarPHP);
+document.getElementById('buttonPesquisa').addEventListener('click', () =>{
+  chamarPHP();
+  limparCampos();
+});
 
 // Botão ADICIONAR
 document.getElementById('btn-adicionar').addEventListener('click', () => {
@@ -53,8 +69,7 @@ document.getElementById('btn-adicionar').addEventListener('click', () => {
 
   const campos = ['nome', 'categoria', 'valor', 'quantidade', 'lote', 'vencimento'];
   campos.forEach(id => document.getElementById(id).value = '');
-
-  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
+  habilitarCampos();
 });
 
 // Botão EDITAR
@@ -63,23 +78,21 @@ document.getElementById('btn-editar').addEventListener('click', () => {
     alert('Selecione um item para editar');
     return;
   }
-  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
+  habilitarCampos();
   window.adicionandoNovo = false;
 });
 
 // Botão SALVAR
 document.getElementById('btn-salvar').addEventListener('click', () => {
-  const inputs = document.querySelectorAll('.descricaoItem input');
-
   // Quando for adicionar
   if (window.adicionandoNovo) {
     const novoItem = {
-      nome: inputs[0].value,
-      categoria: inputs[1].value,
-      valor: inputs[2].value,
-      quantidade: inputs[3].value,
-      lote: inputs[4].value,
-      vencimento: inputs[5].value
+      nome: document.getElementById("nome").value,
+      categoria: document.getElementById("categoria").value,
+      valor: document.getElementById("valor").value,
+      quantidade: document.getElementById("quantidade").value,
+      lote: document.getElementById("lote").value,
+      vencimento: document.getElementById("vencimento").value
     };
 
     fetch('../php/produto.php', {
@@ -91,12 +104,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       .then(res => {
         alert('Inserido com sucesso!');
         chamarPHP();
-
-        inputs.forEach(input => {
-          input.value = '';
-          input.setAttribute('disabled', true);
-        });
-
+        limparCampos();
         window.adicionandoNovo = false;
         window.itemSelecionado = null;
       })
@@ -106,12 +114,12 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
   else if (window.itemSelecionado) {
     const dadosAtualizados = {
       id: window.itemSelecionado.id_produto,
-      nome: inputs[0].value,
-      categoria: inputs[1].value,
-      valor: inputs[2].value,
-      quantidade: inputs[3].value,
-      lote: inputs[4].value,
-      vencimento: inputs[5].value
+      nome: document.getElementById("nome").value,
+      categoria: document.getElementById("categoria").value,
+      valor: document.getElementById("valor").value,
+      quantidade: document.getElementById("quantidade").value,
+      lote: document.getElementById("lote").value,
+      vencimento: document.getElementById("vencimento").value
     };
 
     fetch('../php/produto.php', {
@@ -123,12 +131,7 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       .then(res => {
         alert('Salvo com sucesso!');
         chamarPHP();
-
-        inputs.forEach(input => {
-          input.value = '';
-          input.setAttribute('disabled', true);
-        });
-
+        limparCampos();
         window.itemSelecionado = null;
       })
       .catch(err => console.error('Erro ao salvar:', err));
@@ -151,13 +154,7 @@ document.getElementById('btn-deletar').addEventListener('click', () => {
     .then(res => {
       alert('Excluído com sucesso!');
       chamarPHP();
-
-      const inputs = document.querySelectorAll('.descricaoItem input');
-      inputs.forEach(input => {
-        input.value = '';
-        input.setAttribute('disabled', true);
-      });
-
+      limparCampos();
       window.itemSelecionado = null;
     })
     .catch(err => console.error('Erro ao deletar:', err));
