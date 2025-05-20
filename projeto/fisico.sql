@@ -65,8 +65,8 @@ id_usuario INT AUTO_INCREMENT,
 );
 CREATE TABLE IF NOT EXISTS pedidocompra(
 id_pedido INT AUTO_INCREMENT,
- id_insumo INT,
- id_usuario INT,
+ id_insumo INT NOT NULL,
+ id_usuario INT NOT NULL,
  dataEmissao DATE NOT NULL,
  pedido_status VARCHAR(255) NOT NULL,
  qntComprar FLOAT NOT NULL,
