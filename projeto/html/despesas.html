@@ -86,7 +86,7 @@
                                 </div>
                             </section>
                             <section class="tipos-despesas-container bento">
-                                <h2>Tipos de despesas cadastradas <button><img src="../img/add_circle.svg" alt=""></button></h2>
+                                <h2>Tipos de despesas cadastradas <button onclick="addTipoDespesa();"><img src="../img/add_circle.svg" alt=""></button></h2>
                                 <section class="tipos-despesas" id="tipos-despesas">
 
                                 </section>
@@ -95,21 +95,28 @@
                         <section class="report">
                         
                         <div class="filter-wrapper bento">
+                            <div style="display: flex;">
+                                <h2>Despesas abertas</h2>
+                            <button onclick="addDespesa();"><img src="../img/add_circle.svg" alt=""></button>
+                            </div>
+                            
                             <div class="line-header">
+                                
+                                <p class="t-header">Colaborador</p>
                                 <p class="t-header">Descritivo</p>
                                 <p class="t-header">Valor</p>
                                 <p class="t-header">Data de aquisição</p>
-                                <p class="t-header">Data de pagamento</p>
                             </div>
                             <div id="despesas-abertas"></div>
                             
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
+                            <h2>Despesas fechadas</h2>
                             <div class="line-header">
+                                <p class="t-header">Colaborador</p>
                                 <p class="t-header">Descritivo</p>
                                 <p class="t-header">Valor</p>
                                 <p class="t-header">Data de aquisição</p>
-                                <p class="t-header">Data de pagamento</p>
                             </div>
                             <div id="despesas-fechadas"></div>
                         </div>

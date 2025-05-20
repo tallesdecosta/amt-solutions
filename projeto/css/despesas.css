@@ -6,30 +6,6 @@
 
 }
 
-table {
-
-    border-collapse: collapse;
-}
-
-
-thead {
-
-    text-align: left;
-}
-.wrapper-principal {
-
-    width: 88vw;
-    height: 80vh;
-    padding: 15px;
-
-}
-
-td, tr {
-
-    max-width: fit-content;
-    max-height: fit-content;
-
-}
 
 .filter-wrapper {
     display: flex;
@@ -70,6 +46,8 @@ td, tr {
     font-size: 14px;
 }
 
+
+
 .total-despesas {
 
     width: 100%;
@@ -90,12 +68,7 @@ main {
     
 }
 
-.main-wrapper {
-    display: flex;
-    height: 86%;
-    gap: 20px;
-    width: 90vw;
-}
+
 
 h1 {
 
@@ -111,4 +84,40 @@ h2 {
 .t-header {
 
     font-weight: 500;
+}
+
+td {
+    height: auto;
+    vertical-align: top;
+}
+
+table {
+
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+tbody {
+    height: auto;
+}
+
+thead {
+
+    text-align: left;
+}
+.wrapper-principal {
+
+    width: 88vw;
+    height: 80vh;
+    padding: 15px;
+    display: table;
+
+}
+
+
+.main-wrapper {
+    display: flex;
+    height: 86%;
+    gap: 20px;
+    width: 90vw;
 }

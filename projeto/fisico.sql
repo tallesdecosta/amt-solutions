@@ -112,8 +112,17 @@ id_usuario INT,
  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
  
 );
+
+CREATE TABLE IF NOT EXISTS tipodespesa(
+	id_tipo_despesa INT AUTO_INCREMENT,
+	nome VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id_tipo_despesa)
+ 
+ 
+);
 CREATE TABLE IF NOT EXISTS despesa(
 id_despesa INT AUTO_INCREMENT,
+id_tipo_despesa INT,
  id_usuario INT,
 descritivo VARCHAR(255) NOT NULL,
  valor FLOAT NOT NULL,
@@ -121,15 +130,11 @@ descritivo VARCHAR(255) NOT NULL,
  dataVencimento DATE NOT NULL,
  estaPago BOOLEAN NOT NULL,
  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+ FOREIGN KEY (id_tipo_despesa) REFERENCES tipodespesa(id_tipo_despesa),
  PRIMARY KEY(id_despesa) 
  
 );
-CREATE TABLE IF NOT EXISTS tipodespesa(
-id_despesa INT,
- nome VARCHAR(255) NOT NULL,
- FOREIGN KEY (id_despesa) REFERENCES despesa(id_despesa)
- 
-);
+
 
 CREATE TABLE IF NOT EXISTS operacao(
 	id INT AUTO_INCREMENT,
@@ -153,5 +158,5 @@ CREATE TABLE IF NOT EXISTS produto_alergia(
 	FOREIGN KEY (id_alergia) REFERENCES alergia(id_alergia)
 );
 
-INSERT INTO `usuario`(`nome`, `contato`, `username`, `senha`, `cargo`, `ehAdm`) VALUES ('admin','22','admin.adm','1234','administrador',1);
+INSERT INTO `usuario`(`nome`, `contato`, `username`, `senha`, `cargo`, `ehAdm`) VALUES ('Admin','22','admin','$2y$10$eG2q9V2GLO2Bz9yXEzxp5eQeUQYnUxPHHB0NjHWce2WyusEJCLoCG','Administrador',1);
 INSERT INTO `permissao`(`id_usuario`, `vendas`, `estoque`, `financeiro`, `gestao`) VALUES (1,1,1,1,1);

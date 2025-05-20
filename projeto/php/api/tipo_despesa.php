@@ -9,6 +9,7 @@
             break;
         
         case "POST":
+            echo json_encode(criarTipoDespesa());
             break;
 
         case "DELETE":
@@ -40,44 +41,25 @@
     }
 
     
+    function criarTipoDespesa() 
+    {
 
-function salvarDfc() {
+        $sql = "INSERT INTO tipodespesa(nome) VALUES('".$_POST['nome']."')";
 
-    $sql = "INSERT INTO dfc(titulo, id_usuario, dataInicio, dataFinal) VALUES('".$_POST['titulo']."','".$_SESSION['id']."','".$_POST['data-inicio']."', '".$_POST['data-fim']."')";
-
-    $conn = conectar();
+        $conn = conectar();
                     
+        $res = $conn -> query($sql);
 
-    $res = $conn->query($sql);
+        if ($res) {
 
-    if($res) {
+            return ['status' => 'ok'];
+        } else {
 
-        return ['status' => 'ok'];
-    } else {
-
-        return ['status' => 'erro'];
-
-    }
-
-}
-
-function deletarDfc() {
-
-    $sql = "DELETE FROM dfc WHERE id_dfc = '".$_GET['id']."'";
-
-    $conn = conectar();
-
-    $res = $conn->query($sql);
-
-    if($res) {
-
-        return ['status' => 'ok'];
-    } else {
-
-        return ['status' => 'erro'];
+            return ['status' => 'erro'];
+        }
 
     }
 
-}
+
 
 ?>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $senha_certa = $data -> senha;
         
-        if ($senha_certa == $senha_form) {
+        if (password_verify($senha_form, $senha_certa)) {
 
             $_SESSION['id'] = $data -> id_usuario;
             $_SESSION['nome'] = $data -> nome;
@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             http_response_code(200);
 
         } else {
-
             http_response_code(401);
 
         }

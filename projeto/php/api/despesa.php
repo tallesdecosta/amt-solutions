@@ -9,6 +9,7 @@
             break;
         
         case "POST":
+            echo json_encode(criarDespesa(), JSON_UNESCAPED_UNICODE);
             break;
 
         case "DELETE":
@@ -26,61 +27,42 @@
         JOIN usuario ON despesa.id_usuario = usuario.id_usuario 
         WHERE despesa.dataInicio BETWEEN '" . $_GET['inicio'] . "' AND '" . $_GET['fim'] . "'";
 
-            $conn = conectar();
+        $conn = conectar();
                     
 
-            $res = $conn->query($sql);
+        $res = $conn->query($sql);
 
-            $id_produto = [];
+        $id_produto = [];
 
-            while ($linha = $res->fetch_assoc()) {
+        while ($linha = $res->fetch_assoc()) {
 
-                $id_produto[] = $linha;
+            $id_produto[] = $linha;
                 
-            }
+        }
 
             return $id_produto;
         }
 
     
+        function criarDespesa() {
 
-function salvarDfc() {
+        $sql = "INSERT INTO despesa(id_tipo_despesa, descritivo, id_usuario, valor, dataInicio, dataVencimento, estaPago) VALUES('".$_POST['tipo_despesa']."', '".$_POST['descritivo']."', '".$_SESSION['id']."', '".$_POST['valor']."', '".$_POST['dataInicio']."', '".$_POST['dataVencimento']."', 0)";
 
-    $sql = "INSERT INTO dfc(titulo, id_usuario, dataInicio, dataFinal) VALUES('".$_POST['titulo']."','".$_SESSION['id']."','".$_POST['data-inicio']."', '".$_POST['data-fim']."')";
-
-    $conn = conectar();
+        $conn = conectar();
                     
+        $res = $conn -> query($sql);
 
-    $res = $conn->query($sql);
 
-    if($res) {
+        if ($res) {
 
-        return ['status' => 'ok'];
-    } else {
+            return ['status' => 'ok'];
 
-        return ['status' => 'erro'];
+        } else {
 
-    }
+            return ['status' => 'erro'];
 
-}
+        }
 
-function deletarDfc() {
-
-    $sql = "DELETE FROM dfc WHERE id_dfc = '".$_GET['id']."'";
-
-    $conn = conectar();
-
-    $res = $conn->query($sql);
-
-    if($res) {
-
-        return ['status' => 'ok'];
-    } else {
-
-        return ['status' => 'erro'];
-
-    }
-
-}
+        }
 
 ?>

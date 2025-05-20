@@ -50,7 +50,7 @@
         $vendas_form = intval($_POST['vendas']);
         $financeiro_form = intval($_POST['financeiro']);
         
-        $sql = "INSERT INTO usuario(nome, senha, username, ehAdm, contato, cargo) VALUES('".$nome_form."','".$senha_form."','".$user_form."','".$admin_form."','".$contato_form."','".$cargo_form."');";
+        $sql = "INSERT INTO usuario(nome, senha, username, ehAdm, contato, cargo) VALUES('".$nome_form."','".password_hash($senha_form, PASSWORD_BCRYPT)."','".$user_form."','".$admin_form."','".$contato_form."','".$cargo_form."');";
 
         $conn = conectar();
         $conn->query($sql);
