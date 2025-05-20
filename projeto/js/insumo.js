@@ -69,9 +69,7 @@ document.getElementById('buttonPesquisa').addEventListener('click', () => {
 document.getElementById('btn-adicionar').addEventListener('click', () => {
   window.adicionandoNovo = true;
   window.itemSelecionado = null;
-
-  const campos = ['nome', 'classificacao', 'qntMinima', 'lote', 'vencimento', 'inspReceb', 'fornecedor', 'localizacao', 'quantidade'];
-  campos.forEach(id => document.getElementById(id).value = '');
+  limparCampos();
   habilitarCampos();
 });
 
@@ -88,17 +86,28 @@ document.getElementById('btn-editar').addEventListener('click', () => {
 // Botão SALVAR
 document.getElementById('btn-salvar').addEventListener('click', () => {
   // Quando for adicionar
-  if (window.adicionandoNovo) {
+
+  let itemNome = document.getElementById("nome").value;
+  let itemClassificacao = document.getElementById("classificacao").value;
+  let itemQntMinima = document.getElementById("qntMinima").value;
+  let itemLote = document.getElementById("lote").value;
+  let itemVencimento = document.getElementById("vencimento").value;
+  let itemInspReceb = document.getElementById("inspReceb").value;
+  let itemFornecedor = document.getElementById("fornecedor").value;
+  let itemLocalizacao = document.getElementById("localizacao").value;
+  let itemQuantidade = document.getElementById("quantidade").value;
+
+  if (window.adicionandoNovo && itemNome != "" && itemClassificacao != "" && itemQntMinima != "" && itemLote != "" && itemVencimento != "" && itemInspReceb != "" && itemFornecedor != "" && itemLocalizacao != "" && itemQuantidade != "") {
     const novoItem = {
-      nome: document.getElementById("nome").value,
-      classificacao: document.getElementById("classificacao").value,
-      qntMinima: document.getElementById("qntMinima").value,
-      lote: document.getElementById("lote").value,
-      vencimento: document.getElementById("vencimento").value,
-      inspReceb: document.getElementById("inspReceb").value,
-      fornecedor: document.getElementById("fornecedor").value,
-      localizacao: document.getElementById("localizacao").value,
-      quantidade: document.getElementById("quantidade").value
+      nome: itemNome,
+      classificacao: itemClassificacao,
+      qntMinima: itemQntMinima,
+      lote: itemLote,
+      vencimento: itemVencimento,
+      inspReceb: itemInspReceb,
+      fornecedor: itemFornecedor,
+      localizacao: itemLocalizacao,
+      quantidade: itemQuantidade
     };
 
     fetch('../php/insumo.php', {
@@ -117,18 +126,18 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       .catch(err => console.error('Erro ao inserir:', err));
   }
   // Quando for editar
-  else if (window.itemSelecionado) {
+  else if (window.itemSelecionado && itemNome != "" && itemClassificacao != "" && itemQntMinima != "" && itemLote != "" && itemVencimento != "" && itemInspReceb != "" && itemFornecedor != "" && itemLocalizacao != "" && itemQuantidade != "") {
     const dadosAtualizados = {
       id: window.itemSelecionado.id_insumo,
-      nome: document.getElementById("nome").value,
-      classificacao: document.getElementById("classificacao").value,
-      qntMinima: document.getElementById("qntMinima").value,
-      lote: document.getElementById("lote").value,
-      vencimento: document.getElementById("vencimento").value,
-      inspReceb: document.getElementById("inspReceb").value,
-      fornecedor: document.getElementById("fornecedor").value,
-      localizacao: document.getElementById("localizacao").value,
-      quantidade: document.getElementById("quantidade").value
+      nome: itemNome,
+      classificacao: itemClassificacao,
+      qntMinima: itemQntMinima,
+      lote: itemLote,
+      vencimento: itemVencimento,
+      inspReceb: itemInspReceb,
+      fornecedor: itemFornecedor,
+      localizacao: itemLocalizacao,
+      quantidade: itemQuantidade
     };
 
     fetch('../php/insumo.php', {
@@ -144,6 +153,8 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         window.itemSelecionado = null;
       })
       .catch(err => console.error('Erro ao salvar:', err));
+  } else{
+    alert("Todos os campos do formulário são obrigatórios!");
   }
 });
 
