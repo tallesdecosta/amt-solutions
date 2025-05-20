@@ -4,46 +4,55 @@ include 'conectar_bd.php';
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-if(isset($_POST)){
+if (isset($_POST)) {
     switch ($_POST) {
         case isset($_POST["resp"]) && $_POST["op"] == "insert":
             echo json_encode(insert());
             break;
-        
+
         case isset($_POST["user"]):
             echo json_encode(verificarAcesso());
             break;
-        
+
         default:
             # code...
             break;
     }
-}else if(isset($_GET)){
+} else if (isset($_GET)) {
     echo json_encode(retornarFuncs());
 }
 
 
 
 
-function insert(){
+function insert()
+{
 
     $resp = intval($_POST["resp"]);
     $val = floatval($_POST["valor"]);
     $obs = $_POST["obs"];
 
     $conn = conectar();
-    $query = "INSERT INTO operacao(id_respon,valor,obs) VALUES ('$resp','$val','$obs')";
+    $query = "INSERT INTO operacao(id_respon,valor,obs,data_op) VALUES ('$resp','$val','$obs',now())";
     $resultado = $conn->query($query);
 
     if ($resultado) {
-        return(["result" => 200]);
-    } else {
-        return(["result" => 0]);
+        $conn = conectar();
+        $query = "INSERT INTO caixa(id_usuario,id_fech,ajuste,valorAber,valorFech,horaAbertura,horaFecha) VALUES ('$resp','$resp',1,'$val','$val',now(),now())";
+        $resultado = $conn->query($query);
+
+        if ($resultado) {
+            return (["result" => 200]);
+        } else {
+            return (["result" => 0]);
+        }
     }
+
 }
 
 
-function verificarAcesso(){
+function verificarAcesso()
+{
 
     $user = $_POST["user"];
     $senha = $_POST["senha"];
@@ -70,23 +79,24 @@ function verificarAcesso(){
                     while ($linha = $resultado->fetch_assoc()) {
 
                         if ($linha["gestao"] == 1) {
-                            return(["acesso" => "autorizado"]);
+                            return (["acesso" => "autorizado"]);
                         } else if ($linha["gestao"] == 0) {
-                            return(["acesso" => "negado"]);
+                            return (["acesso" => "negado"]);
                         }
                     }
                 }
             }
         } else {
-            return(["acesso" => "negado"]);
+            return (["acesso" => "negado"]);
         }
     } else {
-        return(["result" => 401]);
+        return (["result" => 401]);
     }
 }
 
 
-function retornarFuncs(){
+function retornarFuncs()
+{
 
     $conn = conectar();
     $query = "SELECT id_usuario, nome FROM usuario";
@@ -101,7 +111,6 @@ function retornarFuncs(){
             $retorno[] = $linha;
         }
 
-        return($retorno);
+        return ($retorno);
     }
 }
-
