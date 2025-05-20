@@ -66,9 +66,7 @@ document.getElementById('buttonPesquisa').addEventListener('click', () =>{
 document.getElementById('btn-adicionar').addEventListener('click', () => {
   window.adicionandoNovo = true;
   window.itemSelecionado = null;
-
-  const campos = ['nome', 'categoria', 'valor', 'quantidade', 'lote', 'vencimento'];
-  campos.forEach(id => document.getElementById(id).value = '');
+  limparCampos();
   habilitarCampos();
 });
 
@@ -85,14 +83,22 @@ document.getElementById('btn-editar').addEventListener('click', () => {
 // Botão SALVAR
 document.getElementById('btn-salvar').addEventListener('click', () => {
   // Quando for adicionar
-  if (window.adicionandoNovo) {
+
+  let itemNome = document.getElementById("nome").value;
+  let itemCategoria = document.getElementById("categoria").value;
+  let itemValor = document.getElementById("valor").value;
+  let itemQuantidade = document.getElementById("quantidade").value;
+  let itemLote = document.getElementById("lote").value;
+  let itemVencimento = document.getElementById("vencimento").value;
+
+  if (window.adicionandoNovo && itemNome != "" && itemCategoria != "" && itemValor !="" && itemValor !="R$ " && itemQuantidade != "" && itemLote != "" && itemVencimento !="") {
     const novoItem = {
-      nome: document.getElementById("nome").value,
-      categoria: document.getElementById("categoria").value,
-      valor: document.getElementById("valor").value,
-      quantidade: document.getElementById("quantidade").value,
-      lote: document.getElementById("lote").value,
-      vencimento: document.getElementById("vencimento").value
+      nome: itemNome,
+      categoria: itemCategoria,
+      valor: itemValor,
+      quantidade: itemQuantidade,
+      lote: itemLote,
+      vencimento: itemVencimento
     };
 
     fetch('../php/produto.php', {
@@ -111,15 +117,15 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
       .catch(err => console.error('Erro ao inserir:', err));
   }
   // Quando for editar
-  else if (window.itemSelecionado) {
+  else if (window.itemSelecionado && itemNome != "" && itemCategoria != "" && itemValor !="" && itemValor !="R$ " && itemQuantidade != "" && itemLote != "" && itemVencimento !="") {
     const dadosAtualizados = {
       id: window.itemSelecionado.id_produto,
-      nome: document.getElementById("nome").value,
-      categoria: document.getElementById("categoria").value,
-      valor: document.getElementById("valor").value,
-      quantidade: document.getElementById("quantidade").value,
-      lote: document.getElementById("lote").value,
-      vencimento: document.getElementById("vencimento").value
+      nome: itemNome,
+      categoria: itemCategoria,
+      valor: itemValor,
+      quantidade: itemQuantidade,
+      lote: itemLote,
+      vencimento: itemVencimento
     };
 
     fetch('../php/produto.php', {
@@ -135,6 +141,8 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         window.itemSelecionado = null;
       })
       .catch(err => console.error('Erro ao salvar:', err));
+  }else{
+    alert("Todos os campos do formulário são obrigatórios!");
   }
 });
 
