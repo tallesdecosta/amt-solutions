@@ -6,6 +6,11 @@
 
 }
 
+button {
+    background-color: none;
+    border: none;
+}
+
 
 .filter-wrapper {
     display: flex;
@@ -81,30 +86,6 @@ h2 {
     font-size: 16px;
 }
 
-.t-header {
-
-    font-weight: 500;
-}
-
-td {
-    height: auto;
-    vertical-align: top;
-}
-
-table {
-
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-
-tbody {
-    height: auto;
-}
-
-thead {
-
-    text-align: left;
-}
 .wrapper-principal {
 
     width: 88vw;
@@ -120,4 +101,16 @@ thead {
     height: 86%;
     gap: 20px;
     width: 90vw;
+}
+
+table {
+
+    width: 100%;
+    height: 100%;
+    border-spacing: 0;
+}
+
+th {
+
+    text-align: left;
 }

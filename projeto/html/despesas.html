@@ -95,19 +95,36 @@
                         <section class="report">
                         
                         <div class="filter-wrapper bento">
-                            <div style="display: flex;">
+                            <div style="display: flex; padding: 15px; justify-content: space-between;">
                                 <h2>Despesas abertas</h2>
-                            <button onclick="addDespesa();"><img src="../img/add_circle.svg" alt=""></button>
+                                <div style="display: flex;">
+                                    <button  onclick="addDespesa();"><img src="../img/add_circle.svg" alt=""></button>
+                            <p style="font-size: 14px;">Nova despesa</p>
+                                </div>
+                            
+                            </div>
+                            <div style="overflow-y: auto;padding: 15px;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Colaborador</th>
+                                            <th>Descritivo</th>
+                                            <th>Valor</th>
+                                            <th>Data de aquisição</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="despesas-abertas">
+
+                                    </tbody>
+                                </table>
+                                <div class="line-header">
+                                
+                                    
+                                </div>
+                                <div></div>
                             </div>
                             
-                            <div class="line-header">
-                                
-                                <p class="t-header">Colaborador</p>
-                                <p class="t-header">Descritivo</p>
-                                <p class="t-header">Valor</p>
-                                <p class="t-header">Data de aquisição</p>
-                            </div>
-                            <div id="despesas-abertas"></div>
+                            
                             
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
