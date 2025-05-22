@@ -34,16 +34,24 @@ id_insumo INT AUTO_INCREMENT,
  nome VARCHAR(255) NOT NULL,
  classificacao VARCHAR(255) NOT NULL,
  qntMinima FLOAT NOT NULL,
- lote VARCHAR(255) NOT NULL,
- vencimento DATE NOT NULL,
  inspReceb VARCHAR(5) NOT NULL,
- fornecedor VARCHAR(255) NOT NULL,
  localizacao VARCHAR(255) NOT NULL,
- quantidade FLOAT NOT NULL,
  unidMedida VARCHAR(255) NOT NULL,
+ quantidadeTotal FLOAT NOT NULL,
  PRIMARY KEY (id_insumo)
- 
 );
+
+CREATE TABLE IF NOT EXISTS insumoLote(
+	id_Lote INT AUTO_INCREMENT,
+	id_insumo INT,
+	lote VARCHAR(255) NOT NULL,
+	vencimento DATE NOT NULL,
+	fornecedor VARCHAR(255) NOT NULL,
+	quantidade FLOAT NOT NULL,
+	FOREIGN KEY (id_insumo) REFERENCES insumo(id_insumo),
+	PRIMARY KEY (id_lote)	
+);
+
 CREATE TABLE IF NOT EXISTS produtoinsumo(
  id_produto INT,
  id_insumo INT,
