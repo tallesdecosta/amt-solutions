@@ -13,12 +13,24 @@ CREATE TABLE IF NOT EXISTS produto(
 id_produto INT AUTO_INCREMENT,
  nome VARCHAR(255) NOT NULL,
  categoria VARCHAR(255) NOT NULL,
+ qntMinima FLOAT NOT NULL,
  valor FLOAT NOT NULL,
- quantidade FLOAT NOT NULL,
- lote VARCHAR(255),
- vencimento DATE,
+ localizacao VARCHAR(255) NOT NULL,
+ unidMedida VARCHAR(255) NOT NULL,
+ quantidadeTotal FLOAT NOT NULL,
+ imagem VARCHAR(255) NULL,
  PRIMARY KEY (id_produto)
- 
+);
+
+CREATE TABLE IF NOT EXISTS produtoLote(
+	id_Lote INT AUTO_INCREMENT,
+	id_produto INT,
+	lote VARCHAR(255) NOT NULL,
+	vencimento DATE NOT NULL,
+	fornecedor VARCHAR(255) NOT NULL,
+	quantidade FLOAT NOT NULL,
+	FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
+	PRIMARY KEY (id_lote)	
 );
 
 CREATE TABLE IF NOT EXISTS venda_produto(
