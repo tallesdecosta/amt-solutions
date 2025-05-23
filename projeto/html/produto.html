@@ -79,63 +79,159 @@
                     <p>Produto</p>
                 </div>
 
-                <div class="buttonItens">
+                <div class="funcoes">
+                    <button class="btnFuncoes" id="btn-divProduto">Cadastrar Produto</button>
+                    <button class="btnFuncoes" id="btn-divLote">Estoque</button>
+                </div>
 
-                    <div>
-                        <button id="btn-adicionar">
-                          <img src="../img/adicionar.png" alt="">
-                        </button>
-                      </div>
+                <div class="cadastroProduto esconder">
+                    <div class="buttonItens">
+                        <div>
+                            <button id="btn-adicionar">
+                                <img src="../img/adicionar.png" alt="">
+                            </button>
+                        </div>
 
-                    <div>
-                      <button id="btn-editar">
-                        <img src="../img/botaoEditar.png" alt="">
-                      </button>
+                        <div>
+                            <button id="btn-editar">
+                                <img src="../img/botaoEditar.png" alt="">
+                            </button>
+                        </div>
+                    
+                        <div>
+                            <button id="btn-salvar">
+                                <img src="../img/salvar.png" alt="">
+                            </button>
+                        </div>
+                    
+                        <div>
+                            <button id="btn-deletar">
+                                <img src="../img/excluir.png" alt="">
+                            </button>
+                        </div>
                     </div>
-                  
-                    <div>
-                      <button id="btn-salvar">
-                        <img src="../img/salvar.png" alt="">
-                      </button>
-                    </div>
-                  
-                    <div>
-                      <button id="btn-deletar">
-                        <img src="../img/excluir.png" alt="">
-                      </button>
+
+                    <div class="descricaoItem">
+
+                        <div class="descricaoItemImg">
+                          <label class="picture" tabindex="0">
+                            <input type="file" accept="image/*" class="picture_input" id="picture_input">
+                            <span class="picture_image">
+                                <img class="picture_img" id="picture_img" src="" alt="Imagem do Produto">
+                            </span>
+                          </label>
+                        </div>
+
+                        <div class="infoItem">
+                            <div class="info">
+                                <label for="">Nome</label><br>
+                                <input type="text" id="nome" disabled>
+                            </div>
+
+                            <div class="info">
+                                <label for="">categoria</label><br>
+                                <input type="text" id="categoria" disabled>
+                            </div>
+
+                            <div class="info">
+                                <label for="">Qtd. Mínima</label><br>
+                                <input type="number" id="qntMinima" disabled>
+                            </div>
+
+                            <div class="info">
+                                <label for="">Valor</label><br>
+                                <input type="text" id="valor" disabled>
+                            </div>
+
+                            <div class="info">
+                                <label for="">Localização</label><br>
+                                <input type="text" id="localizacao" disabled>
+                            </div>
+
+                             <div class="info">
+                                <label for="">Quantidade</label><br>
+                                <input type="text" id="quantidadeTotal" disabled>
+                            </div>
+
+                        </div>
+                        
                     </div>
                 </div>
 
-                <div class="descricaoItem">
-                    <div class="info">
-                        <label for="">Nome</label><br>
-                        <input type="text" id="nome" disabled>
-                    </div>
+                <div class="cadastroLote esconder">
+
+                    <div class="buttonItens">
+                        <div>
+                            <button id="btn-adicionarLote">
+                                <img src="../img/adicionar.png" alt="">
+                            </button>
+                        </div>
+
+                        <div>
+                            <button id="btn-editarLote">
+                                <img src="../img/botaoEditar.png" alt="">
+                            </button>
+                        </div>
                     
-                    <div class="info">
-                        <label for="">categoria</label><br>
-                        <input type="text" id="categoria" disabled>
+                        <div>
+                            <button id="btn-salvarLote">
+                                <img src="../img/salvar.png" alt="">
+                            </button>
+                        </div>
+                    
+                        <div>
+                            <button id="btn-deletarLote">
+                                <img src="../img/excluir.png" alt="">
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="info">
-                        <label for="">Valor</label><br>
-                        <input type="text" id="valor" disabled>
+                    <div class="descricaoLote">
+
+                        <div class="info">
+                            <label for="">Produto</label><br>
+                            <select id="id_produto" disabled></select>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Lote</label><br>
+                            <input type="text" id="lote" disabled>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Vencimento</label><br>
+                            <input type="date" id="vencimento" disabled>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Fornecedor</label><br>
+                            <input type="text" id="fornecedor" disabled>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Quantidade</label><br>
+                            <input type="number" id="quantidade" disabled>
+                        </div>
+
+                        <div class="tabelaContainerLotes">
+                            <table id="tabela-lote">
+                                <thead>
+                                    <tr>
+                                        <th class="thLote">Código</th>
+                                        <th class="thLote">Lote</th>
+                                        <th class="thLote">Vencimento</th>
+                                        <th class="thLote">Fornecedor</th>
+                                        <th class="thLote">Quantidade</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tabela-lote-corpo" id="tabela-lote-corpo">
+
+                                </tbody>
+                                                    
+                            </table>
+                        </div>
                     </div>
 
-                    <div class="info">
-                        <label for="">Quantidade</label><br>
-                        <input type="text" id="quantidade" disabled>
-                    </div>
-
-                    <div class="info">
-                        <label for="">Lote</label><br>
-                        <input type="text" id="lote" disabled>
-                    </div>
-
-                    <div class="info">
-                        <label for="">Vencimento</label><br>
-                        <input type="date" id="vencimento" disabled>
-                    </div>
                 </div>
                     
                 <div class="barraPesquisa">
@@ -157,7 +253,7 @@
                                 <th>categoria</th>
                                 <th>Valor</th>
                                 <th>Quantidade</th>
-                                <th>Vencimento</th>
+                                <th>Qtd.Mínima</th>
                             </tr>
                         </thead>
                         <tbody id="tabela-corpo">
