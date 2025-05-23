@@ -5,18 +5,23 @@ $conn = conectar();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : '';
-    $query = 'SELECT * FROM produto WHERE 1=1';
-
-    if ($filtro) {
-        $query .= " AND (id_produto LIKE ? OR nome LIKE ? OR categoria LIKE ? OR vencimento LIKE ?)";
-    }
+    $query = "
+        SELECT p.id_produto, p.nome, p.categoria, p.qntMinima, p.valor, p.localizacao, p.imagem,
+        COALESCE(SUM(pl.quantidade), 0) AS quantidadeTotal
+        FROM produto p
+        LEFT JOIN produtoLote pl ON p.id_produto = pl.id_produto
+        WHERE (
+            p.id_produto LIKE ? OR 
+            p.nome LIKE ? OR 
+            p.categoria LIKE ?
+        )
+        GROUP BY p.id_produto
+    ";
 
     $stmt = $conn->prepare($query);
 
-    if ($filtro) {
-        $param = "%$filtro%";
-        $stmt->bind_param('ssss', $param, $param, $param, $param);
-    }
+    $param = "%$filtro%";
+    $stmt->bind_param('sss', $param, $param, $param);
 
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -35,28 +40,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados = json_decode(file_get_contents('php://input'), true);
 
+    $nomeImagem = null;
+    if (isset($dados['imagem']) && !empty($dados['imagem'])) {
+        $imgInfo = explode(',', $dados['imagem']);
+        if (count($imgInfo) === 2) {
+            $imgBase64 = base64_decode($imgInfo[1]);
+            $nomeImagem = uniqid('img_') . '.png';
+            file_put_contents('../img/' . $nomeImagem, $imgBase64);
+        }
+    }
+
     if (isset($dados['id'])) {
-        $stmt = $conn->prepare("UPDATE produto SET nome=?, categoria=?, valor=?, quantidade=?, lote=?, vencimento=? WHERE id_produto=?");
-        $stmt->bind_param(
-            "ssssssi", 
-            $dados['nome'],
-            $dados['categoria'],
-            $dados['valor'],
-            $dados['quantidade'],
-            $dados['lote'],
-            $dados['vencimento'],
-            $dados['id']
-        );
+        if ($nomeImagem) {
+            $stmt = $conn->prepare("UPDATE produto SET nome=?, categoria=?, qntMinima=?, valor=?, localizacao=?, quantidadeTotal=?, imagem=? WHERE id_produto=?");
+            $stmt->bind_param(
+                "ssiisisi",
+                $dados['nome'],
+                $dados['categoria'],
+                $dados['qntMinima'],
+                $dados['valor'],
+                $dados['localizacao'],
+                $dados['quantidadeTotal'],
+                $nomeImagem,
+                $dados['id']
+            );
+        } else {
+            $stmt = $conn->prepare("UPDATE produto SET nome=?, categoria=?, qntMinima=?, valor=?, localizacao=?, quantidadeTotal=? WHERE id_produto=?");
+            $stmt->bind_param(
+                "ssiisii",
+                $dados['nome'],
+                $dados['categoria'],
+                $dados['qntMinima'],
+                $dados['valor'],
+                $dados['localizacao'],
+                $dados['quantidadeTotal'],
+                $dados['id']
+            );
+        }
     } else {
-        $stmt = $conn->prepare("INSERT INTO produto (nome, categoria, valor, quantidade, lote, vencimento) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO produto (nome, categoria, qntMinima, valor, localizacao, quantidadeTotal, imagem) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param(
-            "ssssss", 
+            "ssiisss",
             $dados['nome'],
             $dados['categoria'],
+            $dados['qntMinima'],
             $dados['valor'],
-            $dados['quantidade'],
-            $dados['lote'],
-            $dados['vencimento']
+            $dados['localizacao'],
+            $dados['quantidadeTotal'],
+            $nomeImagem
         );
     }
 
@@ -71,6 +102,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt->close();
 }
+
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     parse_str($_SERVER['QUERY_STRING'], $params);
