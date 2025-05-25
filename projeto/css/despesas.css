@@ -14,15 +14,15 @@ button {
 
 .filter-wrapper {
     display: flex;
-    gap: 25px;
     width: 100%;
     height: 50%;
     flex-direction: column;
 }
 
 .report-wrapper {
-
+    display: flex;
     height: 50%;
+    flex-direction: column;
     width: 100%;
 }
 
@@ -43,7 +43,6 @@ button {
 .tipos-despesas-container {
     width: 100%;
     height: 82%;
-    padding: 18px;
 }
 
 #resumo {
@@ -70,6 +69,7 @@ main {
     flex-direction: column;
     gap: 25px;
     height: 92vh;
+    justify-content: center;
     
 }
 
@@ -86,15 +86,6 @@ h2 {
     font-size: 16px;
 }
 
-.wrapper-principal {
-
-    width: 88vw;
-    height: 80vh;
-    padding: 15px;
-    display: table;
-
-}
-
 
 .main-wrapper {
     display: flex;
@@ -103,14 +94,66 @@ h2 {
     width: 90vw;
 }
 
+td {
+    padding: 19px;
+    text-align: left;
+}
+
+th {
+
+    padding: 5px 19px;
+    text-align: left;
+     
+}
+
+
+
+thead {
+position: sticky;
+  top: 0;
+    background-color: #ECEAEA;
+}
+
 table {
 
     width: 100%;
     height: 100%;
     border-spacing: 0;
+    table-layout: fixed;
+    border-collapse: collapse;
+    
 }
 
-th {
-
-    text-align: left;
+.btn-add-wrapper {
+    cursor: pointer;
 }
+
+img, button {
+
+    background-color: transparent;
+}
+
+.popup-wrapper {
+    position: absolute;
+    display: none;
+    align-self: center;
+    justify-self: center;
+}
+
+.despesa-wrapper, .tipo-wrapper, .despesa-wrapper {
+    position: absolute;
+    display: none;
+    align-self: center;
+    justify-self: center;
+}
+
+#bg-blur {
+    display: none;
+    backdrop-filter: blur(10px);
+}
+
+.popup-wrapper, .tipo-wrapper, .despesa-wrapper {
+    padding: 25px;
+    z-index:2;
+}
+

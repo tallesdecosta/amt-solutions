@@ -11,6 +11,8 @@ async function iniciar() {
 
 }
 
+
+
 async function pesquisarDespesas() {
 
 const hoje = new Date();
@@ -56,12 +58,29 @@ function atualizarResumo(data) {
     valor = 0;
 
     for (despesa in despesas) {
-
-        valor += parseFloat(despesas[despesa].valor);
+        if(despesas[despesa].estaPago == 0) {
+            valor += parseFloat(despesas[despesa].valor);
+        }
+        
 
     };
 
-    document.getElementById('resumo').textContent = `R$${valor.toFixed(2).replace('.', ',')}`;
+    document.getElementById('resumo').textContent = valor.toLocaleString('pt-BR', {
+  style: 'currency',
+  currency: 'BRL'
+}).replace(/\s/g, '');
+
+}
+
+function mostrarPopup (despesa, event) {
+    document.getElementById('popup-wrapper').style.display = 'block';
+    document.getElementById('bg-blur').style.display = 'block';
+    document.getElementById('descritivo').value = despesas[despesa].descritivo;
+    document.getElementById('valor').value = despesas[despesa].valor;
+    document.getElementById('data-inicio').value = despesas[despesa].dataInicio;
+    document.getElementById('data-fim').value = despesas[despesa].dataVencimento;
+    document.getElementById('alterar-despesa').setAttribute('id_despesa', despesas[despesa].id_despesa);
+    document.getElementById('status').checked =  parseInt(despesas[despesa].estaPago) == 1;
 
 }
 
@@ -73,7 +92,7 @@ function atualizarDespesas(despesas) {
     countFechadas = 1;
 
     for (despesa in despesas) {
-
+        if (despesas[despesa].estaPago == 0) {
         linha = document.createElement('tr');
 
         if (countAbertas % 2 != 0 && despesas[despesa].estaPago == '0') {
@@ -87,12 +106,14 @@ function atualizarDespesas(despesas) {
             this.style.backgroundColor = '#A6A6A6';
             this.style.cursor = 'pointer';
 
-        })
+        });
+
+        linha.addEventListener('click', mostrarPopup.bind(null, despesa));
 
         linha.addEventListener('mouseleave', function () {
             if (this.getAttribute('par') == 'true') {
 
-                linha.style.backgroundColor = '#F2F2F2';
+                this.style.backgroundColor = '#F2F2F2';
                 
             } else {
                 this.style.backgroundColor = 'transparent';
@@ -101,9 +122,7 @@ function atualizarDespesas(despesas) {
             
             
         })
-        linha.style.display = 'flex';
-        linha.style.justifyContent = 'space-around';
-        linha.style.width = '100%';
+
 
 
         if (countAbertas % 2 != 0 && despesas[despesa].estaPago == '0') {
@@ -111,7 +130,7 @@ function atualizarDespesas(despesas) {
             linha.style.backgroundColor = '#F2F2F2';
 
         } else if (countFechadas % 2 != 0 && despesas[despesa].estaPago == '1') {
-            linha.style.backgroundColor = '#F2F2F2';
+            linha.style.backgroundColor = 'transparent';
         }
         linha.setAttribute('td-id', despesas[despesa].id_tipo_despesa);
         colaborador = document.createElement('p');
@@ -127,7 +146,11 @@ function atualizarDespesas(despesas) {
         descritivo_td.appendChild(descritivo);
 
         valor = document.createElement('p');
-        valor.textContent = despesas[despesa].valor;
+        valor.textContent = parseFloat(despesas[despesa].valor).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+        }).replace(/\s/g, '');
+        valor.style.color = "#8C0000";
         valor.setAttribute('td-id', despesas[despesa].id_despesa);
         valor_td = document.createElement('td');
         valor_td.appendChild(valor);
@@ -155,8 +178,96 @@ function atualizarDespesas(despesas) {
             containerFechadas.appendChild(linha);
             countFechadas += 1;
         }
-        
+    }
 
+    };
+
+    count = 1;
+
+    for (despesa in despesas) {
+
+        if (despesas[despesa].estaPago == 1) {
+ 
+
+        linha = document.createElement('tr');
+
+        if (count % 2 != 0) {
+            linha.setAttribute('par', true);
+        } else {
+            linha.setAttribute('par', false);
+        }
+
+        linha.addEventListener('mouseover', function () {
+
+            this.style.backgroundColor = '#A6A6A6';
+            this.style.cursor = 'pointer';
+
+        });
+
+        linha.addEventListener('click', mostrarPopup.bind(null, despesa));
+
+        linha.addEventListener('mouseleave', function () {
+            if (this.getAttribute('par') == 'true') {
+
+                this.style.backgroundColor = '#F2F2F2';
+                
+            } else {
+                this.style.backgroundColor = 'transparent';
+            }
+            this.style.cursor = 'default';
+            
+            
+        })
+
+
+
+        if (count % 2 != 0) {
+
+            linha.style.backgroundColor = '#F2F2F2';
+
+        } else if (count % 2 == 0) {
+            linha.style.backgroundColor = 'transparent';
+        }
+        linha.setAttribute('td-id', despesas[despesa].id_tipo_despesa);
+        colaborador = document.createElement('p');
+        colaborador.textContent = despesas[despesa].nome;
+        colaborador.setAttribute('td-id', despesas[despesa].id_despesa);
+        colaborador_td = document.createElement('td');
+        colaborador_td.appendChild(colaborador);
+
+        descritivo = document.createElement('p');
+        descritivo.textContent = despesas[despesa].descritivo;
+        descritivo.setAttribute('td-id', despesas[despesa].id_despesa);
+        descritivo_td = document.createElement('td');
+        descritivo_td.appendChild(descritivo);
+
+        valor = document.createElement('p');
+        valor.textContent = parseFloat(despesas[despesa].valor).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+        }).replace(/\s/g, '');
+        valor.style.color = "#3B209B";
+        valor.setAttribute('td-id', despesas[despesa].id_despesa);
+        valor_td = document.createElement('td');
+        valor_td.appendChild(valor);
+
+        dataInicio = document.createElement('p');
+        dataInicio.textContent = despesas[despesa].dataInicio;
+        dataInicio.setAttribute('td-id', despesas[despesa].id_despesa);
+        dataInicio_td = document.createElement('td');
+        dataInicio_td.appendChild(dataInicio);
+        
+        linha.appendChild(colaborador_td);
+        linha.appendChild(descritivo_td);
+        linha.appendChild(valor_td);
+        linha.appendChild(dataInicio_td);
+
+    
+
+        containerFechadas.appendChild(linha);
+        count += 1;
+        
+        }
     };
 
 }
@@ -169,6 +280,7 @@ function atualizarTiposDespesas(despesas) {
     for (despesa in despesas) {
 
         linha = document.createElement('div');
+        linha.style.padding = '15px 19px';
 
         if (count % 2 != 0) {
 
@@ -178,11 +290,27 @@ function atualizarTiposDespesas(despesas) {
 
         btn = document.createElement('button');
         btn.textContent = despesas[despesa].nome;
+        btn.style.cursor = "pointer";
         btn.setAttribute('td-id', despesas[despesa].id_tipo_despesa);
         btn.addEventListener('click', function()  {
+            btn = this;
+            for (i of this.parentNode.parentNode.children) {
+
+
+                if(i.children[0] == btn) {
+                    console.log(btn)
+                    this.style.fontWeight = "500";
+
+                } else 
+                {
+                    
+                    i.children[0].style.fontWeight = "400";
+                }
+            }
             id = this.getAttribute('td-id');
             despesasFechadas = document.getElementById('despesas-fechadas').children;
             despesasAbertas = document.getElementById('despesas-abertas').children;
+
 
             for (i of despesasFechadas) {
                 
@@ -201,7 +329,6 @@ function atualizarTiposDespesas(despesas) {
             }
 
             for (i of despesasAbertas) {
-                console.log(i.getAttribute('td-id'), id)
                 if (parseInt(i.getAttribute('td-id')) != id) {
                     i.style.display = 'none';
                 } else {
@@ -220,17 +347,19 @@ function atualizarTiposDespesas(despesas) {
         count += 1;
 
     };
+
+    
 }
 
 async function addDespesa() {
 
     body = new URLSearchParams();
 
-    body.append('descritivo', prompt('Descritivo da despesa:'));
-    body.append('valor', parseFloat(prompt('Valor da despesa:')));
-    body.append('dataInicio', prompt('Data de início da despesa (ANO-MÊS-DIA, eg. 2025-05-02):'));
-    body.append('dataVencimento', prompt('Data de vencimento da despesa (ANO-MÊS-DIA, eg. 2025-05-02):'));
-    body.append('tipo_despesa', parseInt(prompt('Insira o id do tipo da despesa (provisório):')));
+    body.append('descritivo', document.getElementById('descritivo-novo').value);
+    body.append('valor', document.getElementById('valor-novo').value);
+    body.append('dataInicio', document.getElementById('data-inicio-novo').value);
+    body.append('dataVencimento', document.getElementById('data-fim-novo').value);
+    body.append('tipo_despesa', document.getElementById('tipo-despesa-select-novo').value);
 
     res = await fetch('../php/api/despesa.php', {
         method: 'POST',
@@ -249,10 +378,37 @@ async function addDespesa() {
     
 }
 
+async function alterarDespesa() {
+
+    body = new URLSearchParams();
+
+    body.append('descritivo', document.getElementById('descritivo').value);
+    body.append('valor', document.getElementById('valor').value);
+    body.append('data-inicio', document.getElementById('data-inicio').value);
+    body.append('data-fim', document.getElementById('data-fim').value);
+    body.append('status', document.getElementById('status').checked == true ? 1 : 0);
+    body.append('id_despesa', document.getElementById('alterar-despesa').getAttribute('id_despesa'));
+
+        res = await fetch('../php/api/despesa.php', {
+        method: 'PUT',
+        body: body,
+        credentials: "include"
+    });
+
+    res = await res.json();
+
+    if (res.status = 'ok') {
+        window.location.reload();
+    } else {
+        alert("Houve erro ao criar a despesa, favor comunicar ao suporte.")
+    }
+    
+}
+
 async function addTipoDespesa() {
 
     body = new URLSearchParams();
-    body.append('nome', prompt('Nome do tipo de despesa:'));
+    body.append('nome', document.getElementById('nome-tipo-despesa-nova').value);
 
     res = await fetch('../php/api/tipo_despesa.php', {
         method: "POST",
@@ -267,6 +423,23 @@ async function addTipoDespesa() {
         window.location.reload();
     } else {
         alert("Houve erro ao criar o tipo de despesa, favor comunicar ao suporte.")
+    }
+
+}
+
+async function mostrarTipoDespesaCriarDespesa() {
+
+    data = await pesquisarTiposDespesas();
+
+    select = document.getElementById('tipo-despesa-select-novo');
+
+    for (i in data) {
+
+        opt = document.createElement('option');
+        opt.value = data[i].id_tipo_despesa;
+        opt.textContent = data[i].nome;
+        select.appendChild(opt)
+
     }
 
 }
