@@ -15,13 +15,13 @@
         <link rel="stylesheet" href="../css/all.css">
 
         <link rel="stylesheet" href="../css/metricas.css">
+        <script src="../js/metricas.js"></script>
 
         <title>Gestão de despesas</title>
 
     </head>
 
     <body onload="esta_logado(); checarAcesso('gestao'); getInfo(); ">
-        <div id="bg-blur" style="position:absolute; width:100vw; height:100vh; z-index:1;"></div>
         <div class="container1" id="container1">
             <div class="logo">
                 <img src="../img/account.png" width="80px" height="30px" alt>
@@ -75,45 +75,133 @@
                 </div>
             </div>
             <main>
-                <section>
-                    <div>
-                        <h1>Métricas de operação</h1>
-                        <p>Resumo do estado das operações do negócio.</p>
-                    </div>
-                    
-                    <div>
-                        <p>Período do relatório:</p>
+                <section class="top-wrapper">
+                    <div style="display: flex; flex-direction:column;gap:10px;">
+                        <div>
+                            <h1>Métricas de operação</h1>
+                            <p style="font-size: 14px; color: rgb(84, 84, 84);">Estado das operações do negócio. Por padrão, considera-se 3 meses para o relatório, podendo ser alterado logo abaixo.</p>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction:column;gap:5px;">
                         <div style="display: flex; gap: 10px;">
                             <div>
-                                <label for="inicio-relatorio">Início</label>
+                                <label for="data-inicio" >Início</label>
                                 <br>
-                                <input type="date">
+                                <input type="date" id="data-inicio" required>
                             </div>
                             <div>
-                                <label for="fim-relatorio">Fim</label>
+                                <label for="data-fim">Fim</label>
                                 <br>
-                                <input type="date">
+                                <input type="date" id="data-fim" required>
+                            </div>
+                            <button onclick="validar()">
+                            <i class="bi bi-search" style="justify-self:center"></i>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    
+                </section>
+                
+                <section class="resumo-semana-wrapper">
+                    <div>
+                        <h2>Resumão da semana</h2>
+                        <p style="font-size: 14px; color: rgb(84, 84, 84);">Mapa semanal de operações vs última semana, independente de filtro.</p>
+                    </div>
+                    
+                    <div class="resumo-cards-wrapper">
+                        <div class="card">
+                            <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Vendas efetuadas</h3>
+                                <i class="bi bi-cart-check-fill" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                            </div>
+                            <div style="max-width:fit-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card">152</p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Receita total</h3>
+                                <i class="bi bi-currency-dollar" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                            </div>
+                            <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card">R$<span>5.000,00</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
                             </div>
                         </div>
                     </div>
                 </section>
-                
-                <section>
-                    <h2>Resumão da semana</h2>
-                    <p style="font-size: 14px; color: gray;">Independe do filtro.</p>
-                    <div class="resumo-cards-wrapper">
 
+                <section class="indicadores-wrapper">
+                    <div>
+                        <h2>Como estamos, chefe?</h2>
+                        <p style="font-size: 14px; color: rgb(84, 84, 84);">Visão geral das operações no período desejado.</p>
                     </div>
-                </section>
-
-                <section>
-                    <h2>Como estão as vendas?</h2>
+                    
                     <div class="vendas-info-wrapper">
                         <div class="vendas-info-cards">
-
-                        </div>
-                        <div class="vendas-info-graphs">
-
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Volume de vendas</h3>
+                                <i class="bi bi-percent" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card"><span id="volume_vendas">5</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Ticket médio</h3>
+                                <i class="bi bi-cash-coin" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card"><span id="ticket_medio_valor">R$5.000,00</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Margem de lucro</h3>
+                                <i class="bi bi-piggy-bank-fill" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card">R$<span>5.000,00</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Crescimento</h3>
+                                <i class="bi bi-sort-up" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card">R$<span>5.000,00</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Lucro real</h3>
+                                <i class="bi bi-plus-slash-minus" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card"><span >R$5.000,00</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Despesas vs Receita</h3>
+                                <i class="bi bi-percent" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card">R$<span>5.000,00</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
