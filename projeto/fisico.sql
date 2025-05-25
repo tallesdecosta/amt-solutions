@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS venda(
  statuscmd CHAR(1) NOT NULL,
  PRIMARY KEY (id)
 );
+
 CREATE TABLE IF NOT EXISTS produto(
 id_produto INT AUTO_INCREMENT,
  nome VARCHAR(255) NOT NULL,
@@ -31,6 +32,16 @@ CREATE TABLE IF NOT EXISTS produtoLote(
 	quantidade FLOAT NOT NULL,
 	FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
 	PRIMARY KEY (id_lote)	
+);
+
+CREATE TABLE IF NOT EXISTS produtoLoteInsumo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_produtoLote INT,
+  id_insumoLote INT,
+  quantidade_utilizada FLOAT NOT NULL,
+
+  FOREIGN KEY (id_produtoLote) REFERENCES produtoLote(id_Lote),
+  FOREIGN KEY (id_insumoLote) REFERENCES insumoLote(id_Lote)
 );
 
 CREATE TABLE IF NOT EXISTS venda_produto(
@@ -64,14 +75,6 @@ CREATE TABLE IF NOT EXISTS insumoLote(
 	PRIMARY KEY (id_lote)	
 );
 
-CREATE TABLE IF NOT EXISTS produtoinsumo(
- id_produto INT,
- id_insumo INT,
- quantidade VARCHAR(255),
- observacoes VARCHAR(255),
- FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
- FOREIGN KEY (id_insumo) REFERENCES insumo(id_insumo)
-);
 CREATE TABLE IF NOT EXISTS usuario(
 id_usuario INT AUTO_INCREMENT,
  nome VARCHAR(255) NOT NULL,
@@ -168,6 +171,7 @@ CREATE TABLE IF NOT EXISTS operacao(
 CREATE TABLE IF NOT EXISTS alergia(
 	id_alergia INT AUTO_INCREMENT,
 	nome VARCHAR(255) NOT NULL,
+	 observacao VARCHAR(255),
 	PRIMARY KEY(id_alergia)
 );
 
