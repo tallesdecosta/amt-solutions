@@ -10,7 +10,7 @@
 
         <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/produto.css">
+        <link rel="stylesheet" href="../css/produto.css?=v2">
 
         <title>Produto</title>
     </head>
@@ -154,6 +154,12 @@
                             </div>
 
                         </div>
+
+                            <div class="produtoAlergias" id="produto-alergias">
+                              <h3>Alergias</h3>
+                                <button type="button" id="btn-adicionarAlergia">Adicionar Alergias</button>
+                              <div id="lista-alergias"></div>
+                            </div>
                         
                     </div>
                 </div>
@@ -211,6 +217,12 @@
                         <div class="info">
                             <label for="">Quantidade</label><br>
                             <input type="number" id="quantidade" disabled>
+                        </div>
+                        
+                        <div class="insumosUtilizados" id="insumos-utilizados">
+                          <h3>Insumos Utilizados</h3>
+                            <button type="button" id="btn-adicionarInsumo">Adicionar Insumo</button>
+                          <div id="lista-insumos"></div>
                         </div>
 
                         <div class="tabelaContainerLotes">
@@ -276,7 +288,7 @@
 
 <script src="../js/podeAcessar.js"></script>
 
-<script src="../js/produto.js"></script>
+<script src="../js/produto.js?v=1"></script>
 
 <script>
 
