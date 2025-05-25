@@ -225,6 +225,40 @@ button:hover{
     outline-color: rgb(149, 158, 255);
 }
 
+.insumosUtilizados{
+    width: 100%;
+    max-width: 100%;
+    min-height: 50%;
+    overflow-x: auto;
+    flex-direction: column;
+    gap: 12px; 
+    justify-content: left;
+    justify-items: left;
+}
+
+.insumo-item{
+  display: flex;
+  gap: 8px; 
+  padding: 6px;
+}
+
+.produtoAlergias{
+    width: 100%;
+    max-width: 100%;
+    min-height: 50%;
+    overflow-x: auto;
+    flex-direction: column;
+    gap: 12px; 
+    justify-content: left;
+    justify-items: left;
+}
+
+.insumo-alergia{
+  display: flex;
+  gap: 8px; 
+  padding: 6px;
+}
+
 /**/
 
 .secall .app .barraPesquisa{
