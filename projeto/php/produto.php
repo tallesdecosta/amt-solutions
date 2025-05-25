@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados = json_decode(file_get_contents('php://input'), true);
-
+    
     $nomeImagem = null;
     if (isset($dados['imagem']) && !empty($dados['imagem'])) {
         $imgInfo = explode(',', $dados['imagem']);
@@ -93,13 +93,15 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         header('Content-Type: application/json');
-        echo json_encode(["status" => "sucesso"]);
+        $id_produto = isset($dados['id']) ? $dados['id'] : $conn->insert_id;
+        echo json_encode(["status" => "sucesso", "id_produto" => $id_produto]);
     } else {
         http_response_code(500);
         header('Content-Type: application/json');
         echo json_encode(["erro" => "Erro ao salvar ou atualizar"]);
     }
 
+    
     $stmt->close();
 }
 
