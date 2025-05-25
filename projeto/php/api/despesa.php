@@ -73,12 +73,13 @@
 
 
           $sql = "UPDATE despesa SET " .
-    "descritivo = '"     . $put_vars['descritivo']     . "', " .
-    "valor = "           . $put_vars['valor']          . ", " .
-    "dataInicio = '"     . $put_vars['data-inicio']     . "', " .
-    "dataVencimento = '" . $put_vars['data-fim'] . "', " .
-    "estaPago = "          . $put_vars['status']         . " " .
-  "WHERE id_despesa = " . $put_vars['id_despesa'] . ";";
+    "descritivo = '"       . $put_vars['descritivo']       . "', " .
+    "valor = "             . $put_vars['valor']            . ", " .
+    "dataInicio = '"       . $put_vars['data-inicio']      . "', " .
+    "dataVencimento = '"   . $put_vars['data-fim']         . "', " .
+    "estaPago = "          . $put_vars['status']           . ", " .
+    "id_tipo_despesa = "   . $put_vars['id_tipo_despesa']  . " " .
+    "WHERE id_despesa = "  . $put_vars['id_despesa']       . ";";
         $conn = conectar();
         $res = $conn->query($sql);
 

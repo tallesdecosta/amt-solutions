@@ -14,14 +14,14 @@
 
         <link rel="stylesheet" href="../css/all.css">
 
-        <link rel="stylesheet" href="../css/despesas.css">
+        <link rel="stylesheet" href="../css/metricas.css">
 
         <title>Gestão de despesas</title>
 
     </head>
 
-    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); iniciar();">
-
+    <body onload="esta_logado(); checarAcesso('gestao'); getInfo(); ">
+        <div id="bg-blur" style="position:absolute; width:100vw; height:100vh; z-index:1;"></div>
         <div class="container1" id="container1">
             <div class="logo">
                 <img src="../img/account.png" width="80px" height="30px" alt>
@@ -74,28 +74,54 @@
                     </div>
                 </div>
             </div>
-            <div style="display: flex; justify-content: center; align-items: center; width: 100vw;">
-                <main>
-                    <h1>Gestão de despesas</h1>
-                    <table class="bento wrapper-principal">
-                        <thead>
-                            <tr class="colunas">
-                                <th>Colaborador</th>
-                                <th>Data</th>
-                                <th>Valor</th>
-                                <th>Categoria</th>
-                                <th>Status</th>
-                        </tr>
-
-                        </thead>
-                        <tbody id="despesas-abertas"></tbody>
+            <main>
+                <section>
+                    <div>
+                        <h1>Métricas de operação</h1>
+                        <p>Resumo do estado das operações do negócio.</p>
+                    </div>
+                    
+                    <div>
+                        <p>Período do relatório:</p>
+                        <div style="display: flex; gap: 10px;">
+                            <div>
+                                <label for="inicio-relatorio">Início</label>
+                                <br>
+                                <input type="date">
+                            </div>
+                            <div>
+                                <label for="fim-relatorio">Fim</label>
+                                <br>
+                                <input type="date">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section>
+                    <h2>Resumão da semana</h2>
+                    <p style="font-size: 14px; color: gray;">Independe do filtro.</p>
+                    <div class="resumo-cards-wrapper">
 
                     </div>
-                </main>
-            </div>
-            
+                </section>
 
+                <section>
+                    <h2>Como estão as vendas?</h2>
+                    <div class="vendas-info-wrapper">
+                        <div class="vendas-info-cards">
+
+                        </div>
+                        <div class="vendas-info-graphs">
+
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+            
         </section>
+        
 
     </body>
 

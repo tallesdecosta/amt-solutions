@@ -81,6 +81,9 @@ function mostrarPopup (despesa, event) {
     document.getElementById('data-fim').value = despesas[despesa].dataVencimento;
     document.getElementById('alterar-despesa').setAttribute('id_despesa', despesas[despesa].id_despesa);
     document.getElementById('status').checked =  parseInt(despesas[despesa].estaPago) == 1;
+    mostrarTipoDespesaAlterarDespesa(despesa);
+    
+
 
 }
 
@@ -388,6 +391,7 @@ async function alterarDespesa() {
     body.append('data-fim', document.getElementById('data-fim').value);
     body.append('status', document.getElementById('status').checked == true ? 1 : 0);
     body.append('id_despesa', document.getElementById('alterar-despesa').getAttribute('id_despesa'));
+    body.append('id_tipo_despesa', document.getElementById('tipo-despesa-select-alterar').value);
 
         res = await fetch('../php/api/despesa.php', {
         method: 'PUT',
@@ -433,6 +437,11 @@ async function mostrarTipoDespesaCriarDespesa() {
 
     select = document.getElementById('tipo-despesa-select-novo');
 
+    if (select.children) {
+        select.innerHTML = '';
+
+    }
+
     for (i in data) {
 
         opt = document.createElement('option');
@@ -441,5 +450,27 @@ async function mostrarTipoDespesaCriarDespesa() {
         select.appendChild(opt)
 
     }
+
+}
+
+async function mostrarTipoDespesaAlterarDespesa(despesa) {
+
+    data = await pesquisarTiposDespesas();
+
+    select = document.getElementById('tipo-despesa-select-alterar');
+    if (select.children) {
+        select.innerHTML = '';
+
+    }
+    for (i in data) {
+
+        opt = document.createElement('option');
+        opt.value = data[i].id_tipo_despesa;
+        opt.textContent = data[i].nome;
+        select.appendChild(opt)
+
+    }
+
+    document.getElementById('tipo-despesa-select-alterar').value = despesas[despesa].id_tipo_despesa;
 
 }
