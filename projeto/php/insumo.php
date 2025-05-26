@@ -5,18 +5,24 @@ $conn = conectar();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : '';
-    $query = 'SELECT * FROM insumo WHERE 1=1';
 
-    if ($filtro) {
-        $query .= " AND (id_insumo LIKE ? OR nome LIKE ? OR classificacao LIKE ? OR vencimento LIKE ?)";
-    }
+    $query = "
+        SELECT i.id_insumo, i.nome, i.classificacao, i.qntMinima, i.inspReceb, i.localizacao, 
+        COALESCE(SUM(il.quantidade), 0) AS quantidadeTotal
+        FROM insumo i
+        LEFT JOIN insumoLote il ON i.id_insumo = il.id_insumo
+        WHERE (
+            i.id_insumo LIKE ? OR 
+            i.nome LIKE ? OR 
+            i.classificacao LIKE ?
+        )
+        GROUP BY i.id_insumo
+    ";
 
     $stmt = $conn->prepare($query);
 
-    if ($filtro) {
-        $param = "%$filtro%";
-        $stmt->bind_param('ssss', $param, $param, $param, $param);
-    }
+    $param = "%$filtro%";
+    $stmt->bind_param('sss', $param, $param, $param);
 
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -36,33 +42,27 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados = json_decode(file_get_contents('php://input'), true);
 
     if (isset($dados['id'])) {
-        $stmt = $conn->prepare("UPDATE insumo SET nome=?, classificacao=?, qntMinima=?, lote=?, vencimento=?, inspReceb=?, fornecedor=?, localizacao=?, quantidade=? WHERE id_insumo=?");
+        $stmt = $conn->prepare("UPDATE insumo SET nome=?, classificacao=?, qntMinima=?, inspReceb=?, localizacao=?, quantidadeTotal=? WHERE id_insumo=?");
         $stmt->bind_param(
-            "ssssssssii", 
+            "ssissii", 
             $dados['nome'],
             $dados['classificacao'],
             $dados['qntMinima'],
-            $dados['lote'],
-            $dados['vencimento'],
             $dados['inspReceb'],
-            $dados['fornecedor'],
             $dados['localizacao'],
-            $dados['quantidade'],
+            $dados['quantidadeTotal'],
             $dados['id']
         );
     } else {
-        $stmt = $conn->prepare("INSERT INTO insumo (nome, classificacao, qntMinima, lote, vencimento, inspReceb, fornecedor, localizacao, quantidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO insumo (nome, classificacao, qntMinima, inspReceb, localizacao, quantidadeTotal) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param(
-            "ssssssssi", 
+            "ssissi", 
             $dados['nome'],
             $dados['classificacao'],
             $dados['qntMinima'],
-            $dados['lote'],
-            $dados['vencimento'],
             $dados['inspReceb'],
-            $dados['fornecedor'],
             $dados['localizacao'],
-            $dados['quantidade']
+            $dados['quantidadeTotal']
         );
     }
 
