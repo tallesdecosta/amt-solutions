@@ -35,12 +35,32 @@ async function adcfunc() {
 
 
 async function salvar() {
+
+    let nome = document.getElementById("operacao").innerText
     let element1 = document.getElementById("respon").value
     let element2 = document.getElementById("valor").value
     let element3 = document.getElementById("obs").value 
 
     if(element1 != 0){
-        response = await registrarop(element1, element2, element3)
+
+        if(nome == 'Entrada de caixa'){
+            nome = 'Entrada'
+
+        }else if(nome == 'Saída de caixa'){
+
+            
+            nome = 'Saida'
+
+            if(element2 > 0){
+                element2 = element2*(-1)
+
+                
+            }
+            
+        }  
+
+       
+        response = await registrarop(element1, element2, element3,nome)
 
         for (i in response) {
     
@@ -64,13 +84,14 @@ async function salvar() {
     
 }
 
-async function registrarop(dado1, dado2, dado3) {
+async function registrarop(dado1, dado2, dado3,dado4) {
 
-    let list = { "resp": dado1, "op": "insert", "nome": "Entrada de caixa", "valor": dado2, "obs": dado3 }
+    let list = { "resp": dado1, "op": "insert", "nome": dado4, "valor": dado2, "obs": dado3 }
 
     let data = await fetch("../php/operacao.php", {
         method: "POST",
         credentials: "include",
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(list)
     })
 

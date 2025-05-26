@@ -34,13 +34,12 @@ async function adcfunc() {
 
 adcfunc()
 
-
 async function abrir() {
     let element1 = document.getElementById("respon").value
     let element2 = document.getElementById("valor").value
 
-    if (element1 != 0) {
-        response = await registrarop(element1,"abrir", element2)
+    if (element1 != 0 && (element2 != '' && element2 != false)) {
+        response = await registrarop(element1, "abrir", element2)
 
         for (i in response) {
 
@@ -65,9 +64,10 @@ async function abrir() {
 async function fechar() {
     let element1 = document.getElementById("respon").value
     let element2 = document.getElementById("valor").value
+    let element3 = document.getElementById("obs").value
 
     if (element1 != 0) {
-        response = await registrarop(element1,"fechar", element2)
+        response = await registrarop(element1, "fechar", element2, element3)
 
         for (i in response) {
 
@@ -91,9 +91,9 @@ async function fechar() {
 
 
 
-async function registrarop(dado1,ope, dado2) {
+async function registrarop(dado1, ope, dado2, dado3) {
 
-    let list = { "resp": dado1, "op" : ope, "nome": "Entrada de caixa", "valor": dado2}
+    let list = { "resp": dado1, "op": ope, "valor": dado2, "obs": dado3 }
 
     let data = await fetch("../php/caixa.php", {
         method: "POST",
@@ -109,3 +109,57 @@ async function registrarop(dado1,ope, dado2) {
 function voltar() {
     window.location.href = '../html/moduloVendas.html'
 }
+
+async function valorAtual() {
+
+    if (window.location.href == 'http://localhost/projeto/html/fechaCaixa.html') {
+
+        element1 = document.getElementById('valorAtual')
+
+        data = await registrarop(null, "valorAtual", null, null)
+
+        if (data) {
+
+            for (i in data) {
+
+                let valor = parseFloat((data[i].valor_final))
+                let valorFinal = valor.toFixed(2)
+
+                let valorFinal2 = valorFinal.replace(".", ",")
+
+                element1.innerText = "R$ " + valorFinal2
+            }
+
+        }
+    }
+
+}
+
+valorAtual()
+
+async function valorDinheiro() {
+
+    if (window.location.href == 'http://localhost/projeto/html/fechaCaixa.html') {
+
+        element = document.getElementById('valorDinheiro')
+
+        data = await registrarop(null, "valorDinheiro", null, null)
+
+
+        if (data) {
+
+            let sum = 0
+
+            for (i in data) {
+
+                sum += parseFloat(data[i].valor)
+            }
+
+            let valor1 = sum.toFixed(2)
+            let valor2 = valor1.replace(".", ",")
+            element.innerText = "R$ " + valor2
+        }
+    }
+
+}
+valorDinheiro()
