@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS venda(
  data_emissao DATE NOT NULL,
  formaPagamento VARCHAR(255) NOT NULL,
  statuscmd CHAR(1) NOT NULL,
+ valor FLOAT,
  PRIMARY KEY (id)
 );
 
@@ -100,12 +101,18 @@ id_pedido INT AUTO_INCREMENT,
  
 );
 CREATE TABLE IF NOT EXISTS caixa(
- id_usuario INT,
- valorTotal FLOAT NOT NULL,
- data_caixa DATE NOT NULL,
- horaAbertura DATETIME NOT NULL,
- horaFecha DATETIME NOT NULL,
- FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+ id_op INT AUTO_INCREMENT,
+ valor_ini FLOAT NOT NULL,
+ valor_final FLOAT,
+ id_ini INT NOT NULL,
+ id_final INT,
+ nome_op VARCHAR(50) NOT NULL,
+ hora_ini DATETIME NOT NULL,
+ hora_final DATETIME,
+ obs VARCHAR(255),
+ FOREIGN KEY (id_ini) REFERENCES usuario(id_usuario),
+ FOREIGN KEY (id_final) REFERENCES usuario(id_usuario),
+ PRIMARY KEY (id_op)
  
 );
 CREATE TABLE IF NOT EXISTS dfc(
@@ -159,14 +166,14 @@ descritivo VARCHAR(255) NOT NULL,
 );
 
 
-CREATE TABLE IF NOT EXISTS operacao(
-	id INT AUTO_INCREMENT,
-	id_respon INT NOT NULL,
- 	valor FLOAT NOT NULL,
-	obs VARCHAR(300) NOT NULL,
-	PRIMARY KEY(id),
- 	FOREIGN KEY (id_respon) REFERENCES usuario(id_usuario)
-);
+-- CREATE TABLE IF NOT EXISTS operacao(
+-- 	id INT AUTO_INCREMENT,
+-- 	id_respon INT NOT NULL,
+--  	valor FLOAT NOT NULL,
+-- 	obs VARCHAR(300) NOT NULL,
+-- 	PRIMARY KEY(id),
+--  	FOREIGN KEY (id_respon) REFERENCES usuario(id_usuario)
+-- );
 
 CREATE TABLE IF NOT EXISTS alergia(
 	id_alergia INT AUTO_INCREMENT,
