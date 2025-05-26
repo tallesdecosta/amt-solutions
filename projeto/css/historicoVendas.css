@@ -1,0 +1,336 @@
+.app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 96vw;
+}
+
+.app .alinha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-height: 100%;
+    min-width: 60%;
+}
+
+.app .alinha .topo {
+    width: 100%;
+}
+
+.app .alinha .topo .divoltar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.app .topo .divoltar p {
+    margin: 0px
+}
+
+.app .topo h1 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 200;
+    margin: 20px auto 50px auto;
+}
+
+
+.app .fundotabela {
+    min-height: 200px;
+    max-height: 50%;
+    width: 100%;
+    overflow-y: scroll;
+    border-radius: 10px;
+    background-color: white;
+}
+
+
+.app table {
+    min-height: fit-content;
+    min-width: 100%;
+    border-spacing: 0;
+}
+
+.app .fundotabela thead tr {
+    border-radius: 10px;
+    background-color: #a8a8a8;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+}
+
+.app .fundotabela thead tr th {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: left;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: black;
+
+}
+
+.app .fundotabela tbody td {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: left;
+    padding: 10px 20px;
+    height: fit-content;
+    top: 0;
+    color: rgb(15, 15, 15);
+}
+
+.app .fundotabela tbody td i {
+    font-size: 22px;
+    cursor: pointer;
+
+}
+
+
+
+
+#tabela tbody tr:nth-child(even) {
+    background-color: #e2e2e2;
+}
+
+#tabela tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+.app .fundotabela::-webkit-scrollbar {
+    background-color: #c9c9c9ce;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.app .fundotabela::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+}
+
+
+
+.app .fundoComanda {
+    bottom: 0;
+    right: 0;
+    width: 96vw;
+    height: 92vh;
+    background-color: rgba(0, 0, 0, 0.764);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+}
+
+.app .fundoComanda .janelaComanda {
+    width: 35%;
+    height: 80%;
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    border-radius: 10px;
+
+}
+.app .fundoComanda .janelaComanda .fechar{
+    display: flex;
+    align-items: center;
+    text-align: start;
+    padding: 0px 15px;
+    font-size: 14px;
+    gap: 7px;
+    height: 10px;
+    overflow: visible;
+    width: fit-content;
+    cursor: pointer;
+}
+
+
+.app .fundoComanda .janelaComanda .infos {
+    max-width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 14px;
+    padding-left: 15px;
+    justify-content: center;
+}
+
+.app .fundoComanda .janelaComanda .infos p{
+    margin: 8px;
+}
+
+
+
+.app .fundoComanda .janelaComanda .itens {
+    width: 100%;
+    height: 40%;
+}
+
+.app .fundoComanda .janelaComanda .itens .p1 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 15px;
+}
+
+.app .fundoComanda .janelaComanda .fundotable {
+    width: 95%;
+    height: 80%;
+    overflow-y: scroll;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.app .fundotable::-webkit-scrollbar {
+    background-color: #c9c9c9ce;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.app .fundotable::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+}
+
+.app .fundoComanda .janelaComanda .itens .fundotable table .nome {
+    max-width: 270px;
+    width: 270px;
+    overflow: hidden;
+    text-wrap: nowrap;
+}
+
+.app .fundoComanda .janelaComanda .itens .fundotable table th {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 300;
+    background-color: #a8a8a8;
+}
+
+.app .fundoComanda .janelaComanda .itens .fundotable table td {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.app .fundotable table thead tr {
+    border-radius: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+
+.app .fundoComanda .janelaComanda .itens .fundotable table tr:nth-child(even) {
+    background-color: #e2e2e2;
+}
+
+.app .fundoComanda .janelaComanda .itens .fundotable table tr:nth-child(odd) {
+    background-color: white;
+}
+
+
+.app .fundoComanda .janelaComanda .valortotal {
+    display: flex;
+    gap: 7px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.app .fundoComanda .janelaComanda .valortotal p {
+    margin-left: 15px;
+}
+
+
+
+/* .app{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 96vw;
+}
+.app .fundo{
+    min-height: 60%;
+}
+
+.app .fundo .divoltar{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 18px;
+    font-weight: 300;
+    width: fit-content;
+    cursor: pointer;
+}
+.app .fundo .divoltar p{
+    margin: 0;
+}
+
+.app .fundo h1{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 200;
+    margin: 50px 0px
+}
+
+.app .fundo table{
+    border-spacing: 0; */
+/* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
+/* overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.app .fundo table thead th{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    padding: 10px 20px;
+    background-color: #c4c4c4;
+}
+
+.app .fundo table tbody td{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    padding: 10px 20px;
+    height: fit-content;
+}
+
+
+
+.app .fundo table:nth-child(even) {
+    background-color: #F5F5F5;
+}
+
+.app .fundo table:nth-child(odd) {
+    background-color: white;
+}
+
+.app .fundo table::-webkit-scrollbar {
+    background-color: #e7e7e7ce;
+    border-radius: 10px;
+    width: 10px;
+    padding: 3px;
+}
+
+.app .fundo table::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.281);
+    border-radius: 10px;
+} */
