@@ -35,16 +35,6 @@ CREATE TABLE IF NOT EXISTS produtoLote(
 	PRIMARY KEY (id_lote)	
 );
 
-CREATE TABLE IF NOT EXISTS produtoLoteInsumo (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  id_produtoLote INT,
-  id_insumoLote INT,
-  quantidade_utilizada FLOAT NOT NULL,
-
-  FOREIGN KEY (id_produtoLote) REFERENCES produtoLote(id_Lote),
-  FOREIGN KEY (id_insumoLote) REFERENCES insumoLote(id_Lote)
-);
-
 CREATE TABLE IF NOT EXISTS venda_produto(
 	id_produto INT NOT NULL,
 	id_venda INT NOT NULL,
@@ -74,6 +64,16 @@ CREATE TABLE IF NOT EXISTS insumoLote(
 	quantidade FLOAT NOT NULL,
 	FOREIGN KEY (id_insumo) REFERENCES insumo(id_insumo),
 	PRIMARY KEY (id_lote)	
+);
+
+CREATE TABLE IF NOT EXISTS produtoLoteInsumo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_produtoLote INT,
+  id_insumoLote INT,
+  quantidade_utilizada FLOAT NOT NULL,
+
+  FOREIGN KEY (id_produtoLote) REFERENCES produtoLote(id_Lote),
+  FOREIGN KEY (id_insumoLote) REFERENCES insumoLote(id_Lote)
 );
 
 CREATE TABLE IF NOT EXISTS usuario(
