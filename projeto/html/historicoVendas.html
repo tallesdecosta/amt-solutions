@@ -9,7 +9,7 @@
 
     <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-    <link rel="stylesheet" href="../css/operacoesCaixaV.css">
+    <link rel="stylesheet" href="../css/historicoVendas.css">
 
     <title>Operações do caixa</title>
 
@@ -86,19 +86,73 @@
                         <thead>
                             <tr>
                                 <th>Data</th>
-                                <th>Operação</th>
-                                <th>Responsável</th>
+                                <th>Nº comanda</th>
+                                <th>Cliente</th>
+                                <th>Forma de pagamento</th>
                                 <th>Valor</th>
-                                <th>Total Caixa</th>
+                                <th>Comanda</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody">
-                             
+                        <tbody id="tbodyVendas">
+                            <tr id="trvenda1">
+                                <td id="data1">25/05/2025</td>
+                                <td id="numcmd">1</td>
+                                <td id="nome1">Joao Barros da Silva</td>
+                                <td id="forma1">Débito</td>
+                                <td id="valor1">R$ 300,90</td>
+                                <td><i class="bi bi-file-text"></i></td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
+
+
             </div>
 
+            <div class="fundoComanda" id="fundoComanda">
+
+                <div class="janelaComanda">
+
+                    <div class="fechar" onclick="voltar()">
+                        <i class="bi bi-arrow-left-circle"></i>
+                        <p>Voltar</p>
+                    </div>
+
+                    <div class="infos">
+                        <p id="cliente">Cliente: </p>
+                        <p id="cmd">Nº comanda: </p>
+                        <p id="form">Forma de pagamento: </p>
+                        <p id="datacmd">Data: </p>
+                    </div>
+
+                    <div class="itens">
+                        <p class="p1">Itens</p>
+                        <div class="fundotable">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Qnt</th>
+                                        <th>SubTotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodycmd">
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="valortotal">
+                        <p>Valor total:</p>
+                        <p class="p1" id="pvalor">R$ </p>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -112,7 +166,7 @@
 
 <script src="../js/nav.js"></script>
 
-<script src="../js/operacoesCaixaV.js"></script>
+<script src="../js/historicoVendas.js"></script>
 
 <script src="../js/estaLogado.js"></script>
 

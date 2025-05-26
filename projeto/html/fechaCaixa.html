@@ -9,7 +9,7 @@
 
     <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-    <link rel="stylesheet" href="../css/entradaDeCaixa.css">
+    <link rel="stylesheet" href="../css/fechaCaixa.css">
 
     <title>Vendas</title>
 </head>
@@ -68,16 +68,20 @@
 
         <div class="app">
 
+            <div class="esq"></div>
+
             <div class="fundo">
                 <div class="alinhar">
-                    <h1>Abertura de caixa</h1>
+                    <div class="voltar">
+                        <i class="bi bi-arrow-left-circle" onclick="voltar()"></i>
+                        <p onclick="voltar()">Voltar</p>
+                    </div>
+                    <h1>Fechamento de caixa</h1>
                     <div class="div1">
                         <div class="inps1">
                             <label for="" class="element1">Responsável</label>
                             <select name="respon" id="respon" class="element1">
                                 <option value="0"></option>
-                                <!-- <option value="1">Matheus Lucas</option>
-                                <option value="2">Luana</option> -->
                             </select>
                         </div>
                         <div class="inps2">
@@ -85,16 +89,27 @@
                             <input type="number" name="" id="valor" class="element2">
                         </div>
                     </div>
-                    <!-- <div class="div2">
-                        <label for="">Observações</label>
-                        <textarea name="" id="obs" cols="70" rows="6"></textarea>
-                    </div> -->
+                    <div class="inps3">
+                        <label for="obs">Observações</label>
+                        <textarea name="obs" id="obs" cols="70" rows="6"></textarea>
+                    </div>
                     <div class="divbut">
-                        <button id="but" onclick="fechar()">Abrir Caixa</button>
+                        <button id="but" onclick="fechar()">Fechar Caixa</button>
                     </div>
                 </div>
             </div>
-
+            <div class="dir">
+                <div class="fundoValCaixa">
+                    <div class="caixa">
+                        <p class="p1">Valor Total do caixa</p>
+                        <p class="p2" id="valorAtual">R$ 0</p>
+                    </div>
+                    <div class="caixa">
+                        <p class="p1">Valor em dinheiro do dia</p>
+                        <p class="p2" id="valorDinheiro">R$ 0</p>
+                    </div>
+                </div>
+            </div>
             
 
 
