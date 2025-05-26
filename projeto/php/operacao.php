@@ -31,23 +31,33 @@ function insert()
     $resp = intval($_POST["resp"]);
     $val = floatval($_POST["valor"]);
     $obs = $_POST["obs"];
+    $nome = $_POST["nome"];
 
     $conn = conectar();
-    $query = "INSERT INTO operacao(id_respon,valor,obs,data_op) VALUES ('$resp','$val','$obs',now())";
+    $query = "SELECT valor_final FROM caixa ORDER BY id_op DESC LIMIT 1;";
     $resultado = $conn->query($query);
+    $data = $resultado -> fetch_object();
+
+    
+
+    $ultimo_valor = $data -> valor_final;
+
+    $ajuste = $ultimo_valor + ($val);
 
     if ($resultado) {
+
         $conn = conectar();
-        $query = "INSERT INTO caixa(id_usuario,id_fech,ajuste,valorAber,valorFech,horaAbertura,horaFecha) VALUES ('$resp','$resp',1,'$val','$val',now(),now())";
+        $query = "INSERT INTO caixa(valor_ini,valor_final,id_ini,id_final,nome_op,hora_ini,hora_final,obs) VALUES ('$val','$ajuste','$resp','$resp','$nome',now(),now(),'$obs')";
         $resultado = $conn->query($query);
 
-        if ($resultado) {
-            return (["result" => 200]);
-        } else {
-            return (["result" => 0]);
-        }
+
     }
 
+    if ($resultado) {
+        return (["result" => 200]);
+    } else {
+        return (["result" => 0]);
+    }
 }
 
 
@@ -58,7 +68,7 @@ function verificarAcesso()
     $senha = $_POST["senha"];
 
     $conn = conectar();
-    $query = "SELECT id_usuario FROM usuario WHERE username = '$user' AND senha = '$senha'";
+    $query = "SELECT id_usuario,senha FROM usuario WHERE username = '$user'";
     $resultado = $conn->query($query);
 
     if ($resultado) {
@@ -69,21 +79,28 @@ function verificarAcesso()
 
                 $id = $linha["id_usuario"];
 
-                $conn = conectar();
-                $query = "SELECT gestao FROM permissao WHERE id_usuario = '$id'";
-                $resultado = $conn->query($query);
+                $senha_certa = $linha["senha"];
+
+                if (password_verify($senha, $senha_certa)) {
+
+                    $conn = conectar();
+                    $query = "SELECT gestao FROM permissao WHERE id_usuario = '$id'";
+                    $resultado = $conn->query($query);
 
 
-                if ($resultado) {
+                    if ($resultado) {
 
-                    while ($linha = $resultado->fetch_assoc()) {
+                        while ($linha = $resultado->fetch_assoc()) {
 
-                        if ($linha["gestao"] == 1) {
-                            return (["acesso" => "autorizado"]);
-                        } else if ($linha["gestao"] == 0) {
-                            return (["acesso" => "negado"]);
+                            if ($linha["gestao"] == 1) {
+                                return (["acesso" => "autorizado"]);
+                            } else if ($linha["gestao"] == 0) {
+                                return (["acesso" => "negado"]);
+                            }
                         }
                     }
+                } else {
+                    return (["acesso" => "negado"]);
                 }
             }
         } else {
