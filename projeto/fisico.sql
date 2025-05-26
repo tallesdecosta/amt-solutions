@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS venda(
  id INT AUTO_INCREMENT,
  numComanda INT,
  nomeCliente VARCHAR(255),
- data_emissao DATE NOT NULL,
+ data_emissao DATETIME NOT NULL,
  formaPagamento VARCHAR(255) NOT NULL,
  statuscmd CHAR(1) NOT NULL,
  valor FLOAT,
