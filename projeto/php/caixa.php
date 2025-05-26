@@ -167,9 +167,13 @@ function verificar()
     $query = "SELECT valor_final FROM caixa WHERE (nome_op != 'Entrada' AND nome_op != 'Saida') ORDER BY id_op DESC LIMIT 1;";
     $resultado = $conn->query($query);
 
-    while ($linha = $resultado->fetch_assoc()) {
+    if ($resultado->num_rows > 0) {
+        while ($linha = $resultado->fetch_assoc()) {
 
-        return $linha;
+            return $linha;
+        }
+    }else{
+        return ["valor_final" => true];
     }
 }
 
@@ -179,11 +183,11 @@ function retornarCaixa()
     $query = "SELECT caixa.*,u.nome FROM caixa JOIN usuario as u WHERE caixa.id_final = u.id_usuario AND caixa.nome_op != 'Abertura' ORDER BY hora_final DESC;";
     $resultado = $conn->query($query);
 
-    if($resultado){
+    if ($resultado) {
 
         $result = [];
 
-        while($linha = $resultado -> fetch_assoc()){
+        while ($linha = $resultado->fetch_assoc()) {
 
             $result[] = $linha;
         }
