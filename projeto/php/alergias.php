@@ -2,69 +2,62 @@
 include 'conectar_bd.php';
 $conn = conectar();
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+if($_SERVER["REQUEST_METHOD"] === 'GET'){
     $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : '';
 
-    $query = "SELECT * FROM alergia WHERE 1=1";
-    if ($filtro) {
-        $query .= " AND (id_alergia LIKE ? OR nome LIKE ?)";
-        $stmt = $conn->prepare($query);
-        $param = "%$filtro%";
-        $stmt->bind_param('ss', $param, $param);
-    } else {
-        $stmt = $conn->prepare($query);
+    $query = "SELECT * FROM alergia";
+    if($filtro){
+        $query .= " WHERE id_alergia LIKE '%$filtro%' OR nome LIKE '%$filtro%'";
     }
 
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+    $resultado = $conn->query($query);
+
     $dados = [];
 
-    while ($linha = $resultado->fetch_assoc()) {
+    while($linha = $resultado->fetch_assoc()){
         $dados[] = $linha;
     }
 
-    header('Content-Type: application/json');
+    header('content-Type: application/json');
     echo json_encode($dados);
-    $stmt->close();
 }
 
-elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+elseif($_SERVER['REQUEST_METHOD'] === 'POST'){
+    header('Content-Type: application/json');
+
     $dados = json_decode(file_get_contents('php://input'), true);
+    $nome = $dados['nome'];
+    $observacao = $dados['observacao'];
+    
 
-    if (isset($dados['id_alergia'])) {
-        $stmt = $conn->prepare("UPDATE alergia SET nome=?, observacao=? WHERE id_alergia=?");
-        $stmt->bind_param("ssi", $dados['nome'], $dados['observacao'], $dados['id_alergia']);
-    } else {
-        $stmt = $conn->prepare("INSERT INTO alergia (nome, observacao) VALUES (?, ?)");
-        $stmt->bind_param("ss", $dados['nome'], $dados['observacao']);
+    if(isset($dados['id_alergia'])){
+        $id_alergia = $dados['id_alergia'];
+        $query = "UPDATE alergia SET nome='$nome', observacao='$observacao' WHERE id_alergia=$id_alergia";
+    }else{
+        $query = "INSERT INTO alergia (nome, observacao) VALUES ('$nome', '$observacao')";
     }
 
-    if ($stmt->execute()) {
-        header('Content-Type: application/json');
-        echo json_encode(["status" => "sucesso"]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["erro" => "Erro ao salvar ou atualizar"]);
-    }
+    $resultado = $conn->query($query);
 
-    $stmt->close();
+    if($resultado){
+        echo json_encode(["Status" => "Sucesso"]);
+    }else{
+        echo json_encode(["Status" => "erro"]);
+    }
 }
 
-elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+elseif($_SERVER['REQUEST_METHOD'] === 'DELETE'){
     parse_str($_SERVER['QUERY_STRING'], $params);
     $id = $params['id'];
+    
+    $query = "DELETE FROM alergia WHERE id_alergia = '$id'";
+    $resultado = $conn->query($query);
 
-    $stmt = $conn->prepare("DELETE FROM alergia WHERE id_alergia=?");
-    $stmt->bind_param("i", $id);
-
-    if ($stmt->execute()) {
-        echo json_encode(["status" => "deletado"]);
-    } else {
-        http_response_code(500);
-        echo json_encode(["erro" => "Erro ao deletar"]);
+    if($resultado){
+        echo json_encode(["Status" => "apagado"]);
+    }else{
+        echo json_encode(["Status" => "erro"]);
     }
-
-    $stmt->close();
 }
 
 $conn->close();
