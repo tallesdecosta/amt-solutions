@@ -37,15 +37,14 @@ async function adcfunc() {
 async function salvar() {
    let element1 = document.getElementById("respon").value
    let element2 = document.getElementById("valor").value
+   let element3 = document.getElementById("obs").value 
 
     if(element2 > 0){
         let x = element2
         element2 = x * (-1)
     }
 
-   let element3 = document.getElementById("obs").value 
-
-   if(element1 != 0){
+   if(element1 != 0 && (element2 != '' && element2 != null) && (element3 != '' && element3 != null)){
        response = await registrarop(element1, element2, element3)
 
        for (i in response) {
@@ -61,10 +60,10 @@ async function salvar() {
                console.log("Encontramos problemas no servidor, Pedimos que tente novamente mais tarde")
            }
        }
-   }else if(element1 == 0){
+   }else {
        let h1 = document.querySelector('h1').innerText
 
-       alert('Para salvar a '+ h1 +' é preciso preencher o campo "Responsável"')
+       alert('Para salvar a '+ h1 +' é preciso preencher todos os campos!')
    }
 
    

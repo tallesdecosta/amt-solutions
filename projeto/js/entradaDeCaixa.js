@@ -40,7 +40,7 @@ async function salvar() {
     let element2 = document.getElementById("valor").value
     let element3 = document.getElementById("obs").value
 
-    if (element1 != 0) {
+    if (element1 != 0 && (element2 != '' && element2 != null) && (element3 != '' && element3 != null)) {
 
         if (nome == 'Entrada de caixa') {
             nome = 'Entrada'
@@ -83,10 +83,10 @@ async function salvar() {
         }
 
 
-    } else if (element1 == 0) {
+    } else {
         let h1 = document.querySelector('h1').innerText
 
-        alert('Para salvar a ' + h1 + ' é preciso preencher o campo "Responsável"')
+        alert('Para salvar a ' + h1 + ' é preciso preencher todos os campos')
     }
 
 
