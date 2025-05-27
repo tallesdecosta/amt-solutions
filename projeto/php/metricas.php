@@ -13,60 +13,83 @@
             break;
     }
 
-    function retornarMetricas() {
+function retornarMetricas() {
+    $conn = conectar();
 
+    $dataInicio = $_GET['dataInicio'];
+    $dataFim = $_GET['dataFim'];
+
+    $intervalo = strtotime($dataFim) - strtotime($dataInicio);
+    $dataFimAnterior = date('Y-m-d', strtotime($dataInicio) - 1);
+    $dataInicioAnterior = date('Y-m-d', strtotime($dataInicio) - $intervalo - 1);
+
+    function buscarMetricas($conn, $inicio, $fim) {
         $metricas = [];
-        $sql_ticket_medio = "SELECT AVG(p.valor * vp.qntd) AS ticket_medio 
-        FROM venda v 
-        JOIN venda_produto vp ON v.id = vp.id_venda
-        JOIN produto p ON vp.id_produto = p.id_produto
-        WHERE v.data_emissao BETWEEN '".$_GET['dataInicio']."' AND '".$_GET['dataFim']."';";
 
-        $conn = conectar();
-        
+        // Receita, volume de vendas, ticket médio
+        $sql = "
+            SELECT 
+                COUNT(DISTINCT v.id) AS volume_vendas,
+                SUM(p.valor * vp.qntd) AS receita
+            FROM venda v
+            JOIN venda_produto vp ON v.id = vp.id_venda
+            JOIN produto p ON vp.id_produto = p.id_produto
+            WHERE v.data_emissao BETWEEN ? AND ?
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $inicio, $fim);
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
 
-        $res = $conn->query($sql_ticket_medio);
+        $receita = floatval($res['receita'] ?? 0);
+        $volumeVendas = intval($res['volume_vendas'] ?? 0);
 
-        $ticket_medio = $res->fetch_assoc();
-        $metricas[] = $ticket_medio;
+        $metricas['receita'] = $receita;
+        $metricas['volume_vendas'] = $volumeVendas;
+        $metricas['ticket_medio'] = $volumeVendas > 0 ? $receita / $volumeVendas : 0;
 
-        //
+        // Despesas pagas
+        $sql = "
+            SELECT SUM(valor) AS total_despesas
+            FROM despesa
+            WHERE dataVencimento BETWEEN ? AND ? AND estaPago = 1
+        ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $inicio, $fim);
+        $stmt->execute();
+        $res = $stmt->get_result()->fetch_assoc();
+        $totalDespesas = floatval($res['total_despesas'] ?? 0);
 
-        $sql_volume_vendas = "SELECT 
-        COUNT(*) AS total_comandas
-        FROM venda
-        WHERE data_emissao BETWEEN '".$_GET['dataInicio']."' AND '".$_GET['dataFim']."';";
+        // Lucro real
+        $lucro = $receita - $totalDespesas;
+        $metricas['lucro_real'] = $lucro;
 
-        $res = $conn->query($sql_volume_vendas);
-
-        $volume_vendas = $res->fetch_assoc();
-        $metricas[] = $volume_vendas;
-
-        //
-
-        $sql_margem_lucro = "SELECT 
-        COUNT(*) AS total_comandas
-        FROM venda
-        WHERE data_emissao BETWEEN '".$_GET['dataInicio']."' AND '".$_GET['dataFim']."';";
-
-        $res = $conn->query($sql_volume_vendas);
-
-        $volume_vendas = $res->fetch_assoc();
-        $metricas[] = $volume_vendas;
-
-        $sql_horario_pico = "
-        SELECT HOUR(v.data_emissao) AS hora, COUNT(*) AS total
-        FROM venda v
-        WHERE v.data_emissao BETWEEN '".$_GET['dataInicio']."' AND '".$_GET['dataFim']."'
-        GROUP BY hora
-        ORDER BY total DESC
-        LIMIT 1;
-    ";
-    $res = $conn->query($sql_horario_pico);
-    $metricas['horario_pico'] = $res->fetch_assoc()['hora'] . 'h';
+        // Margem de lucro (%)
+        $metricas['margem_lucro'] = $receita > 0 ? ($lucro / $receita) * 100 : null;
 
         return $metricas;
     }
+
+    $atual = buscarMetricas($conn, $dataInicio, $dataFim);
+    $anterior = buscarMetricas($conn, $dataInicioAnterior, $dataFimAnterior);
+
+    $resultado = [];
+
+    foreach ($atual as $key => $valorAtual) {
+        $valorAnterior = $anterior[$key] ?? 0;
+        $crescimento = $valorAnterior == 0 ? 100 : (($valorAtual - $valorAnterior) / $valorAnterior) * 100;
+
+        $resultado[$key] = [
+            'atual' => $valorAtual,
+            'anterior' => $valorAnterior,
+            'crescimento' => $crescimento,
+        ];
+    }
+
+    return $resultado;
+}
+
+
 
     
 

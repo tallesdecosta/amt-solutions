@@ -26,15 +26,16 @@ async function pesquisarDespesa() {
 async function mostrarDfc() {
 
     data = await pesquisar();
+    console.log(data.entradas)
 
 
-    while (document.getElementById('report-wrapper').firstChild && document.getElementById('report-wrapper').childElementCount != 1) {
+    while (document.getElementById('report-body').firstChild && document.getElementById('report-body').childElementCount != 1) {
 
-        document.getElementById('report-wrapper').removeChild(document.getElementById('report-wrapper').lastChild);
+        document.getElementById('report-body').removeChild(document.getElementById('report-body').lastChild);
 
     }
 
-    linha = document.createElement('div');
+    linha = document.createElement('tr');
     valor = 0;
 
     for (item in data) {
@@ -44,19 +45,17 @@ async function mostrarDfc() {
 
     }
 
-    titulo = document.createElement('p'); 
+    titulo = document.createElement('td'); 
     titulo.textContent = 'Recebimento de clientes';
-    tipo = document.createElement('p'); 
+    tipo = document.createElement('td'); 
     tipo.textContent = 'Entrada (+)';
-    valorText = document.createElement('p'); 
+    valorText = document.createElement('td'); 
     valorText.textContent = `R$${valor.toFixed(2)}`;
     valorText.textContent = valorText.textContent.replace(".", ",");
     linha.appendChild(titulo);
     linha.appendChild(tipo);
     linha.appendChild(valorText);
-    linha.style.display = "flex";
-    linha.style.gap = "30px";
-    document.getElementById('report-wrapper').appendChild(linha);
+    document.getElementById('report-body').appendChild(linha);
 
 
 }
@@ -68,7 +67,7 @@ async function mostrarDespesa() {
 
     for (i in data) {
 
-        linha = document.createElement('div');
+        linha = document.createElement('tr');
         valor = 0;
 
 
@@ -76,19 +75,18 @@ async function mostrarDespesa() {
         valor = parseFloat(data[i].valor);
         console.log(data[i].valor);
 
-        titulo = document.createElement('p'); 
+        titulo = document.createElement('td'); 
     titulo.textContent = data[i].descritivo;
-    tipo = document.createElement('p'); 
+    tipo = document.createElement('td'); 
     tipo.textContent = 'Saída (-)';
-    valorText = document.createElement('p'); 
+    valorText = document.createElement('td'); 
     valorText.textContent = `R$${valor.toFixed(2)}`;
     valorText.textContent = valorText.textContent.replace(".", ",");
     linha.appendChild(titulo);
     linha.appendChild(tipo);
     linha.appendChild(valorText);
-    linha.style.display = "flex";
-    linha.style.gap = "30px";
-    document.getElementById('report-wrapper').appendChild(linha);
+
+    document.getElementById('report-body').appendChild(linha);
 
         
     }
@@ -111,13 +109,13 @@ async function mostrarDfcSalvo(id) {
 
     data = await pesquisarSalvo(id);
 
-    while (document.getElementById('report-wrapper').firstChild && document.getElementById('report-wrapper').childElementCount != 1) {
+    while (document.getElementById('report-body').firstChild && document.getElementById('report-body').childElementCount != 1) {
 
-        document.getElementById('report-wrapper').removeChild(document.getElementById('report-wrapper').lastChild);
+        document.getElementById('report-body').removeChild(document.getElementById('report-body').lastChild);
 
     }
 
-    linha = document.createElement('div');
+    linha = document.createElement('tr');
     valor = 0;
 
     for (item in data) {
@@ -127,19 +125,18 @@ async function mostrarDfcSalvo(id) {
 
     }
 
-    titulo = document.createElement('p'); 
+    titulo = document.createElement('td'); 
     titulo.textContent = 'Recebimento de clientes';
-    tipo = document.createElement('p'); 
+    tipo = document.createElement('td'); 
     tipo.textContent = 'Entrada (+)';
-    valorText = document.createElement('p'); 
+    valorText = document.createElement('td'); 
     valorText.textContent = `R$${valor.toFixed(2)}`;
     valorText.textContent = valorText.textContent.replace(".", ",");
     linha.appendChild(titulo);
     linha.appendChild(tipo);
     linha.appendChild(valorText);
-    linha.style.display = "flex";
-    linha.style.gap = "30px";
-    document.getElementById('report-wrapper').appendChild(linha);
+
+    document.getElementById('report-body').appendChild(linha);
 
 
 }
@@ -152,6 +149,7 @@ async function getDfcs() {
     });
 
     data = await res.json();
+    
 
     for (i in data) {
 

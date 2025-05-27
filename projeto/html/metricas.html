@@ -144,12 +144,22 @@
                         <div class="vendas-info-cards">
                             <div class="card">
                                 <div style="display: flex; gap:12px; max-width:fit-content">
-                                <h3>Volume de vendas</h3>
-                                <i class="bi bi-percent" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                <h3>Receita</h3>
+                                <i class="bi bi-sort-up" style="align-self:center; color: rgb(0, 204, 3)"></i>
                                 </div>
                                 <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card"><span id="volume_vendas">5</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                <p class="number-card"><span id="receita_periodo">-</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span><span id="passado_receita">X% vs período passado</span></p>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div style="display: flex; gap:12px; max-width:fit-content">
+                                <h3>Vendas</h3>
+                                <i class="bi bi-bag-check-fill" style="align-self:center; color: rgb(0, 204, 3)"></i>
+                                </div>
+                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
+                                <p class="number-card"><span id="volume_vendas">-</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span><span id="passado_vendas">X% vs período passado</span></p>
                                 </div>
                             </div>
                             <div class="card">
@@ -158,8 +168,8 @@
                                 <i class="bi bi-cash-coin" style="align-self:center; color: rgb(0, 204, 3)"></i>
                                 </div>
                                 <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card"><span id="ticket_medio_valor">R$5.000,00</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                <p class="number-card"><span id="ticket_medio_valor">-</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span><span id="passado_ticket">X% vs período passado</span></p>
                                 </div>
                             </div>
                             <div class="card">
@@ -168,38 +178,19 @@
                                 <i class="bi bi-piggy-bank-fill" style="align-self:center; color: rgb(0, 204, 3)"></i>
                                 </div>
                                 <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card">R$<span>5.000,00</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                <p class="number-card"><span id="margem_lucro">-</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span><span id="passado_margem">X% vs período passado</span></p>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div style="display: flex; gap:12px; max-width:fit-content">
-                                <h3>Crescimento</h3>
-                                <i class="bi bi-sort-up" style="align-self:center; color: rgb(0, 204, 3)"></i>
-                                </div>
-                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card">R$<span>5.000,00</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
-                                </div>
-                            </div>
+
                             <div class="card">
                                 <div style="display: flex; gap:12px; max-width:fit-content">
                                 <h3>Lucro real</h3>
                                 <i class="bi bi-plus-slash-minus" style="align-self:center; color: rgb(0, 204, 3)"></i>
                                 </div>
                                 <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card"><span >R$5.000,00</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div style="display: flex; gap:12px; max-width:fit-content">
-                                <h3>Despesas vs Receita</h3>
-                                <i class="bi bi-percent" style="align-self:center; color: rgb(0, 204, 3)"></i>
-                                </div>
-                                <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card">R$<span>5.000,00</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                <p class="number-card"><span id="lucro_real">-</span></p>
+                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span><span id="passado_lucro">X% vs período passado</span></p>
                                 </div>
                             </div>
                         </div>

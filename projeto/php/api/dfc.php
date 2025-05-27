@@ -21,37 +21,75 @@
             break;
     }
 
-    function retornarDfc() {
+function retornarDfc() {
+    if (isset($_GET['inicio']) && isset($_GET['fim'])) {
 
-        if(isset($_GET['inicio']) && isset($_GET['fim'])) {
+        $inicio = $_GET['inicio'];
+        $fim = $_GET['fim'];
 
-            $sql = "SELECT 
-            v.id AS venda_id, 
-            v.data_emissao, 
-            SUM(p.valor * vp.qntd) AS total_valor
-        FROM venda v
-        INNER JOIN venda_produto vp ON v.id = vp.id_venda
-        INNER JOIN produto p ON vp.id_produto = p.id_produto
-        WHERE v.data_emissao BETWEEN '" . $_GET['inicio'] . "' AND '" . $_GET['fim'] . "'
-        GROUP BY v.id, v.data_emissao";
+        $conn = conectar();
 
-            $conn = conectar();
-                    
+        // ===== ENTRADAS (VENDAS) =====
+        $sqlEntradas = "SELECT 
+                            v.id AS venda_id, 
+                            v.data_emissao, 
+                            SUM(p.valor * vp.qntd) AS total_valor
+                        FROM venda v
+                        INNER JOIN venda_produto vp ON v.id = vp.id_venda
+                        INNER JOIN produto p ON vp.id_produto = p.id_produto
+                        WHERE v.data_emissao BETWEEN '$inicio' AND '$fim'
+                        GROUP BY v.id, v.data_emissao";
 
-            $res = $conn->query($sql);
+        $resEntradas = $conn->query($sqlEntradas);
 
-            $id_produto = [];
+        $entradas = [];
+        $totalEntradas = 0;
 
-            while ($linha = $res->fetch_assoc()) {
-
-                $id_produto[] = $linha;
-                
-            }
-
-            return $id_produto;
+        while ($linha = $resEntradas->fetch_assoc()) {
+            $entradas[] = $linha;
+            $totalEntradas += $linha['total_valor'];
         }
 
+        // ===== SAÍDAS (DESPESAS PAGAS) =====
+        $sqlSaidas = "SELECT 
+                            d.id_despesa, 
+                            d.descritivo, 
+                            td.nome AS tipo, 
+                            d.valor, 
+                            d.dataInicio
+                        FROM despesa d
+                        INNER JOIN tipodespesa td ON d.id_tipo_despesa = td.id_tipo_despesa
+                        WHERE d.dataInicio BETWEEN '$inicio' AND '$fim'
+                        AND d.estaPago = 1";
+
+        $resSaidas = $conn->query($sqlSaidas);
+
+        $saidas = [];
+        $totalSaidas = 0;
+
+        while ($linha = $resSaidas->fetch_assoc()) {
+            $saidas[] = $linha;
+            $totalSaidas += $linha['valor'];
+        }
+
+        // ===== SALDO FINAL =====
+        $saldoFinal = $totalEntradas - $totalSaidas;
+
+        // ===== RETORNO COMPLETO =====
+        return [
+            'entradas' => [
+                'detalhes' => $entradas,
+                'total' => $totalEntradas
+            ],
+            'saidas' => [
+                'detalhes' => $saidas,
+                'total' => $totalSaidas
+            ],
+            'saldo_final' => $saldoFinal
+        ];
     }
+}
+
 
 function salvarDfc() {
 

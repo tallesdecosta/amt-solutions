@@ -41,7 +41,7 @@ button {
 
 .card {
 
-    max-width: fit-content;
+    max-width: 226px;
     border: 1px solid rgb(174, 174, 174);
     padding: 15px;
     background-color: #FFFFFF;
@@ -64,6 +64,7 @@ button {
     display: flex;
     gap: 20px;
     max-width: max-content;
+    flex-wrap: wrap;
 }
 
 .number-card {
@@ -88,6 +89,7 @@ button {
 .vendas-info-wrapper {
 
     max-width: 100%;
+    flex-wrap: wrap;
 }
 
 input[type="date"] {

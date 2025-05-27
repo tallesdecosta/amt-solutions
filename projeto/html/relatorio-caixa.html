@@ -76,9 +76,10 @@
             </div>
             <div style="display: flex; justify-content: center; align-items: center; width: 100vw;">
                 <main>
-                    <h1>Demonstração de fluxo de caixa</h1>
+                    <section class="saved-reports bento" id="saved-reports"></section>
+                    
                     <div class="main-wrapper">
-                        <section class="saved-reports bento" id="saved-reports"></section>
+                    <h1>Demonstração de fluxo de caixa</h1>
                     <section class="report">
                         <div class="filter-wrapper bento">
                             <div>
@@ -99,11 +100,18 @@
                             </div>
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
-                            <div class="line-header">
-                                <p><b>Nome</b></p>
-                                <p><b>Tipo</b></p>
-                                <p><b>Valor</b></p>
-                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Tipo</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-body">
+
+                                </tbody>
+                            </table>
                         </div>
                     </section>
                     </div>
