@@ -28,7 +28,6 @@ async function mostrarDfc() {
   const corpoRelatorio = document.getElementById('report-body');
   corpoRelatorio.innerHTML = "";
 
-  // Mapear os dados com os nomes fixos antes de chamar montarGrupo
   const vendas = dados.entradas.detalhes
     .filter(item => item.origem === "venda")
     .map(e => ({
@@ -77,7 +76,7 @@ async function mostrarDespesa() {
 }
 
 function montarGrupo(titulo, itens, tipo, container, jaTemTipo = false) {
-  // Cabeçalho do grupo
+ 
   const linhaTitulo = document.createElement('tr');
   const th = document.createElement('th');
   th.colSpan = 3;
@@ -106,7 +105,7 @@ function montarGrupo(titulo, itens, tipo, container, jaTemTipo = false) {
     subtotal += valor;
   }
 
-  // Subtotal do grupo
+  
   const linhaSubtotal = document.createElement('tr');
   const tdSubtotalLabel = document.createElement('td');
   tdSubtotalLabel.colSpan = 2;
@@ -193,9 +192,17 @@ async function getDfcs() {
         div = document.createElement('div');
 
         btn = document.createElement('button');
+        btn.style.backgroundColor = "transparent";
+        btn.style.padding = "5px 10px";
+        btn.style.borderRadius = "5px";
+        btn.style.cursor = "pointer";
         btnDelete = document.createElement('button');
+        btnDelete.style.cursor = "pointer";
         btnDelete.setAttribute("id", data[i].id_dfc);
-        btnDelete.textContent = '-';
+        btnDelete.textContent = '(deletar)';
+        btnDelete.style.backgroundColor = 'transparent';
+        btnDelete.style.color = 'red';
+        btnDelete.style.border = 'none';
         btn.textContent = data[i].titulo;
         btn.setAttribute("data-inicio", data[i].dataInicio);
         btn.setAttribute("data-fim", data[i].dataFinal);
