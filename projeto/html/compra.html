@@ -10,7 +10,7 @@
 
         <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/compra.css?v=6">
+        <link rel="stylesheet" href="../css/compra.css">
 
         <title>Pedido de compras</title>
     </head>
@@ -110,22 +110,22 @@
                     <div class="descricaoItem" id="descricaoItem">
 
                         <div class="info">
-                            <label for="insumo">Insumo</label><br>
+                            <label for="insumo">Insumo<span id="span" style="display: none">*</span></label><br>
                             <select id="id_insumo" disabled></select>
                         </div>
 
                         <div class="info">
-                            <label for="usuario">Solicitante</label><br>
+                            <label for="usuario">Solicitante<span id="span" style="display: none">*</span></label><br>
                             <select id="id_usuario" disabled></select>
                         </div>
                         
                         <div class="info">
-                            <label for="">Data de Emissão</label><br>
+                            <label for="">Data de Emissão<span id="span" style="display: none">*</span></label><br>
                             <input type="date" id="dataEmissao" disabled>
                         </div>
                         
                         <div class="info">
-                            <label for="">Status</label><br>
+                            <label for="">Status<span id="span" style="display: none">*</span></label><br>
                             <select id="pedido_status" disabled>
                                 <option value="Pendente">Pendente</option>
                                 <option value="Concluido">Concluido</option>
@@ -134,7 +134,7 @@
                         </div>               
 
                         <div class="info">
-                            <label for="">Quantidade de compra</label><br>
+                            <label for="">Quantidade de compra<span id="span" style="display: none">*</span></label><br>
                             <input type="text" id="qntComprar" disabled>
                         </div>
 

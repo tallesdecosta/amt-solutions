@@ -10,7 +10,7 @@
 
         <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/produto.css?=v2">
+        <link rel="stylesheet" href="../css/produto.css">
 
         <title>Produto</title>
     </head>
@@ -124,27 +124,27 @@
 
                         <div class="infoItem">
                             <div class="info">
-                                <label for="">Nome</label><br>
+                                <label for="">Nome<span id="span" style="display: none">*</span></label><br>
                                 <input type="text" id="nome" disabled>
                             </div>
 
                             <div class="info">
-                                <label for="">categoria</label><br>
+                                <label for="">categoria<span id="span" style="display: none">*</span></label><br>
                                 <input type="text" id="categoria" disabled>
                             </div>
 
                             <div class="info">
-                                <label for="">Qtd. Mínima</label><br>
+                                <label for="">Qtd. Mínima<span id="span" style="display: none">*</span></label><br>
                                 <input type="number" id="qntMinima" disabled>
                             </div>
 
                             <div class="info">
-                                <label for="">Valor</label><br>
+                                <label for="">Valor<span id="span" style="display: none">*</span></label><br>
                                 <input type="text" id="valor" disabled>
                             </div>
 
                             <div class="info">
-                                <label for="">Localização</label><br>
+                                <label for="">Localização<span id="span" style="display: none">*</span></label><br>
                                 <input type="text" id="localizacao" disabled>
                             </div>
 
@@ -157,7 +157,7 @@
 
                             <div class="produtoAlergias" id="produto-alergias">
                               <h3>Alergias</h3>
-                                <button type="button" id="btn-adicionarAlergia">Adicionar Alergias</button>
+                                <button type="button" id="btn-adicionarAlergia" disabled>Adicionar Alergias</button>
                               <div id="lista-alergias"></div>
                             </div>
                         
@@ -195,33 +195,33 @@
                     <div class="descricaoLote">
 
                         <div class="info">
-                            <label for="">Produto</label><br>
+                            <label for="">Produto<span id="spanL" style="display: none">*</span></label><br>
                             <select id="id_produto" disabled></select>
                         </div>
 
                         <div class="info">
-                            <label for="">Lote</label><br>
+                            <label for="">Lote<span id="spanL" style="display: none">*</span></label><br>
                             <input type="text" id="lote" disabled>
                         </div>
 
                         <div class="info">
-                            <label for="">Vencimento</label><br>
+                            <label for="">Vencimento<span id="spanL" style="display: none">*</span></label><br>
                             <input type="date" id="vencimento" disabled>
                         </div>
 
                         <div class="info">
-                            <label for="">Fornecedor</label><br>
+                            <label for="">Fornecedor<span id="spanL" style="display: none">*</span></label><br>
                             <input type="text" id="fornecedor" disabled>
                         </div>
 
                         <div class="info">
-                            <label for="">Quantidade</label><br>
+                            <label for="">Quantidade<span id="spanL" style="display: none">*</span></label><br>
                             <input type="number" id="quantidade" disabled>
                         </div>
                         
                         <div class="insumosUtilizados" id="insumos-utilizados">
                           <h3>Insumos Utilizados</h3>
-                            <button type="button" id="btn-adicionarInsumo">Adicionar Insumo</button>
+                            <button type="button" id="btn-adicionarInsumo" disabled>Adicionar Insumo</button>
                           <div id="lista-insumos"></div>
                         </div>
 
@@ -288,7 +288,7 @@
 
 <script src="../js/podeAcessar.js"></script>
 
-<script src="../js/produto.js?v=1"></script>
+<script src="../js/produto.js"></script>
 
 <script>
 
