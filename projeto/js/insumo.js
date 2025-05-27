@@ -35,67 +35,159 @@ function limparCampos(){
 
   const tbody = document.getElementById("tabela-lote-corpo");
   tbody.innerHTML = ""; 
+  document.querySelectorAll("#span").forEach(span => {span.style.display = "none";});
+  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "none";});
 }
 
 function habilitarCampos(){
   document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
+  document.querySelectorAll("#span").forEach(span => {span.style.display = "";});
 }
 
 function habilitarCamposLote() {
   document.querySelectorAll('.descricaoLote input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoLote select').forEach(select => select.removeAttribute('disabled'));
+  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "";});
 }
 
 // Cadastro Insumos
 
-function chamarPHP() {
+async function chamarPHP() {
   const filtro = document.getElementById('inputPesquisa').value;
   let url = `../php/insumo.php?filtro=${filtro}`;
 
-  fetch(url)
-    .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro no servidor');
-      return resposta.json();
-    })
-    .then(dados => {
-      const tbody = document.getElementById('tabela-corpo');
-      tbody.innerHTML = '';
+  try {
+    const resposta = await fetch(url);
+    if (!resposta.ok) throw new Error('Erro no servidor');
 
-      dados.forEach((item, index) => {
-        const linha = document.createElement('tr');
-        const classe = (index % 2 === 0) ? 'linhaWhite' : 'linhaGray';
-        linha.classList.add(classe);
+    const dados = await resposta.json();
 
-        linha.innerHTML = `
-          <td>${item.id_insumo}</td>
-          <td>${item.nome}</td>
-          <td>${item.classificacao}</td>
-          <td>${item.quantidadeTotal}</td>
-          <td>${item.qntMinima}</td>
-        `;
+    const tbody = document.getElementById('tabela-corpo');
+    tbody.innerHTML = '';
 
-        linha.addEventListener('click', () => {
-          window.itemSelecionado = item;
-          window.adicionandoNovo = false;
+    dados.forEach((item, index) => {
+      const linha = document.createElement('tr');
+      const classe = (index % 2 === 0) ? 'linhaWhite' : 'linhaGray';
+      linha.classList.add(classe);
 
-          document.getElementById('nome').value = item.nome || '';
-          document.getElementById('classificacao').value = item.classificacao || '';
-          document.getElementById('qntMinima').value = item.qntMinima || '';
-          document.getElementById('inspReceb').value = item.inspReceb || '';
-          document.getElementById('localizacao').value = item.localizacao || '';
-          document.getElementById('quantidadeTotal').value = item.quantidadeTotal || '';
+      linha.innerHTML = `
+        <td>${item.id_insumo}</td>
+        <td>${item.nome}</td>
+        <td>${item.classificacao}</td>
+        <td>${item.quantidadeTotal}</td>
+        <td>${item.qntMinima}</td>
+      `;
 
-          mostrarLotes(item.id_insumo);
-        });
+      linha.addEventListener('click', () => {
+        window.itemSelecionado = item;
+        window.adicionandoNovo = false;
 
-        tbody.appendChild(linha);
+        document.getElementById('nome').value = item.nome || '';
+        document.getElementById('classificacao').value = item.classificacao || '';
+        document.getElementById('qntMinima').value = item.qntMinima || '';
+        document.getElementById('inspReceb').value = item.inspReceb || '';
+        document.getElementById('localizacao').value = item.localizacao || '';
+        document.getElementById('quantidadeTotal').value = item.quantidadeTotal || '';
+
+        mostrarLotes(item.id_insumo);
       });
 
-      limparCampos();
-    })
-    .catch(error => console.error('Erro:', error));
+      tbody.appendChild(linha);
+    });
+
+    limparCampos();
+  } catch (error) {
+    console.error('Erro:', error);
+    alert('Erro ao buscar os insumos. Verifique se o servidor está online.');
+  }
 }
+
+document.getElementById('btn-salvar').addEventListener('click', async () => {
+  const nome = document.getElementById("nome").value;
+  const classificacao = document.getElementById("classificacao").value;
+  const qntMinima = document.getElementById("qntMinima").value;
+  const inspReceb = document.getElementById("inspReceb").value;
+  const localizacao = document.getElementById("localizacao").value;
+  const quantidadeTotal = document.getElementById("quantidadeTotal").value;
+
+  if (!nome || !classificacao || !qntMinima || !inspReceb || !localizacao) {
+    alert("Todos os campos do formulário são obrigatórios!");
+    return;
+  }
+
+  const url = '../php/insumo.php';
+  const metodo = 'POST';
+  const headers = { 'Content-Type': 'application/json' };
+
+  let dadosEnviar = {
+    nome,
+    classificacao,
+    qntMinima,
+    inspReceb,
+    localizacao,
+    quantidadeTotal
+  };
+
+  if (!window.adicionandoNovo && window.itemSelecionado) {
+    dadosEnviar.id = window.itemSelecionado.id_insumo;
+  }
+
+  try {
+    const resposta = await fetch(url, {
+      method: metodo,
+      headers: headers,
+      body: JSON.stringify(dadosEnviar)
+    });
+
+    const resultado = await resposta.json();
+
+    if (window.adicionandoNovo) {
+      alert('Inserido com sucesso!');
+    } else {
+      alert('Salvo com sucesso!');
+    }
+
+    chamarPHP();
+    mostrarLotes();
+    limparCampos();
+
+    window.adicionandoNovo = false;
+    window.itemSelecionado = null;
+
+  } catch (erro) {
+    console.error('Erro na requisição:', erro);
+    alert('Erro ao salvar o insumo. Verifique sua conexão com o servidor.');
+  }
+});
+
+document.getElementById('btn-deletar').addEventListener('click', async () => {
+  if (!window.itemSelecionado) {
+    alert('Selecione um item antes.');
+    return;
+  }
+
+  if (!confirm('Tem certeza que deseja excluir este item?')) return;
+
+  try {
+    const resposta = await fetch(`../php/insumo.php?id=${window.itemSelecionado.id_insumo}`, {
+      method: 'DELETE'
+    });
+
+    const resultado = await resposta.json();
+
+    alert('Excluído com sucesso!');
+    chamarPHP();
+    mostrarLotes();
+    limparCampos();
+    window.itemSelecionado = null;
+
+  } catch (erro) {
+    console.error('Erro ao deletar:', erro);
+    alert('Erro ao excluir o insumo. Verifique sua conexão com o servidor.');
+  }
+});
+
 
 document.getElementById('buttonPesquisa').addEventListener('click', () => {
   chamarPHP();
@@ -118,216 +210,122 @@ document.getElementById('btn-editar').addEventListener('click', () => {
   window.adicionandoNovo = false;
 });
 
-document.getElementById('btn-salvar').addEventListener('click', () => {
-  let itemNome = document.getElementById("nome").value;
-  let itemClassificacao = document.getElementById("classificacao").value;
-  let itemQntMinima = document.getElementById("qntMinima").value;
-  let itemInspReceb = document.getElementById("inspReceb").value;
-  let itemLocalizacao = document.getElementById("localizacao").value;
-  let itemQuantidadeTotal = document.getElementById("quantidadeTotal").value;
-
-  if (window.adicionandoNovo && itemNome && itemClassificacao && itemQntMinima && itemInspReceb && itemLocalizacao && itemQuantidadeTotal) {
-    const novoItem = {
-      nome: itemNome,
-      classificacao: itemClassificacao,
-      qntMinima: itemQntMinima,
-      inspReceb: itemInspReceb,
-      localizacao: itemLocalizacao,
-      quantidadeTotal: itemQuantidadeTotal
-    };
-
-    fetch('../php/insumo.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(novoItem)
-    })
-      .then(res => res.json())
-      .then(res => {
-        alert('Inserido com sucesso!');
-        chamarPHP();
-        mostrarLotes();
-        limparCampos();
-        window.adicionandoNovo = false;
-        window.itemSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao inserir:', err));
-  }
-  else if (window.itemSelecionado && itemNome && itemClassificacao && itemQntMinima && itemInspReceb && itemLocalizacao && itemQuantidadeTotal) {
-    const dadosAtualizados = {
-      id: window.itemSelecionado.id_insumo,
-      nome: itemNome,
-      classificacao: itemClassificacao,
-      qntMinima: itemQntMinima,
-      inspReceb: itemInspReceb,
-      localizacao: itemLocalizacao,
-      quantidadeTotal: itemQuantidadeTotal
-    };
-
-    fetch('../php/insumo.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dadosAtualizados)
-    })
-      .then(res => res.json())
-      .then(res => {
-        alert('Salvo com sucesso!');
-        chamarPHP();
-        mostrarLotes();
-        limparCampos();
-        window.itemSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao salvar:', err));
-  } else {
-    alert("Todos os campos do formulário são obrigatórios!");
-  }
-});
-
-document.getElementById('btn-deletar').addEventListener('click', () => {
-  if (!window.itemSelecionado) {
-    alert('Selecione um item antes.');
-    return;
-  }
-
-  if (!confirm('Tem certeza que deseja excluir este item?')) return;
-
-  fetch(`../php/insumo.php?id=${window.itemSelecionado.id_insumo}`, {
-    method: 'DELETE'
-  })
-    .then(res => res.json())
-    .then(res => {
-      alert('Excluído com sucesso!');
-      chamarPHP();
-      mostrarLotes();
-      limparCampos();
-      window.itemSelecionado = null;
-    })
-    .catch(err => console.error('Erro ao deletar:', err));
-});
-
 // Lotes
 
-function mostrarLotes(idInsumo = null) {
-  let url = '../php/insumoLote.php';
-  if (idInsumo) {
-    url += `?id_insumo=${idInsumo}`;
-  }
+async function mostrarLotes(idInsumo = null) {
+  try {
+    let url = '../php/insumoLote.php';
+    if (idInsumo) {
+      url += `?id_insumo=${idInsumo}`;
+    }
 
-  fetch(url)
-    .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro ao buscar lotes');
-      return resposta.json();
-    })
-    .then(lotes => {
-      const tbody = document.querySelector('#tabela-lote-corpo');
-      tbody.innerHTML = '';
+    const resposta = await fetch(url);
+    if (!resposta.ok) throw new Error('Erro ao buscar lotes');
 
-      if (!Array.isArray(lotes)) {
-        console.error('Resposta inválida do servidor:', lotes);
-        return;
-      }
+    const lotes = await resposta.json();
 
-      lotes.forEach((lote, index) => {
-        const linha = document.createElement('tr');
-        const classe = (index % 2 === 0) ? 'linhaWhiteLote' : 'linhaGrayLote';
-        linha.classList.add(classe);
+    const tbody = document.querySelector('#tabela-lote-corpo');
+    tbody.innerHTML = '';
 
-        linha.innerHTML = `
-          <td>${lote.id_Lote}</td>
-          <td>${lote.lote}</td>
-          <td>${lote.vencimento}</td>
-          <td>${lote.fornecedor}</td>
-          <td>${lote.quantidade}</td>
-        `;
-        linha.addEventListener('click', () => {
-          window.loteSelecionado = lote;
-          window.adicionandoLote = false;
-          document.getElementById('id_insumo').value = lote.id_insumo;
-          document.getElementById('lote').value = lote.lote;
-          document.getElementById('vencimento').value = lote.vencimento;
-          document.getElementById('fornecedor').value = lote.fornecedor;
-          document.getElementById('quantidade').value = lote.quantidade;
+    if (!Array.isArray(lotes)) {
+      console.error('Resposta inválida do servidor:', lotes);
+      return;
+    }
 
-        });
-        tbody.appendChild(linha);
+    lotes.forEach((lote, index) => {
+      const linha = document.createElement('tr');
+      const classe = (index % 2 === 0) ? 'linhaWhiteLote' : 'linhaGrayLote';
+      linha.classList.add(classe);
+
+      linha.innerHTML = `
+        <td>${lote.id_Lote}</td>
+        <td>${lote.lote}</td>
+        <td>${lote.vencimento}</td>
+        <td>${lote.fornecedor}</td>
+        <td>${lote.quantidade}</td>
+      `;
+
+      linha.addEventListener('click', () => {
+        window.loteSelecionado = lote;
+        window.adicionandoLote = false;
+        document.getElementById('id_insumo').value = lote.id_insumo;
+        document.getElementById('lote').value = lote.lote;
+        document.getElementById('vencimento').value = lote.vencimento;
+        document.getElementById('fornecedor').value = lote.fornecedor;
+        document.getElementById('quantidade').value = lote.quantidade;
       });
-    })
-    .catch(erro => console.error('Erro ao carregar lotes:', erro));
+
+      tbody.appendChild(linha);
+    });
+
+  } catch (erro) {
+    console.error('Erro ao carregar lotes:', erro);
+  }
 }
 
-document.getElementById("btn-adicionarLote").addEventListener("click", () => {
-  window.adicionandoLote = true;
-  window.itemSelecionado = null;
-  limparCampos();
-  habilitarCamposLote();
-})
+document.getElementById('btn-salvarLote').addEventListener('click', async () => {
+  const loteInsumo = document.getElementById("id_insumo").value.trim();
+  const loteLote = document.getElementById("lote").value.trim();
+  const loteVencimento = document.getElementById("vencimento").value.trim();
+  const loteFornecedor = document.getElementById("fornecedor").value.trim();
+  const loteQuantidade = document.getElementById("quantidade").value.trim();
 
-document.getElementById("btn-editarLote").addEventListener('click', () => {
-  if(!window.loteSelecionado){
-    alert('Selecione um lote para editar');
+  if (!loteInsumo || !loteLote || !loteVencimento || !loteFornecedor || !loteQuantidade) {
+    alert("Todos os campos do formulário são obrigatórios!");
     return;
   }
-  habilitarCamposLote(); 
-  window.adicionandoLote = false;
-});
 
-document.getElementById('btn-salvarLote').addEventListener('click', () => {
-  let loteInsumo = document.getElementById("id_insumo").value;
-  let loteLote = document.getElementById("lote").value;
-  let loteVencimento = document.getElementById("vencimento").value;
-  let loteFornecedor = document.getElementById("fornecedor").value;
-  let loteQuantidade = document.getElementById("quantidade").value;
+  try {
+    let bodyData;
 
-  if(window.adicionandoLote && loteInsumo && loteLote && loteVencimento && loteFornecedor && loteQuantidade){
-    const novoLote = {
-      id_insumo: loteInsumo,
-      lote: loteLote,
-      vencimento: loteVencimento,
-      fornecedor: loteFornecedor,
-      quantidade: loteQuantidade
-    };
+    if (window.adicionandoLote) {
+      bodyData = {
+        id_insumo: loteInsumo,
+        lote: loteLote,
+        vencimento: loteVencimento,
+        fornecedor: loteFornecedor,
+        quantidade: loteQuantidade
+      };
+    } else if (window.loteSelecionado) {
+      bodyData = {
+        id: window.loteSelecionado.id_Lote,
+        id_insumo: loteInsumo,
+        lote: loteLote,
+        vencimento: loteVencimento,
+        fornecedor: loteFornecedor,
+        quantidade: loteQuantidade
+      };
+    } else {
+      alert("Nenhum lote selecionado para atualização!");
+      return;
+    }
 
-    fetch('../php/insumoLote.php', {
-      method: 'POST',
-      headers: {'Content-Type' : 'application/json'},
-      body: JSON.stringify(novoLote)
-    })
-      .then(res => res.json())
-      .then(res => {
-        alert('Lote inserido com sucesso!');
-        chamarPHP();
-        limparCampos();
-        window.adicionandoLote = false;
-        window.loteSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao inserir o lote:', err));
-  }
-  else if (window.loteSelecionado && loteInsumo && loteLote && loteVencimento && loteFornecedor && loteQuantidade) {
-    const loteAtualizado = {
-      id: window.loteSelecionado.id_Lote,
-      id_insumo: loteInsumo,
-      lote: loteLote,
-      vencimento: loteVencimento,
-      fornecedor: loteFornecedor,
-      quantidade: loteQuantidade
-    };
-
-    fetch('../php/insumoLote.php', {
+    const resposta = await fetch('../php/insumoLote.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(loteAtualizado)
-    })
-      .then(res => res.json())
-      .then(res => {
-        alert('Lote salvo com sucesso!');
-        chamarPHP();
-        limparCampos();
-        window.loteSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao salvar lote:', err));
-  } else {
-    alert("Todos os campos do formulário são obrigatórios!");
+      body: JSON.stringify(bodyData)
+    });
+
+    if (!resposta.ok) throw new Error('Erro na resposta do servidor');
+
+    const res = await resposta.json();
+
+    if (window.adicionandoLote) {
+      alert('Lote inserido com sucesso!');
+      window.adicionandoLote = false;
+    } else {
+      alert('Lote salvo com sucesso!');
+      window.loteSelecionado = null;
+    }
+
+    chamarPHP();
+    limparCampos();
+
+  } catch (err) {
+    console.error('Erro ao salvar o lote:', err);
   }
 });
+
 
 document.getElementById('btn-deletarLote').addEventListener('click', () => {
   if(!window.loteSelecionado){
@@ -348,6 +346,22 @@ document.getElementById('btn-deletarLote').addEventListener('click', () => {
       window.loteSelecionado = null;
     })
     .catch(err => console.erro('Erro ao deletar o lote:', err));
+});
+
+document.getElementById("btn-adicionarLote").addEventListener("click", () => {
+  window.adicionandoLote = true;
+  window.itemSelecionado = null;
+  limparCampos();
+  habilitarCamposLote();
+})
+
+document.getElementById("btn-editarLote").addEventListener('click', () => {
+  if(!window.loteSelecionado){
+    alert('Selecione um lote para editar');
+    return;
+  }
+  habilitarCamposLote(); 
+  window.adicionandoLote = false;
 });
 
 // Carregar insumos

@@ -33,6 +33,18 @@ function limparCampos(){
     select.setAttribute('disabled', true);
   });
 
+  const btnAlergia = document.querySelectorAll("#btn-adicionarAlergia");
+  btnAlergia.forEach(btnAlergia => {
+    btnAlergia.value = '';
+    btnAlergia.setAttribute('disabled', true);
+  });
+
+  const btnInsumo = document.querySelectorAll("#btn-adicionarInsumo");
+  btnInsumo.forEach(btnInsumo => {
+    btnInsumo.value = '';
+    btnInsumo.setAttribute('disabled', true);
+  });
+
   const tbody = document.getElementById("tabela-lote-corpo");
   tbody.innerHTML = ""; 
 
@@ -43,12 +55,16 @@ function limparCampos(){
   const pictureLabel = document.querySelector('.picture');
   pictureLabel.style.backgroundColor = '#ddd';
   pictureLabel.style.border = '2px dashed #aaa';
-  
+
+  document.querySelectorAll("#span").forEach(span => {span.style.display = "none";});
+  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "none";}); 
 }
 
 function habilitarCampos(){
   document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
+  document.querySelectorAll("#span").forEach(span => {span.style.display = "";});
+  document.querySelectorAll("#btn-adicionarAlergia").forEach(btnAlergia => btnAlergia.removeAttribute('disabled'));
 
   document.querySelectorAll('#lista-insumos .insumo-item').forEach(item => {
     item.querySelector('.insumo-select').disabled = false;
@@ -67,6 +83,8 @@ function habilitarCampos(){
 function habilitarCamposLote() {
   document.querySelectorAll('.descricaoLote input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoLote select').forEach(select => select.removeAttribute('disabled'));
+  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "";});
+  document.querySelectorAll("#btn-adicionarInsumo").forEach(btnInsumo => btnInsumo.removeAttribute('disabled'));
 
   document.querySelectorAll('#lista-insumos .insumo-item').forEach(item => {
     item.querySelector('.insumo-select').disabled = false;
@@ -114,69 +132,69 @@ inputFile.addEventListener('change', function(e) {
   }
 });
 
-function chamarPHP() {
-  const filtro = document.getElementById('inputPesquisa').value;
-  let url = `../php/produto.php?filtro=${filtro}`;
-
-  fetch(url)
-    .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro no servidor');
-      return resposta.json();
-    })
-    .then(dados => {
-      const tbody = document.getElementById('tabela-corpo');
-      tbody.innerHTML = '';
-
-      dados.forEach((item, index) => {
-        const linha = document.createElement('tr');
-        const classe = (index % 2 === 0) ? 'linhaWhite' : 'linhaGray';
-        linha.classList.add(classe);
-
-        linha.innerHTML = `
-          <td>${item.id_produto}</td>
-          <td>${item.nome}</td>
-          <td>${item.categoria}</td>
-          <td>R$ ${item.valor}</td>
-          <td>${item.quantidadeTotal}</td>
-          <td>${item.qntMinima}</td>
-        `;
-
-        linha.addEventListener('click', () => {
-          window.itemSelecionado = item;
-          window.adicionandoNovo = false;
-
-          document.getElementById('nome').value = item.nome || '';
-          document.getElementById('categoria').value = item.categoria || '';
-          document.getElementById('qntMinima').value = item.qntMinima || '';
-          document.getElementById('valor').value = item.valor || '';
-          document.getElementById('localizacao').value = item.localizacao || '';
-          document.getElementById('quantidadeTotal').value = item.quantidadeTotal || '';
-          
-          // Atualiza imagem
-          if (pictureImgPreview) {
-            if (item.imagem) {
-              pictureImgPreview.src = `../img/${item.imagem}`;
-              pictureImage.innerHTML = '';
-              pictureImage.appendChild(pictureImgPreview);
-              pictureLabel.style.backgroundColor = 'transparent';
-              pictureLabel.style.border = 'none';
-            } else {
-              pictureImage.innerHTML = pictureImageTxt;
-              pictureImgPreview.src = '';
-              pictureLabel.style.backgroundColor = '#ddd';
-              pictureLabel.style.border = '2px dashed #aaa';
-            }
+async function chamarPHP() {
+  try {
+    const filtro = document.getElementById('inputPesquisa').value;
+    const url = `../php/produto.php?filtro=${encodeURIComponent(filtro)}`;
+    
+    const resposta = await fetch(url);
+    if (!resposta.ok) throw new Error('Erro no servidor');
+    
+    const dados = await resposta.json();
+    const tbody = document.getElementById('tabela-corpo');
+    tbody.innerHTML = '';
+    
+    dados.forEach((item, index) => {
+      const linha = document.createElement('tr');
+      const classe = (index % 2 === 0) ? 'linhaWhite' : 'linhaGray';
+      linha.classList.add(classe);
+      
+      linha.innerHTML = `
+        <td>${item.id_produto}</td>
+        <td>${item.nome}</td>
+        <td>${item.categoria}</td>
+        <td>R$ ${item.valor}</td>
+        <td>${item.quantidadeTotal}</td>
+        <td>${item.qntMinima}</td>
+      `;
+      
+      linha.addEventListener('click', () => {
+        window.itemSelecionado = item;
+        window.adicionandoNovo = false;
+        
+        document.getElementById('nome').value = item.nome || '';
+        document.getElementById('categoria').value = item.categoria || '';
+        document.getElementById('qntMinima').value = item.qntMinima || '';
+        document.getElementById('valor').value = item.valor || '';
+        document.getElementById('localizacao').value = item.localizacao || '';
+        document.getElementById('quantidadeTotal').value = item.quantidadeTotal || '';
+        
+        // Atualiza imagem
+        if (pictureImgPreview) {
+          if (item.imagem) {
+            pictureImgPreview.src = `../img/${item.imagem}`;
+            pictureImage.innerHTML = '';
+            pictureImage.appendChild(pictureImgPreview);
+            pictureLabel.style.backgroundColor = 'transparent';
+            pictureLabel.style.border = 'none';
+          } else {
+            pictureImage.innerHTML = pictureImageTxt;
+            pictureImgPreview.src = '';
+            pictureLabel.style.backgroundColor = '#ddd';
+            pictureLabel.style.border = '2px dashed #aaa';
           }
-          carregarAlergiasVinculadas(item.id_produto);
-          mostrarLotes(item.id_produto);
-        });
-
-        tbody.appendChild(linha);
+        }
+        carregarAlergiasVinculadas(item.id_produto);
+        mostrarLotes(item.id_produto);
       });
-
-      limparCampos();
-    })
-    .catch(error => console.error('Erro:', error));
+      
+      tbody.appendChild(linha);
+    });
+    
+    limparCampos();
+  } catch (error) {
+    console.error('Erro:', error);
+  }
 }
 
 document.getElementById('buttonPesquisa').addEventListener('click', () => {
@@ -216,85 +234,38 @@ function getImagem() {
 }
 
 // Botão SALVAR
-document.getElementById('btn-salvar').addEventListener('click', () => {
-  let itemNome = document.getElementById("nome").value;
-  let itemCategoria = document.getElementById("categoria").value;
-  let itemQntMinima = document.getElementById("qntMinima").value;
-  let itemValor = document.getElementById("valor").value;
-  let itemLocalizacao = document.getElementById("localizacao").value;
-  let itemQuantidadeTotal = document.getElementById("quantidadeTotal").value;
-  
-  const alergias = [];
-  let camposIncompletos2 = false;
-  
-  document.querySelectorAll('.insumo-alergia').forEach(item => {
-    const alergia = item.querySelector('.alergia-select').value;
-  
-    if (!alergia) {
-      camposIncompletos2 = true;
-    } else {
-      alergias.push({
-        id_alergia: parseInt(alergia)
-      });
-    }
-  });
+document.getElementById('btn-salvar').addEventListener('click', async () => {
+  try {
+    let itemNome = document.getElementById("nome").value;
+    let itemCategoria = document.getElementById("categoria").value;
+    let itemQntMinima = document.getElementById("qntMinima").value;
+    let itemValor = document.getElementById("valor").value;
+    let itemLocalizacao = document.getElementById("localizacao").value;
+    let itemQuantidadeTotal = document.getElementById("quantidadeTotal").value;
 
-  if (window.adicionandoNovo && itemNome && itemCategoria && itemQntMinima && itemValor && itemValor !== 'R$ ' && itemLocalizacao) {
-    getImagem().then(imagemFile => {
-      const novoItem = {
-        nome: itemNome,
-        categoria: itemCategoria,
-        qntMinima: itemQntMinima,
-        valor: itemValor,
-        localizacao: itemLocalizacao,
-        quantidadeTotal: itemQuantidadeTotal,
-        imagem: imagemFile
-      };
+    const alergias = [];
+    let camposIncompletos2 = false;
 
-      fetch('../php/produto.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(novoItem)
-      })
-      .then(res => res.json())
-      .then(res => {
-        alert('Inserido com sucesso!');
+    document.querySelectorAll('.insumo-alergia').forEach(item => {
+      const alergia = item.querySelector('.alergia-select').value;
 
-        if (alergias.length > 0 && !camposIncompletos2) {
-          fetch('../php/produtoAlergia.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id_produto: res.id_produto,
-              alergias: alergias
-            })
-          })
-          .then(res => res.text())
-          .then(text => {
-            console.log("Resposta bruta:", text);
-            try {
-              const json = JSON.parse(text);
-              console.log("Alergias salvas:", json);
-            } catch (e) {
-              console.error("Erro ao converter JSON:", e, text);
-            }
-          })
-          .catch(err => console.error('Erro ao salvar alergias:', err));
-        }
-
-        chamarPHP();
-        mostrarLotes();
-        limparCampos();
-        window.adicionandoNovo = false;
-        window.itemSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao inserir:', err));
+      if (!alergia) {
+        camposIncompletos2 = true;
+      } else {
+        alergias.push({
+          id_alergia: parseInt(alergia)
+        });
+      }
     });
 
-  } else if (window.itemSelecionado && itemNome && itemCategoria && itemQntMinima && itemValor && itemValor !== 'R$ ' && itemLocalizacao) {
-    getImagem().then(imagemFile => {
-      const dadosAtualizados = {
-        id: window.itemSelecionado.id_produto,
+    if (
+      (window.adicionandoNovo || window.itemSelecionado) &&
+      itemNome && itemCategoria && itemQntMinima &&
+      itemValor && itemValor !== 'R$ ' && itemLocalizacao
+    ) {
+      const imagemFile = await getImagem();
+
+      const dados = {
         nome: itemNome,
         categoria: itemCategoria,
         qntMinima: itemQntMinima,
@@ -303,198 +274,208 @@ document.getElementById('btn-salvar').addEventListener('click', () => {
         quantidadeTotal: itemQuantidadeTotal
       };
 
-      if (imagemFile) {
-        dadosAtualizados.imagem = imagemFile;
+      if (window.adicionandoNovo) {
+        dados.imagem = imagemFile;
+      } else if (imagemFile) {
+        dados.imagem = imagemFile;
+        dados.id = window.itemSelecionado.id_produto;
+      } else {
+        dados.id = window.itemSelecionado.id_produto;
       }
 
-      fetch('../php/produto.php', {
+      const resposta = await fetch('../php/produto.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dadosAtualizados)
-      })
-      .then(res => res.json())
-      .then(res => {
-        alert('Salvo com sucesso!');
+        body: JSON.stringify(dados)
+      });
 
-        if (!camposIncompletos2) {
-          fetch('../php/produtoAlergia.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id_produto: (window.adicionandoNovo ? res.id_produto : window.itemSelecionado.id_produto),
-              alergias: alergias
-            })
+      const resJson = await resposta.json();
+
+      alert(window.adicionandoNovo ? 'Inserido com sucesso!' : 'Salvo com sucesso!');
+
+      if (!camposIncompletos2) {
+        const alergiasResposta = await fetch('../php/produtoAlergia.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id_produto: window.adicionandoNovo ? resJson.id_produto : window.itemSelecionado.id_produto,
+            alergias: alergias
           })
-          .then(res => res.text())
-          .then(text => {
-            try {
-              const json = JSON.parse(text);
-              console.log("Alergias atualizadas:", json);
-            } catch (e) {
-              console.error("Erro ao converter resposta JSON:", e, text);
-            }
-          })
-          .catch(err => console.error('Erro ao salvar alergias:', err));
+        });
+      
+        const text = await alergiasResposta.text();
+        try {
+          const json = JSON.parse(text);
+          console.log(window.adicionandoNovo ? "Alergias salvas:" : "Alergias atualizadas:", json);
+        } catch (e) {
+          console.error("Erro ao converter resposta JSON:", e, text);
         }
-        chamarPHP();
-        mostrarLotes();
-        limparCampos();
-        window.itemSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao salvar:', err));
-    });
+      }
 
-  } else {
-    alert("Todos os campos do formulário são obrigatórios!");
+      chamarPHP();
+      mostrarLotes();
+      limparCampos();
+      window.adicionandoNovo = false;
+      window.itemSelecionado = null;
+
+    } else {
+      alert("Todos os campos do formulário são obrigatórios!");
+    }
+  } catch (err) {
+    console.error('Erro ao salvar:', err);
   }
 });
 
-
 // Botão DELETAR
-document.getElementById('btn-deletar').addEventListener('click', () => {
-  if (!window.itemSelecionado) {
-    alert('Selecione um item antes.');
-    return;
-  }
+document.getElementById('btn-deletar').addEventListener('click', async () => {
+  try {
+    if (!window.itemSelecionado) {
+      alert('Selecione um item antes.');
+      return;
+    }
 
-  if (!confirm('Tem certeza que deseja excluir este item?')) return;
+    if (!confirm('Tem certeza que deseja excluir este item?')) return;
 
-  fetch(`../php/produto.php?id=${window.itemSelecionado.id_produto}`, {
-    method: 'DELETE'
-  })
-  .then(res => res.json())
-  .then(res => {
+    const resposta = await fetch(`../php/produto.php?id=${window.itemSelecionado.id_produto}`, {
+      method: 'DELETE'
+    });
+
+    const resJson = await resposta.json();
+
     alert('Excluído com sucesso!');
     chamarPHP();
     mostrarLotes();
     limparCampos();
     window.itemSelecionado = null;
-  })
-  .catch(err => console.error('Erro ao deletar:', err));
+  } catch (err) {
+    console.error('Erro ao deletar:', err);
+  }
 });
 
 // Lotes
-function mostrarLotes(idProduto = null) {
-  let url = '../php/produtoLote.php';
-  if (idProduto) {
-    url += `?id_produto=${idProduto}`;
-  }
+async function mostrarLotes(idProduto = null) {
+  try {
+    let url = '../php/produtoLote.php';
+    if (idProduto) {
+      url += `?id_produto=${idProduto}`;
+    }
 
-  fetch(url)
-    .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro ao buscar lotes');
-      return resposta.json();
-    })
-    .then(lotes => {
-      const tbody = document.querySelector('#tabela-lote-corpo');
-      tbody.innerHTML = '';
+    const resposta = await fetch(url);
+    if (!resposta.ok) throw new Error('Erro ao buscar lotes');
+    const lotes = await resposta.json();
 
-      if (!Array.isArray(lotes)) {
-        console.error('Resposta inválida do servidor:', lotes);
-        return;
-      }
+    const tbody = document.querySelector('#tabela-lote-corpo');
+    tbody.innerHTML = '';
 
-      lotes.forEach((lote, index) => {
-        const linha = document.createElement('tr');
-        const classe = (index % 2 === 0) ? 'linhaWhiteLote' : 'linhaGrayLote';
-        linha.classList.add(classe);
+    if (!Array.isArray(lotes)) {
+      console.error('Resposta inválida do servidor:', lotes);
+      return;
+    }
 
-        linha.innerHTML = `
-          <td>${lote.id_Lote}</td>
-          <td>${lote.lote}</td>
-          <td>${lote.vencimento}</td>
-          <td>${lote.fornecedor}</td>
-          <td>${lote.quantidade}</td>
-        `;
-        linha.addEventListener('click', () => {
-          window.loteSelecionado = lote;
-          window.adicionandoLote = false;
-          document.getElementById('id_produto').value = lote.id_produto;
-          document.getElementById('lote').value = lote.lote;
-          document.getElementById('vencimento').value = lote.vencimento;
-          document.getElementById('fornecedor').value = lote.fornecedor;
-          document.getElementById('quantidade').value = lote.quantidade;
+    lotes.forEach((lote, index) => {
+      const linha = document.createElement('tr');
+      const classe = (index % 2 === 0) ? 'linhaWhiteLote' : 'linhaGrayLote';
+      linha.classList.add(classe);
 
-          carregarInsumosVinculados(lote.id_Lote);
-        });
-        tbody.appendChild(linha);
+      linha.innerHTML = `
+        <td>${lote.id_Lote}</td>
+        <td>${lote.lote}</td>
+        <td>${lote.vencimento}</td>
+        <td>${lote.fornecedor}</td>
+        <td>${lote.quantidade}</td>
+      `;
+      linha.addEventListener('click', () => {
+        window.loteSelecionado = lote;
+        window.adicionandoLote = false;
+        document.getElementById('id_produto').value = lote.id_produto;
+        document.getElementById('lote').value = lote.lote;
+        document.getElementById('vencimento').value = lote.vencimento;
+        document.getElementById('fornecedor').value = lote.fornecedor;
+        document.getElementById('quantidade').value = lote.quantidade;
+
+        carregarInsumosVinculados(lote.id_Lote);
       });
-    })
-    .catch(erro => console.error('Erro ao carregar lotes:', erro));
+      tbody.appendChild(linha);
+    });
+
+  } catch (erro) {
+    console.error('Erro ao carregar lotes:', erro);
+  }
 }
+
 
 // Função para buscar e mostrar insumos vinculados ao lote
-function carregarInsumosVinculados(idLote) {
-  const url2 = `../php/produtoLoteInsumos.php?id_lote=${idLote}`;
+async function carregarInsumosVinculados(idLote) {
+  try {
+    const url2 = `../php/produtoLoteInsumos.php?id_lote=${idLote}`;
+    const resposta = await fetch(url2);
+    if (!resposta.ok) throw new Error('Erro ao buscar insumos dos lotes');
 
-  fetch(url2)
-    .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro ao buscar insumos dos lotes');
-      return resposta.json();
-    })
-    .then(insumos => {
-      const container = document.getElementById('lista-insumos');
-      container.innerHTML = '';
+    const insumos = await resposta.json();
 
-      if (!Array.isArray(insumos)) {
-        console.error('Resposta inválida dos insumos:', insumos);
-        return;
-      }
+    const container = document.getElementById('lista-insumos');
+    container.innerHTML = '';
 
-      insumos.forEach(insumo => {
-        const div = document.createElement('div');
-        div.classList.add('insumo-item');
+    if (!Array.isArray(insumos)) {
+      console.error('Resposta inválida dos insumos:', insumos);
+      return;
+    }
 
-        div.innerHTML = `
-          <select class="insumo-select" disabled>
-            <option value="${insumo.id_insumo}" selected>${insumo.nome}</option>
-          </select>
-          <select class="lote-insumo-select" disabled>
-            <option value="${insumo.id_Lote}" selected>Lote: ${insumo.lote} | Qtd: ${insumo.quantidade}</option>
-          </select>
-          <input type="number" class="quantidade-insumo" value="${insumo.quantidade_utilizada}" min="0" step="0.01" disabled>
-          <button type="button" onclick="removerInsumo(this)" disabled>Remover</button>
-        `;
-        container.appendChild(div);
-      });
-    })
-    .catch(erro => {
-      console.error('Erro ao carregar insumos vinculados:', erro);
+    insumos.forEach(insumo => {
+      const div = document.createElement('div');
+      div.classList.add('insumo-item');
+
+      div.innerHTML = `
+        <span id="spanL" style="display: none">*</span>
+        <select class="insumo-select" disabled>
+          <option value="${insumo.id_insumo}" selected>${insumo.nome}</option>
+        </select>
+        <span id="spanL" style="display: none">*</span>
+        <select class="lote-insumo-select" disabled>
+          <option value="${insumo.id_Lote}" selected>Lote: ${insumo.lote} | Qtd: ${insumo.quantidade}</option>
+        </select>
+        <span id="spanL" style="display: none">*</span>
+        <input type="number" class="quantidade-insumo" value="${insumo.quantidade_utilizada}" min="0" step="0.01" disabled>
+        <button type="button" onclick="removerInsumo(this)" disabled>Remover</button>
+      `;
+      container.appendChild(div);
     });
+  } catch (erro) {
+    console.error('Erro ao carregar insumos vinculados:', erro);
+  }
 }
 
-function carregarAlergiasVinculadas(idProduto) {
-  fetch(`../php/produtoAlergia.php?id_produto=${idProduto}`)
-    .then(resposta => {
-      if (!resposta.ok) throw new Error('Erro ao buscar alergias vinculadas');
-      return resposta.json();
-    })
-    .then(alergias => {
-      const container = document.getElementById('lista-alergias');
-      container.innerHTML = '';
+async function carregarAlergiasVinculadas(idProduto) {
+  try {
+    const resposta = await fetch(`../php/produtoAlergia.php?id_produto=${idProduto}`);
+    if (!resposta.ok) throw new Error('Erro ao buscar alergias vinculadas');
 
-      if (!Array.isArray(alergias)) {
-        console.error('Resposta inválida das alergias:', alergias);
-        return;
-      }
+    const alergias = await resposta.json();
 
-      alergias.forEach(alergia => {
-        const div = document.createElement('div');
-        div.classList.add('insumo-alergia');
+    const container = document.getElementById('lista-alergias');
+    container.innerHTML = '';
 
-        div.innerHTML = `
-          <select class="alergia-select" disabled>
-            <option value="${alergia.id_alergia}" selected>${alergia.nome}</option>
-          </select>
-          <button type="button" onclick="removerAlergias(this)" disabled>Remover</button>
-        `;
+    if (!Array.isArray(alergias)) {
+      console.error('Resposta inválida das alergias:', alergias);
+      return;
+    }
 
-        container.appendChild(div);
-      });
-    })
-    .catch(erro => {
-      console.error('Erro ao carregar alergias vinculadas:', erro);
+    alergias.forEach(alergia => {
+      const div = document.createElement('div');
+      div.classList.add('insumo-alergia');
+
+      div.innerHTML = `
+        <select class="alergia-select" disabled>
+          <option value="${alergia.id_alergia}" selected>${alergia.nome}</option>
+        </select>
+        <button type="button" onclick="removerAlergias(this)" disabled>Remover</button>
+      `;
+
+      container.appendChild(div);
     });
+  } catch (erro) {
+    console.error('Erro ao carregar alergias vinculadas:', erro);
+  }
 }
 
 document.getElementById("btn-adicionarLote").addEventListener("click", () => {
@@ -513,7 +494,7 @@ document.getElementById("btn-editarLote").addEventListener('click', () => {
   window.adicionandoLote = false;
 });
 
-document.getElementById('btn-salvarLote').addEventListener('click', () => {
+document.getElementById('btn-salvarLote').addEventListener('click', async () => {
   let loteProduto = document.getElementById("id_produto").value;
   let loteLote = document.getElementById("lote").value;
   let loteVencimento = document.getElementById("vencimento").value;
@@ -551,94 +532,92 @@ document.getElementById('btn-salvarLote').addEventListener('click', () => {
       });
     }
   });
-  
+
   if (camposIncompletos) {
     alert("Preencha corretamente os campos dos insumos adicionados.");
     return;
   }
 
-  if (window.adicionandoLote) {
-    // Criar novo lote
-    fetch('../php/produtoLote.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(loteData)
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (!res.id_Lote) {
-          alert('Erro ao inserir lote: ' + (res.erro || 'Resposta inesperada'));
-          return;
-        }
-        alert('Lote inserido com sucesso!');
+  try {
+    if (window.adicionandoLote) {
+      // Criar novo lote
+      const resLote = await fetch('../php/produtoLote.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loteData)
+      });
+      const resJson = await resLote.json();
 
-        if (insumos.length > 0) {
-          // Só envia insumos se tiver algum preenchido
-          fetch('../php/produtoLoteInsumos.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id_produtoLote: res.id_Lote,
-              insumos: insumos
-            })
-          })
-            .then(res => res.json())
-            .then(res => console.log('Insumos salvos com sucesso:', res))
-            .catch(err => console.error('Erro ao salvar insumos:', err));
-        }
+      if (!resJson.id_Lote) {
+        alert('Erro ao inserir lote: ' + (resJson.erro || 'Resposta inesperada'));
+        return;
+      }
+      alert('Lote inserido com sucesso!');
 
-        chamarPHP();
-        limparCampos();
-        window.adicionandoLote = false;
-        window.loteSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao salvar novo lote:', err));
-
-  } else {
-    // Editar lote existente
-    if (!window.loteSelecionado || !window.loteSelecionado.id_Lote) {
-      alert("Nenhum lote selecionado para edição.");
-      return;
-    }
-
-    loteData.id_Lote = window.loteSelecionado.id_Lote;
-
-    fetch('../php/produtoLote.php', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(loteData)
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status !== 'sucesso') {
-          alert('Erro ao atualizar lote: ' + (res.erro || 'Resposta inesperada'));
-          return;
-        }
-        alert('Lote atualizado com sucesso!');
-
-        fetch('../php/produtoLoteInsumos.php', {
-          method: 'PUT',
+      if (insumos.length > 0) {
+        // Só envia insumos se tiver algum preenchido
+        const resInsumos = await fetch('../php/produtoLoteInsumos.php', {
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            id_produtoLote: loteData.id_Lote,
-            insumos: insumos,
-            insumosRemovidos: Array.from(window.insumosRemovidos || [])
+            id_produtoLote: resJson.id_Lote,
+            insumos: insumos
           })
-        })
-          .then(res => res.json())
-          .then(res => console.log('Insumos atualizados com sucesso:', res))
-          .catch(err => console.error('Erro ao atualizar insumos:', err));
+        });
+        const resInsumosJson = await resInsumos.json();
+        console.log('Insumos salvos com sucesso:', resInsumosJson);
+      }
 
-        chamarPHP();
-        limparCampos();
-        window.loteSelecionado = null;
-      })
-      .catch(err => console.error('Erro ao atualizar lote:', err));
+      chamarPHP();
+      limparCampos();
+      window.adicionandoLote = false;
+      window.loteSelecionado = null;
+
+    } else {
+      // Editar lote existente
+      if (!window.loteSelecionado || !window.loteSelecionado.id_Lote) {
+        alert("Nenhum lote selecionado para edição.");
+        return;
+      }
+
+      loteData.id_Lote = window.loteSelecionado.id_Lote;
+
+      const resLote = await fetch('../php/produtoLote.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loteData)
+      });
+      const resJson = await resLote.json();
+
+      if (resJson.status !== 'sucesso') {
+        alert('Erro ao atualizar lote: ' + (resJson.erro || 'Resposta inesperada'));
+        return;
+      }
+      alert('Lote atualizado com sucesso!');
+
+      const resInsumos = await fetch('../php/produtoLoteInsumos.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id_produtoLote: loteData.id_Lote,
+          insumos: insumos,
+          insumosRemovidos: Array.from(window.insumosRemovidos || [])
+        })
+      });
+      const resInsumosJson = await resInsumos.json();
+      console.log('Insumos atualizados com sucesso:', resInsumosJson);
+
+      chamarPHP();
+      limparCampos();
+      window.loteSelecionado = null;
+    }
+  } catch (err) {
+    console.error('Erro ao salvar lote:', err);
+    alert('Erro ao salvar lote. Veja o console para detalhes.');
   }
 });
 
-
-document.getElementById('btn-deletarLote').addEventListener('click', () => {
+document.getElementById('btn-deletarLote').addEventListener('click', async () => {
   if(!window.loteSelecionado){
     alert('Selecione um lote antes!');
     return;
@@ -646,55 +625,62 @@ document.getElementById('btn-deletarLote').addEventListener('click', () => {
 
   if(!confirm('Tem certeza que deseja excluir este lote?')) return;
 
-  fetch(`../php/produtoLote.php?id=${window.loteSelecionado.id_Lote}`,{
-    method: 'DELETE'
-  })
-    .then(res => res.json())
-    .then(res => {
-      alert('Lote excluído com sucesso!');
-      chamarPHP();
-      limparCampos();
-      window.loteSelecionado = null;
-    })
-    .catch(err => console.erro('Erro ao deletar o lote:', err));
+  try {
+    const res = await fetch(`../php/produtoLote.php?id=${window.loteSelecionado.id_Lote}`, {
+      method: 'DELETE'
+    });
+    const resJson = await res.json();
+
+    alert('Lote excluído com sucesso!');
+    chamarPHP();
+    limparCampos();
+    window.loteSelecionado = null;
+  } catch(err) {
+    console.error('Erro ao deletar o lote:', err);
+    alert('Erro ao deletar o lote. Veja o console para detalhes.');
+  }
 });
 
-document.getElementById("btn-adicionarInsumo").addEventListener("click", ()=> {
+document.getElementById("btn-adicionarInsumo").addEventListener("click", async () => {
   const container = document.getElementById('lista-insumos');
 
   const div = document.createElement('div');
   div.classList.add('insumo-item');
 
   div.innerHTML = `
+    <span id="spanL" style="display: none">*</span>
     <select class="insumo-select">
       <option value="">Selecione um insumo</option>
     </select>
+    <span id="spanL" style="display: none">*</span>
     <select class="lote-insumo-select">
       <option value="">Selecione um lote</option>
     </select>
+    <span id="spanL" style="display: none">*</span>
     <input type="number" class="quantidade-insumo" placeholder="Quantidade Utilizada" min="0" step="0.01">
     <button type="button" onclick="removerInsumo(this)">Remover</button>
   `;
 
   container.appendChild(div);
-
+  habilitarCamposLote();
   const selectInsumo = div.querySelector('.insumo-select');
   const selectLote = div.querySelector('.lote-insumo-select');
 
-  // Carrega a lista de insumos no select
-  fetch('../php/get_insumos.php')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id_insumo;
-        option.textContent = item.nome;
-        selectInsumo.appendChild(option);
-      });
-    });
+  try {
+    const response = await fetch('../php/get_insumos.php');
+    const data = await response.json();
 
-  // Quando o insumo for selecionado, buscar lotes vinculados
-  selectInsumo.addEventListener('change', () => {
+    data.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.id_insumo;
+      option.textContent = item.nome;
+      selectInsumo.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Erro ao carregar insumos:", error);
+  }
+
+  selectInsumo.addEventListener('change', async () => {
     const idInsumo = selectInsumo.value;
 
     // Limpar o select de lote
@@ -702,26 +688,24 @@ document.getElementById("btn-adicionarInsumo").addEventListener("click", ()=> {
 
     if (!idInsumo) return;
 
-    fetch(`../php/get_insumoLote.php?id_insumo=${idInsumo}`)
-      .then(response => response.json())
-      .then(lotes => {
-        lotes.forEach(lote => {
-          const option = document.createElement('option');
-          option.value = lote.id_Lote;
-          option.textContent = `Lote: ${lote.lote} | Qtd: ${lote.quantidade}`;
-          selectLote.appendChild(option);
-        });
-      })
-      .catch(error => {
-        console.error("Erro ao carregar lotes:", error);
+    try {
+      const response = await fetch(`../php/get_insumoLote.php?id_insumo=${idInsumo}`);
+      const lotes = await response.json();
+
+      lotes.forEach(lote => {
+        const option = document.createElement('option');
+        option.value = lote.id_Lote;
+        option.textContent = `Lote: ${lote.lote} | Qtd: ${lote.quantidade}`;
+        selectLote.appendChild(option);
       });
+    } catch (error) {
+      console.error("Erro ao carregar lotes:", error);
+    }
   });
 
 });
 
 function removerInsumo(botao) {
-  const listaInsumos = document.querySelectorAll('.insumo-item');
-
   if (window.loteSelecionado && window.loteSelecionado.id_Lote) {
     const insumoItem = botao.closest('.insumo-item');
     const id_insumoLote = insumoItem.querySelector('.lote-insumo-select').value;
@@ -740,34 +724,40 @@ function removerInsumo(botao) {
   botao.parentElement.remove();
 }
 
-document.getElementById("btn-adicionarAlergia").addEventListener("click", () => {
-  const container = document.getElementById('lista-alergias');
+document.getElementById("btn-adicionarAlergia").addEventListener("click", async () => {
+  try {
+    const container = document.getElementById('lista-alergias');
 
-  const div = document.createElement('div');
-  div.classList.add('insumo-alergia');
+    const div = document.createElement('div');
+    div.classList.add('insumo-alergia');
 
-  div.innerHTML = `
-    <select class="alergia-select">
-      <option value="">Selecione uma alergia</option>
-    </select>
-    <button type="button" onclick="removerAlergias(this)">Remover</button>
-  `;
+    div.innerHTML = `
+      <select class="alergia-select">
+        <option value="">Selecione uma alergia</option>
+      </select>
+      <button type="button" onclick="removerAlergias(this)">Remover</button>
+    `;
 
-  container.appendChild(div);
+    container.appendChild(div);
 
-  const selectAlergia = div.querySelector('.alergia-select');
+    const selectAlergia = div.querySelector('.alergia-select');
 
-  // Carrega a lista de alergias no select
-  fetch('../php/get_alergias.php')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id_alergia;
-        option.textContent = item.nome;
-        selectAlergia.appendChild(option);
-      });
+    // Carrega a lista de alergias no select 
+    const response = await fetch('../php/get_alergias.php');
+    if (!response.ok) throw new Error('Erro ao buscar alergias');
+
+    const data = await response.json();
+
+    data.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.id_alergia;
+      option.textContent = item.nome;
+      selectAlergia.appendChild(option);
     });
+  } catch (error) {
+    console.error('Erro ao carregar alergias:', error);
+    alert('Erro ao carregar alergias. Tente novamente.');
+  }
 });
 
 function removerAlergias(botao) {
@@ -788,8 +778,6 @@ function removerAlergias(botao) {
   // Remove do DOM
   botao.parentElement.remove();
 }
-
-
 
 // Carregar produtos
 fetch('../php/get_produtos.php')

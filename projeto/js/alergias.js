@@ -17,24 +17,24 @@ function limparCampos(){
     textarea.value = '';
     textarea.setAttribute('disabled', true);
   });
+
+  document.querySelectorAll("#span").forEach(span => {span.style.display = "none";});
 }
 
 function habilitarCampos(){
   document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
   document.querySelectorAll('.observacaoItem textarea').forEach(textarea => textarea.removeAttribute('disabled'));
+  document.querySelectorAll("#span").forEach(span => {span.style.display = "";});
 }
 
-function chamarPHP() {
+async function chamarPHP(){
   const filtro = document.getElementById('inputPesquisa').value;
   let url = `../php/alergias.php?filtro=${filtro}`;
+    try{
+      const resposta = await fetch(url);
+      const dados = await resposta.json();
 
-  fetch(url)
-    .then(res => {
-      if (!res.ok) throw new Error('Erro no servidor');
-      return res.json();
-    })
-    .then(dados => {
       const tbody = document.getElementById('tabela-corpo');
       tbody.innerHTML = '';
 
@@ -47,19 +47,19 @@ function chamarPHP() {
           <td>${item.nome}</td>
         `;
 
-        linha.addEventListener('click', () => {
+        linha.addEventListener('click', async function() {
           window.itemSelecionado = item;
           window.adicionandoNovo = false;
           document.getElementById('nome').value = item.nome || '';
           document.getElementById('observacao').value = item.observacao || '';
+
         });
-
         tbody.appendChild(linha);
-      });
-
+      })
       limparCampos();
-    })
-    .catch(error => console.error('Erro:', error));
+    }catch(erro){
+      console.error('Erro:', erro);
+    }
 }
 
 document.getElementById('buttonPesquisa').addEventListener('click', () => {
@@ -83,72 +83,83 @@ document.getElementById('btn-editar').addEventListener('click', () => {
   window.adicionandoNovo = false;
 });
 
-document.getElementById('btn-salvar').addEventListener('click', () => {
+document.getElementById('btn-salvar').addEventListener('click', async function(){
   let itemNome = document.getElementById('nome').value;
   let itemObservacao = document.getElementById('observacao').value;
 
-  if (itemNome === "") {
-    alert("O campo 'Nome' é obrigatório.");
-    return;
+  if(itemNome === ''){
+    alert("O campo 'nome' é obrigatório.");
+    this.removeAttributeNS;
   }
 
-  const payload = {
-    nome: itemNome,
-    observacao: itemObservacao
-  };
+  if(window.adicionandoNovo){
+    try{
+      const resposta = await fetch('../php/alergias.php', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          nome: itemNome,
+          observacao: itemObservacao
+        })
+      });
 
-  if (window.adicionandoNovo) {
-    fetch('../php/alergias.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(res => res.json())
-    .then(res => {
+      const resultado = await resposta.json();
       alert('Inserido com sucesso!');
       chamarPHP();
       limparCampos();
       window.adicionandoNovo = false;
       window.itemSelecionado = null;
-    })
-    .catch(err => console.error('Erro ao inserir:', err));
-  } else if (window.itemSelecionado) {
-    payload.id_alergia = window.itemSelecionado.id_alergia;
+    }catch(erro){
+      console.error('Erro:', erro);
+    }
+  }else if(window.itemSelecionado){
 
-    fetch('../php/alergias.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(res => res.json())
-    .then(res => {
+    try{
+      const resposta = await fetch('../php/alergias.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          id_alergia: window.itemSelecionado.id_alergia,
+          nome: itemNome,
+          observacao: itemObservacao
+        })
+      });
+
+      const resultado = await resposta.json();
       alert('Salvo com sucesso!');
       chamarPHP();
       limparCampos();
       window.itemSelecionado = null;
-    })
-    .catch(err => console.error('Erro ao salvar:', err));
+
+    }catch(erro){
+      console.error('Erro:', erro);
+    }
   }
 });
 
-document.getElementById('btn-deletar').addEventListener('click', () => {
-  if (!window.itemSelecionado) {
+document.getElementById('btn-deletar').addEventListener('click', async function(){
+  if(!window.itemSelecionado){
     alert('Selecione um item antes.');
     return;
   }
 
-  if (!confirm('Tem certeza que deseja excluir este item?')) return;
+  if(!confirm('Tem certeza que deseja excluir este item?')) return;
 
-  fetch(`../php/alergias.php?id=${window.itemSelecionado.id_alergia}`, {
-    method: 'DELETE'
-  })
-  .then(res => res.json())
-  .then(res => {
-    alert('Excluído com sucesso!');
+  try{
+    const resposta = await fetch(`../php/alergias.php?id=${window.itemSelecionado.id_alergia}`,{
+      method: 'DELETE'
+    })
+
+    const resultado = await resposta.json();
+    alert('Excluido com sucesso!');
     chamarPHP();
     limparCampos();
     window.itemSelecionado = null;
-  })
-  .catch(err => console.error('Erro ao deletar:', err));
+
+  }catch(erro){
+    console.error('Erro:', erro);
+  }
+
 });
+
 window.onload = chamarPHP;
