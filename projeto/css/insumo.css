@@ -296,3 +296,11 @@ button:hover{
 .esconder {
   display: none;
 }
+
+#span{
+    color: red;
+}
+
+#spanL{
+    color: red;
+}
