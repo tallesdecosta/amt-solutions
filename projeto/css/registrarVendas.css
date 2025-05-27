@@ -53,6 +53,25 @@
     background-color: #EDEDED;
     flex-direction: row;
     gap: 30px;
+    position: relative;
+}
+
+.app .divoltar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    left: 50px;
+    top: 20px;
+}
+
+.app .divoltar p {
+    margin: 0px
 }
 
 .secall .app .conteudos {

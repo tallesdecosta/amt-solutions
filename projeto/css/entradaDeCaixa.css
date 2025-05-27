@@ -31,6 +31,30 @@
     align-items: center;
     justify-content: center;
 }
+
+.secall .app .fundo .alinhar .voltar{
+    width: fit-content;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #000000ce;
+    margin: 0px auto 0px 30px;
+    cursor: pointer;
+    
+}
+
+.secall .app .fundo .alinhar .voltar p{
+    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.secall .app .fundo .alinhar .voltar i{
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
 .secall .app .fundo .alinhar h1{
     text-align: center;
     margin: 0px 0px 100px 0px;

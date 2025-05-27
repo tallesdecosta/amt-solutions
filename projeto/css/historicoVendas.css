@@ -141,6 +141,7 @@
     justify-content: space-evenly;
     flex-direction: column;
     border-radius: 10px;
+    
 
 }
 .app .fundoComanda .janelaComanda .fechar{
@@ -188,7 +189,7 @@
 .app .fundoComanda .janelaComanda .fundotable {
     width: 95%;
     height: 80%;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin: auto;
     border-radius: 10px;
 }
@@ -206,8 +207,8 @@
 }
 
 .app .fundoComanda .janelaComanda .itens .fundotable table .nome {
-    max-width: 270px;
-    width: 270px;
+    max-width: 250px;
+    width: 250px;
     overflow: hidden;
     text-wrap: nowrap;
 }
@@ -256,81 +257,3 @@
 }
 
 
-
-/* .app{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 96vw;
-}
-.app .fundo{
-    min-height: 60%;
-}
-
-.app .fundo .divoltar{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 18px;
-    font-weight: 300;
-    width: fit-content;
-    cursor: pointer;
-}
-.app .fundo .divoltar p{
-    margin: 0;
-}
-
-.app .fundo h1{
-    text-align: center;
-    font-size: 25px;
-    font-weight: 200;
-    margin: 50px 0px
-}
-
-.app .fundo table{
-    border-spacing: 0; */
-/* border-top-left-radius: 10px;
-    border-top-right-radius: 10px; */
-/* overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.app .fundo table thead th{
-    text-align: center;
-    font-size: 14px;
-    font-weight: 400;
-    text-align: left;
-    padding: 10px 20px;
-    background-color: #c4c4c4;
-}
-
-.app .fundo table tbody td{
-    text-align: center;
-    font-size: 16px;
-    font-weight: 300;
-    text-align: left;
-    padding: 10px 20px;
-    height: fit-content;
-}
-
-
-
-.app .fundo table:nth-child(even) {
-    background-color: #F5F5F5;
-}
-
-.app .fundo table:nth-child(odd) {
-    background-color: white;
-}
-
-.app .fundo table::-webkit-scrollbar {
-    background-color: #e7e7e7ce;
-    border-radius: 10px;
-    width: 10px;
-    padding: 3px;
-}
-
-.app .fundo table::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.281);
-    border-radius: 10px;
-} */
