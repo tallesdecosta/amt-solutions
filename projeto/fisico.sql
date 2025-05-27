@@ -191,3 +191,31 @@ CREATE TABLE IF NOT EXISTS produto_alergia(
 
 INSERT INTO `usuario`(`nome`, `contato`, `username`, `senha`, `cargo`, `ehAdm`) VALUES ('Admin','22','admin','$2y$10$eG2q9V2GLO2Bz9yXEzxp5eQeUQYnUxPHHB0NjHWce2WyusEJCLoCG','Administrador',1);
 INSERT INTO `permissao`(`id_usuario`, `vendas`, `estoque`, `financeiro`, `gestao`) VALUES (1,1,1,1,1);
+
+
+INSERT INTO alergia(nome) VALUES
+('Glúten'),
+('Lactose'),
+('Leite de vaca'),
+('Ovos'),
+('Amendoim'),
+('Frutos secos (nozes, castanhas, amêndoas, etc.)'),
+('Soja'),
+('Trigo'),
+('Peixes'),
+('Frutos do mar (camarão, lagosta, caranguejo, etc.)'),
+('Corantes artificiais'),
+('Conservantes'),
+('Sulfitos'),
+('Aipo'),
+('Mostarda'),
+('Gergelim'),
+('Milho'),
+('Chocolate'),
+('Cafeína'),
+('Aspartame'),
+('Frutose'),
+('Histamina'),
+('Glutamato monossódico (MSG)'),
+('Alho'),
+('Cebola');
