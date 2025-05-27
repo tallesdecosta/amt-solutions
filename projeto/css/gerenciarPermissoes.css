@@ -1,3 +1,23 @@
+.app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 62px;
+    background-color: rgb(255, 255, 255);
+    height: 80%;
+    width: 45%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px #0000004b;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 0;
+}
 
 
 .btn-user {
@@ -6,6 +26,7 @@
     border: none;
     cursor: pointer;
     display: block;
+    font-size: 16px;
 
 }
 
@@ -15,27 +36,284 @@
 
 }
 
-.main-content {
-    display: flex;
-    flex-direction: row;
-    gap: 62px;
-
-}
 
 #users {
-
-    max-width: fit-content;
+    text-align: center;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 100%;
+    gap: 50px;
 }
+
+#users button {
+    background-color: #ffffff;
+    width: fit-content;
+    height: fit-content;
+    color: #0e9e3c;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 3px 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1.5px solid #0e9e3c;
+    cursor: pointer;
+}
+
+#users button i {
+    font-size: 20px;
+}
+
+#users button:hover {
+    background-color: #0e9e3c;
+    color: #ffffff;
+    border: 1.5px solid #9beeb5;
+}
+
+
+
+
+#users h2 {
+    font-size: 22px;
+    font-weight: 200;
+    color: rgba(0, 0, 0, 0.74);
+}
+
+
+.alinhar {
+    display: flex;
+    width: 95%;
+    height: 40%;
+}
+
+#listausers {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eeeeee;
+    border-radius: 5px 0px 0px 5px;
+    /* background-image: linear-gradient(to left,white , #eeeeee 90%); */
+    background-color: #eeeeee8d;
+    border-right: none;
+}
+
+#listausers div {
+    display: flex;
+    width: 90%;
+    justify-content: left;
+    align-items: center;
+    padding: 10px;
+    margin: 10px auto;
+    gap: 15px;
+}
+
+
+.deletebtn {
+    padding: 5px 5px;
+    color: rgb(200, 53, 53);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+
+#acessos {
+    border: 1px solid #eeeeee;
+    border-left: none;
+    /* background-image: linear-gradient(to left, white 85%,#eeeeee ); */
+    background-color: #eeeeee37;
+    border-radius: 0px 5px 5px 0px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#acessos .botao {
+    width: 80%;
+    display: flex;
+    justify-content: end;
+}
+
+#acessos .botao button {
+    padding: 5px 10px;
+    background-color: white;
+    border: 1.5px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#acessos .botao button:hover {
+    background-color: rgb(79, 79, 79);
+    border: 1.5px solid white;
+    color: white;
+
+}
+
+#acessos .inputs {
+    width: 80%;
+    color: black;
+}
+
+#acessos .inputs label {
+    color: black;
+}
+
+#acessos .priv {
+    width: 80%;
+    color: rgba(0, 0, 0, 0.648);
+    font-size: 15px;
+
+}
+
 
 .popup {
 
-    width: 500px;
-    height: 500px;
-    background-color: beige;
     position: absolute;
-    right: 500px;
-    top: auto;
-    border: 1px solid black;
+    bottom: 0;
+    right: 0;
+    width: 96vw;
+    height: 92vh;
+    background-color: rgba(0, 0, 0, 0.773);
     display: none;
+    align-items: center;
+    justify-content: center;
 
+}
+
+.popup .fundo {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px 40px;
+
+}
+
+.popup .fundo .topo {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    height: 0px;
+    overflow: visible;
+    margin: 10px 0px 30px auto;
+    background-color: red;
+
+}
+
+.popup .fundo .topo button {
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 16px;
+    border: none;
+}
+
+.popup .fundo .infos {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    gap: 50px;
+}
+
+.popup .fundo .infos .esq {
+    padding: 20px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup .fundo .infos .dir {
+    padding: 20px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup .fundo .infos .dir div{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+
+}
+
+.popup .fundo .infos .alinhar {
+    height: fit-content;
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup .fundo h3 {
+    color: rgba(0, 0, 0, 0.708);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.popup .fundo .alinhar label {
+    color: black;
+    font-size: 14px;
+}
+
+.popup .fundo .alinhar input {
+    border-radius: 5px;
+    border: 1px solid #393939;
+    height: 28px;
+}
+
+
+.divbtnsalvar{
+    display: flex;
+    justify-content: end;
+}
+
+.btnsalvar{
+    padding: 5px 10px;
+    background-color: white;
+    cursor: pointer;
+    border: 1.5px solid #0e9e3c;
+    color: #0e9e3c;
+    width: fit-content;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0px 2px 4px rgb(155, 155, 155);
+    margin-top: 30px;
+}
+
+.btnsalvar:hover{
+    background-color: #0e9e3c;
+    border: 1.5px solid #6fb384;
+    color: white;
+}
+
+
+.secall .app .voltar{
+    width: fit-content;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #000000ce;
+    margin: 0px auto 0px 30px;
+    cursor: pointer;
+    
+}
+
+.secall .app .voltar p{
+    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.secall .app .voltar i{
+    font-size: 22px;
+    cursor: pointer;
 }
