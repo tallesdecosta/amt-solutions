@@ -1,4 +1,4 @@
-.navegation{
+.navegation {
     background-color: white;
     width: 4vw;
     height: 92vh;
@@ -6,23 +6,23 @@
 }
 
 
-.navegation .icone{
+.navegation .icone {
     height: 50px;
     font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: black;   
+    color: black;
     cursor: pointer;
 }
 
-.alinha{
+.alinha {
     color: black !important;
     cursor: default !important;
 }
 
 
-.navegation .modulos{
+.navegation .modulos {
     height: 100px;
     font-size: 20px;
     display: flex;
@@ -31,14 +31,14 @@
     color: #00000059;
 }
 
-#icon1{
+#icon1 {
     color: black !important;
     cursor: pointer !important;
 }
 
 /*      SECTION DO CONTEUDO      */
 
-.secall .app{
+.secall .app {
     width: 96vw;
     height: 92vh;
     display: flex;
@@ -46,24 +46,24 @@
     align-items: center;
 }
 
-.secall .app .fundo{
+.secall .app .fundo {
     gap: 15px;
     display: flex;
     flex-direction: column;
 }
 
-.secall .app p{
+.secall .app p {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.637);
     margin: 0;
 }
 
-.secall .app .fundo .modulosVendas{
+.secall .app .fundo .modulosVendas {
     display: flex;
     gap: 15px;
 }
 
-.secall .app .fundo .modulosVendas .func{
+.secall .app .fundo .modulosVendas .func {
     min-height: 180px;
     min-width: 250px;
     max-height: 180px;
@@ -76,34 +76,107 @@
     cursor: pointer;
 }
 
-.secall .app .fundo .modulosVendas .func:hover{
+.secall .app .fundo .modulosVendas .func:hover {
     background-color: white;
     border: 0.5px solid rgb(192, 192, 192);
 }
 
-.secall .app .fundo .modulosVendas .func i{
+.secall .app .fundo .modulosVendas .func i {
     font-size: 35px;
 }
 
 
-.secall .app .fundo .modulosVendas .func p{
+.secall .app .fundo .modulosVendas .func p {
     font-size: 18px;
     margin: 10px 0px;
     color: black;
 }
 
 
-.secall .app .fundo .modulosVendas .func1{
+.secall .app .fundo .modulosVendas .func1 {
     background-color: #5664ff59;
 }
 
-.secall .app .fundo .modulosVendas .func2{
+.secall .app .fundo .modulosVendas .func2 {
     background-color: #5664ffa6;
 }
 
-.secall .app .fundo .modulosVendas .func3{
+.secall .app .fundo .modulosVendas .func3 {
     background-color: #6e7aff;
 }
 
 
 
+
+
+/* Alertas */
+
+/* .alertapadrao {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 96vw;
+    height: 92vh;
+    background-color: rgba(0, 0, 0, 0.789);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.alertapadrao .alerta {
+    background-color: white;
+    height: 250px;
+    width: 500px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+.alertapadrao .alerta p {
+    font-size: 17px;
+    color: black;
+    text-align: center;
+}
+
+.alertapadrao .alerta .botoes {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.alertapadrao .alerta .botoes button {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background-color: palegoldenrod;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.alertapadrao .alerta .botoes .but1 {
+    background-color: #3a4186;
+    border: 1px solid rgb(114, 114, 114);
+    color: white;
+}
+
+.alertapadrao .alerta .botoes .but1:hover {
+    background-color: #e5e7f3;
+    border: 1px solid rgb(114, 114, 114);
+    color: #080e4d;
+}
+
+.alertapadrao .alerta .botoes .but2 {
+    background-color: white;
+    border: 1px solid rgb(114, 114, 114);
+    color: #494949;
+}
+.alertapadrao .alerta .botoes .but2:hover {
+    background-color: #727272;
+    border: 1px solid white;
+    color: white;
+} */
