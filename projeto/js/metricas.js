@@ -55,7 +55,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-async function atualizarSemanal(data) {
+async function atualizarSemanal(dados) {
+
+    const receita = document.getElementById('receita-semanal');
+    receita.textContent = dados.receita.atual.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+        }).replace(/\s/g, '');
+    const receitaDif = document.getElementById('receita-semanal-dif');
+    receitaDif.textContent = dados.receita.crescimento;
+
+    if (dados.receita.crescimento < 0) {
+
+        document.getElementById('receita-semanal-dif-span').style.color = "#ff0000";
+
+    } else {
+
+        document.getElementById('receita-semanal-dif-span').style.color = "rgb(0, 204, 3)";
+
+    }
+
+    const vendas = document.getElementById('vendas-semanal');
+    vendas.textContent = dados.volume_vendas.atual;
+    const vendasDif = document.getElementById('vendas-semanal-dif');
+    vendasDif.textContent = dados.volume_vendas.crescimento;
+
+    if (dados.volume_vendas.crescimento < 0) {
+
+        document.getElementById('vendas-semanal-dif-span').style.color = "#ff0000";
+
+    } else {
+
+        document.getElementById('vendas-semanal-dif-span').style.color = "rgb(0, 204, 3)";
+
+    }
+
+
     
 }
 
@@ -113,7 +148,7 @@ async function atualizarRelatorio(data) {
 
         margemLucro.textContent = "-1000%";
     } else {
-        margemLucro.textContent = `${parseFloat(data.margem_lucro.atual).toFixed(2)}%`;
+        margemLucro.textContent = data.margem_lucro.atual == null ? "0%" : `${parseFloat(data.margem_lucro.atual).toFixed(2)}%`;
     }
 
     const lucroReal = document.getElementById('lucro_real');

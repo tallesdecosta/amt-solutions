@@ -34,7 +34,7 @@ function retornarMetricas() {
             FROM venda v
             JOIN venda_produto vp ON v.id = vp.id_venda
             JOIN produto p ON vp.id_produto = p.id_produto
-            WHERE v.data_emissao BETWEEN ? AND ?
+            WHERE DATE(v.data_emissao) BETWEEN ? AND ?
         ";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $inicio, $fim);

@@ -83,7 +83,7 @@
                         </div>
                         
                         <div style="display: flex; flex-direction:column;gap:5px;">
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 10px; align-items:center;">
                             <div>
                                 <label for="data-inicio" >Início</label>
                                 <br>
@@ -95,7 +95,7 @@
                                 <input type="date" id="data-fim" required>
                             </div>
                             <button onclick="validar()">
-                            <i class="bi bi-search" style="justify-self:center"></i>
+                            <i class="bi bi-search" style="justify-self:center; border: 1px solid black; padding: 10px;">Pesquisar</i>
                             </button>
                         </div>
                     </div>
@@ -117,8 +117,8 @@
                                 <i class="bi bi-cart-check-fill" style="align-self:center; color: rgb(0, 204, 3)"></i>
                             </div>
                             <div style="max-width:fit-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card">152</p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                <p class="number-card" id="vendas-semanal">152</p>
+                                <p class="vendas-p" id="vendas-semanal-dif-span"><span class="bi bi-arrow-up-short"></span><span id="vendas-semanal-dif">12</span>% vs semana passada</p>
                             </div>
                         </div>
                         <div class="card">
@@ -127,8 +127,8 @@
                                 <i class="bi bi-currency-dollar" style="align-self:center; color: rgb(0, 204, 3)"></i>
                             </div>
                             <div style="max-width:max-content; display: flex; gap:5px; flex-direction:column; ">
-                                <p class="number-card">R$<span>5.000,00</span></p>
-                                <p class="vendas-p"><span class="bi bi-arrow-up-short"></span>12% vs semana passada</p>
+                                <p class="number-card" id="receita-semanal"><span>R$5.000,00</span></p>
+                                <p class="vendas-p" id="receita-semanal-dif-span"><span class="bi bi-arrow-up-short"></span><span id="receita-semanal-dif">12</span>% vs semana passada</p>
                             </div>
                         </div>
                     </div>
