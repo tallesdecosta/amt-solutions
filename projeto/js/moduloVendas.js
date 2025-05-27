@@ -20,31 +20,40 @@ async function alterarModulo() {
 
     let modulo = document.getElementById("func2")
 
-    if (response.valor_final == null) {
+    if (response) {
+        if (response.erro) {
+            console.log("Erro: " + response.erro)
+            alert(response.response)
+        } else {
+            if (response.valor_final == null) {
 
-        modulo.addEventListener('click',() =>{
-            window.location.href = '../html/fechaCaixa.html'
-        })
+                modulo.addEventListener('click', () => {
+                    window.location.href = '../html/fechaCaixa.html'
+                })
 
-        let icon = '<i class="bi bi-door-closed"></i>'
+                let icon = '<i class="bi bi-door-closed"></i>'
 
-        let p = '<p>Fechar caixa</p>'
+                let p = '<p>Fechar caixa</p>'
 
-        modulo.innerHTML = icon + p
+                modulo.innerHTML = icon + p
 
-    } else {
+            } else {
 
-        modulo.addEventListener('click',() =>{
-            window.location.href = '../html/abrirCaixa.html'
-        })
+                modulo.addEventListener('click', () => {
+                    window.location.href = '../html/abrirCaixa.html'
+                })
 
-        let icon = '<i class="bi bi-door-open"></i>'
+                let icon = '<i class="bi bi-door-open"></i>'
 
-        let p = '<p>Abrir caixa</p>'
+                let p = '<p>Abrir caixa</p>'
 
-        modulo.innerHTML = icon + p
+                modulo.innerHTML = icon + p
 
+            }
+        }
     }
+
+
 }
 
 alterarModulo()

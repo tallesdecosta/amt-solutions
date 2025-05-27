@@ -43,15 +43,16 @@ async function abrir() {
 
         for (i in response) {
 
-            if (response.result = 200) {
+            if (response.response = 200) {
 
                 let h1 = document.querySelector('h1').innerText
 
                 alert('A operação de ' + h1 + ' foi realizada com sucesso!')
 
                 window.location.href = '../html/moduloVendas.html'
-            } else if (response.result = 0) {
-                console.log("Encontramos problemas no servidor, Pedimos que tente novamente mais tarde")
+            } else {
+                console.log("Erro: " + response.erro)
+                alert(response.response)
             }
         }
     } else if (element1 == 0) {
@@ -71,15 +72,15 @@ async function fechar() {
 
         for (i in response) {
 
-            if (response.result = 200) {
+            if (response.response = 200) {
 
                 let h1 = document.querySelector('h1').innerText
 
                 alert('A operação de ' + h1 + ' foi realizada com sucesso!')
 
                 window.location.href = '../html/moduloVendas.html'
-            } else if (response.result = 0) {
-                console.log("Encontramos problemas no servidor, Pedimos que tente novamente mais tarde")
+            } else {
+                console.log("Erro: " + response.erro)
             }
         }
     } else if (element1 == 0) {
@@ -122,12 +123,21 @@ async function valorAtual() {
 
             for (i in data) {
 
-                let valor = parseFloat((data[i].valor_final))
-                let valorFinal = valor.toFixed(2)
+                if (data[i].erro) {
 
-                let valorFinal2 = valorFinal.replace(".", ",")
+                    console.log("Erro: "+data[i].erro)
+                    alert(data[i].response)
 
-                element1.innerText = "R$ " + valorFinal2
+                } else {
+                    let valor = parseFloat((data[i].valor_final))
+                    let valorFinal = valor.toFixed(2)
+
+                    let valorFinal2 = valorFinal.replace(".", ",")
+
+                    element1.innerText = "R$ " + valorFinal2
+                }
+
+
             }
 
         }
@@ -151,8 +161,12 @@ async function valorDinheiro() {
             let sum = 0
 
             for (i in data) {
-
-                sum += parseFloat(data[i].valor)
+                if(data[i].erro){
+                    console.log("Erro: "+data[i].erro)
+                    alert(data[i].response)
+                }else{
+                    sum += parseFloat(data[i].valor)
+                }
             }
 
             let valor1 = sum.toFixed(2)

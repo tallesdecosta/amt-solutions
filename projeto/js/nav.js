@@ -23,6 +23,7 @@ function abrirperfil() {
     if (y == 0) {
 
         perfil.style.visibility = 'visible'
+        perfil.style.zIndex = '2'
 
         y = 1;
 

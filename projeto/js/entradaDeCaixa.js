@@ -1,13 +1,13 @@
 async function buscarfunc() {
-     let data = await fetch("../php/operacao.php",{
+    let data = await fetch("../php/operacao.php", {
 
         method: "GET",
         credentials: "include",
-     })
+    })
 
-     if(data){
+    if (data) {
         return await data.json()
-     }
+    }
 }
 
 async function adcfunc() {
@@ -16,20 +16,19 @@ async function adcfunc() {
 
     let response = await buscarfunc()
 
-    if(response){
+    if (response) {
+        if (response.erro) {
+            console.log("Erro: " + response.erro)
+            alert(response.response)
+        } else {
+            for (i in response) {
 
-        for(i in response){
+                let opt = ' <option value="' + response[i].id_usuario + '">' + response[i].nome + '</option> '
 
-            let opt = ' <option value="'+ response[i].id_usuario +'">'+ response[i].nome +'</option> '
-
-            select.innerHTML += opt
+                select.innerHTML += opt
+            }
         }
     }
-
-    select.value = 0;
-
-    console.log(select.value)
-    
 }
 
 
@@ -39,52 +38,61 @@ async function salvar() {
     let nome = document.getElementById("operacao").innerText
     let element1 = document.getElementById("respon").value
     let element2 = document.getElementById("valor").value
-    let element3 = document.getElementById("obs").value 
+    let element3 = document.getElementById("obs").value
 
-    if(element1 != 0){
+    if (element1 != 0) {
 
-        if(nome == 'Entrada de caixa'){
+        if (nome == 'Entrada de caixa') {
             nome = 'Entrada'
 
-        }else if(nome == 'Saída de caixa'){
+        } else if (nome == 'Saída de caixa') {
 
-            
+
             nome = 'Saida'
 
-            if(element2 > 0){
-                element2 = element2*(-1)
-
-                
+            if (element2 > 0) {
+                element2 = element2 * (-1)
             }
-            
-        }  
 
-       
-        response = await registrarop(element1, element2, element3,nome)
+        }
 
-        for (i in response) {
-    
-            if (response.result = 200) {
 
-                let h1 = document.querySelector('h1').innerText
+        response = await registrarop(element1, element2, element3, nome)
 
-                alert('A operação de '+ h1 +' foi realizada com sucesso!')
-    
-                window.location.href = '../html/moduloVendas.html'
-            } else if (response.result = 0) {
-                console.log("Encontramos problemas no servidor, Pedimos que tente novamente mais tarde")
+        if (response) {
+
+            if (response.erro) {
+                console.log("Erro: " + response.erro)
+                alert(response.response)
+            } else {
+
+                for (i in response) {
+
+                    if (response.result = 200) {
+
+                        let h1 = document.querySelector('h1').innerText
+
+                        alert('A operação de ' + h1 + ' foi realizada com sucesso!')
+
+                        window.location.href = '../html/moduloVendas.html'
+
+                    }
+                }
+
             }
         }
-    }else if(element1 == 0){
+
+
+    } else if (element1 == 0) {
         let h1 = document.querySelector('h1').innerText
 
-        alert('Para salvar a '+ h1 +' é preciso preencher o campo "Responsável"')
+        alert('Para salvar a ' + h1 + ' é preciso preencher o campo "Responsável"')
     }
 
-    
+
 }
 
-async function registrarop(dado1, dado2, dado3,dado4) {
+async function registrarop(dado1, dado2, dado3, dado4) {
 
     let list = { "resp": dado1, "op": "insert", "nome": dado4, "valor": dado2, "obs": dado3 }
 
@@ -108,21 +116,24 @@ async function verifacess() {
     let pass = document.getElementById('senha').value
 
     if ((user != '' && user != false) && (pass != '' && user != false)) {
-        
-        let response = await validaracess(user,pass)
 
-        if(response){
-            if(response.acesso == 'autorizado'){
+        let response = await validaracess(user, pass)
+
+        if (response) {
+            if (response.erro) {
+                console.log("Erro: " + response.erro)
+                alert(response.response)
+            } else if (response.acesso == 'autorizado') {
                 let element = document.getElementById('verifacess')
 
                 element.style.display = 'none'
 
                 adcfunc()
 
-            }else{
+            } else if (response.acesso = 'negado') {
                 let h1 = document.querySelector('h1').innerText
-                
-                alert('Para acessar o módulo de '+ h1 +' a conta deve conter privilegio de gestor')
+
+                alert('Para acessar o módulo de ' + h1 + ' a conta deve conter privilegio de gestor')
             }
         }
 
@@ -133,11 +144,11 @@ async function verifacess() {
 }
 
 
-async function validaracess(user,senha) {
-    
-    let values = {"user":user, "senha": senha}
+async function validaracess(user, senha) {
 
-    let data = await fetch("../php/operacao.php",{
+    let values = { "user": user, "senha": senha }
+
+    let data = await fetch("../php/operacao.php", {
 
         method: "POST",
         credentials: "include",
@@ -146,12 +157,12 @@ async function validaracess(user,senha) {
 
     })
 
-    if(data){
+    if (data) {
         return data.json()
     }
 
 }
 
-function voltar(){
+function voltar() {
     window.location.href = '../html/moduloVendas.html'
 }

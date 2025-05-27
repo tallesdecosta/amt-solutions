@@ -1,3 +1,5 @@
+// Função para limpar os campos da comanda
+
 function semcomanda() {
     let element1 = document.getElementById('numcomanda')
     let element2 = document.getElementById('nocliente')
@@ -37,6 +39,9 @@ function semcomanda() {
 
 semcomanda();
 
+
+// Botão para criar nova comanada
+
 function criarcomd() {
     let element1 = document.getElementById('numcomanda')
     let element2 = document.getElementById('nocliente')
@@ -75,7 +80,7 @@ function criarcomd() {
     element7.style.opacity = '1'
 }
 
-
+// Botao para salvar a comanda chamando o (registrovenda)
 
 async function salvarcmd() {
 
@@ -88,15 +93,22 @@ async function salvarcmd() {
         let data = await registrovenda("insert", "", "venda", "");
 
         if (data) {
-            for (i in data) {
-                if (data[i] == 200) {
-                    let numcmd = document.getElementById('numcomanda')
 
-                    numcmd.disabled = true
+            if (data.erro) {
+                console.log("Erro: " + data.erro)
+                alert(data.response)
+            } else {
+
+                for (i in data) {
+                    if (data[i] == 200) {
+                        let numcmd = document.getElementById('numcomanda')
+
+                        numcmd.disabled = true
 
 
-                } else if (data.resposta == 1) {
-                    alert("Ja existe uma comanda com este número!")
+                    } else if (data.resposta == 1) {
+                        alert("Ja existe uma comanda com este número!")
+                    }
                 }
             }
         }
@@ -105,6 +117,8 @@ async function salvarcmd() {
 
     }
 }
+
+// ============     Função async para conectar com o vendas ==============
 
 async function cmdativas(op, filtro, tabela, id) {
 
@@ -122,6 +136,9 @@ async function cmdativas(op, filtro, tabela, id) {
     }
 }
 
+// Função para adcionar comanda ativas na listinha do lado
+
+
 async function adccmdativas() {
 
     let resultado = await cmdativas("select", "all", "venda", "");
@@ -132,28 +149,38 @@ async function adccmdativas() {
 
     let x = 1;
 
-    for (i in resultado) {
+    if (resultado.erro) {
+        console.log("Erro :" + resultado.erro)
+        alert(resultado.response)
 
-        let cmd = resultado[i].numComanda
-        let nome = resultado[i].nomeCliente
+    } else {
 
-        
-        let data_americana = resultado[i].data_emissao;
-        let data_brasileira = data_americana.split('-').reverse().join('/');
-        
+        for (i in resultado) {
 
-        let data = data_brasileira
-        let id = resultado[i].id
+            let cmd = resultado[i].numComanda
+            let nome = resultado[i].nomeCliente
 
-        estruturacmd(x, cmd, nome, data, id)
 
-        x++
+            let data_americana = resultado[i].data_emissao;
+            let data_brasileira = data_americana.split('-').reverse().join('/');
 
+
+            let data = data_brasileira
+            let id = resultado[i].id
+
+            estruturacmd(x, cmd, nome, data, id)
+
+            x++
+        }
     }
+
+
 }
 
 adccmdativas()
 
+
+// Função async que registra a venda e os produtos quando salva
 
 async function registrovenda(op, filtro, tabela, id) {
 
@@ -209,7 +236,7 @@ async function registrovenda(op, filtro, tabela, id) {
 
 
 
-
+// Função que abre o popup para adicionar os produtos na comanda
 
 async function abrirprods() {
     let element = document.getElementById('fundopreto');
@@ -221,16 +248,23 @@ async function abrirprods() {
 
     prod.innerHTML = ''
 
+    if (resultado) {
 
-    for (i in resultado) {
+        if (resultado.erro) {
+            console.log(resultado.erro)
+            alert(resultado.response)
+        } else {
+            for (i in resultado) {
 
-        let idprod = resultado[i].id_produto
-        let nome = resultado[i].nome
-        let valor = resultado[i].valor
+                let idprod = resultado[i].id_produto
+                let nome = resultado[i].nome
+                let valor = resultado[i].valor
 
 
-        estruturaprod(idprod, nome, valor)
+                estruturaprod(idprod, nome, valor)
 
+            }
+        }
     }
 
     let salvar = document.getElementById('adcbut')
@@ -247,9 +281,9 @@ async function abrirprods() {
 
             let checkbox = row.querySelector("input[type='checkbox']");
             let qntd = row.querySelector("input[type='number']").value;
-            let hidd = row.querySelector("input[type='hidden']").value
-            let prod = row.querySelector("#nomeprod" + hidd)
-            let valorprod = row.querySelector("#valorprod" + hidd).innerText
+            let id = row.querySelector("input[type='hidden']").value
+            let prod = row.querySelector("#nomeprod" + id)
+            let valorprod = row.querySelector("#valorprod" + id).innerText
 
 
             let v1 = valorprod.replace(",", ".");
@@ -263,27 +297,27 @@ async function abrirprods() {
 
 
 
-            let tr = '<tr id="lineitem' + hidd + '"> </tr>'
-            let icon1 = '<td class="tdicon" id="tdiconexc' + hidd + '"><i class="bi bi-trash exc" onclick="deletaritem(' + hidd + ')" ></i></td>'
+            let tr = '<tr id="lineitem' + id + '"> </tr>'
+            let icon1 = '<td class="tdicon" id="tdiconexc' + id + '"><i class="bi bi-trash exc" onclick="deletaritem(' + id + ')" ></i></td>'
 
-            let icon2 = '<td class="tdicon" id="tdiconedit' + hidd + '"><i class="bi bi-pen edit" onclick= "editarqnt(' + hidd + ')"></i></i></td>'
+            let icon2 = '<td class="tdicon" id="tdiconedit' + id + '"><i class="bi bi-pen edit" onclick= "editarqnt(' + id + ')"></i></i></td>'
 
             if (checkbox && qntd) {
                 if ((checkbox.checked) && (qntd.value != 0 && qntd > 0)) {
 
-                    let qnt = ' <td class="qnt" id="qntitem' + hidd + '">' + qntd + '</td> '
-                    let nome = '<td onclick="abrirprod()" class="nomeprod" id="nomeitem' + hidd + '">' + prod.innerText + '</td>'
-                    let valor = '<td class="valoritem" id="valoritem' + hidd + '">R$ ' + subtotal2 + '</td>'
-                    let hidden = ' <input type="hidden" name="hidden' + hidd + '" id="' + hidd + '" value="' + hidd + '"> '
+                    let qnt = ' <td class="qnt" id="qntitem' + id + '">' + qntd + '</td> '
+                    let nome = '<td onclick="abrirprod(' + id + ')" class="nomeprod" id="nomeitem' + id + '">' + prod.innerText + '</td>'
+                    let valor = '<td class="valoritem" id="valoritem' + id + '">R$ ' + subtotal2 + '</td>'
+                    let hidden = ' <input type="hidden" name="hidden' + id + '" id="' + id + '" value="' + id + '"> '
 
-                    if (document.getElementById("lineitem" + hidd)) {
+                    if (document.getElementById("lineitem" + id)) {
 
-                        line = document.getElementById("lineitem" + hidd)
+                        line = document.getElementById("lineitem" + id)
                         line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
 
                     } else {
                         tbody.innerHTML += tr
-                        line = document.getElementById("lineitem" + hidd)
+                        line = document.getElementById("lineitem" + id)
                         line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
                     }
 
@@ -305,10 +339,7 @@ async function abrirprods() {
 
 }
 
-function editarSubTotal() {
-
-}
-
+// Função que calcula o valor total da comanda
 
 function valorTotal() {
 
@@ -339,6 +370,7 @@ function valorTotal() {
     element.innerHTML = numeroFormatado2
 }
 
+// Botão cancelar que fecha o popup dos produtos
 
 function cancelar() {
     let element = document.getElementById('fundopreto');
@@ -346,6 +378,8 @@ function cancelar() {
     let tbody = document.getElementById('tbody');
     tbody.innerHTML = '<tbody id="tbody"> </tbody>'
 }
+
+// Função async que retorna os produtos
 
 async function verprodutos() {
 
@@ -362,6 +396,7 @@ async function verprodutos() {
     }
 }
 
+// Função que fecha o popup de visualizar produto da comanda
 
 function fecharprod() {
     let element = document.getElementById('fundopreto2');
@@ -369,29 +404,117 @@ function fecharprod() {
     element.style.display = 'none';
 }
 
-function abrirprod() {
+// Função para abrir o popup de visualizar produto da comanda
+
+async function abrirprod(id) {
 
     let element = document.getElementById('fundopreto2');
 
     element.style.display = 'flex';
+
+    let element1 = document.getElementById('nomedoprod')
+    let element2 = document.getElementById('classprod')
+    let element3 = document.getElementById('ingredientesprod')
+    let element4 = document.getElementById('alergiasprod')
+
+    element1.innerHTML = ''
+    element2.innerHTML = ''
+    element3.innerHTML = ''
+    element4.innerHTML = ''
+
+
+    response = await retornarProd("produto", id)
+
+    if (response) {
+
+        if (response.erro) {
+            console.log("Erro: " + reponse.erro)
+            alert(response.response)
+        } else {
+
+            for (i in response) {
+                element1.innerHTML = '<p class="p2" id="nomedoprod">' + response[i].nome + '</p>'
+                element2.innerHTML = '<p class="p2">' + response[i].categoria + '</p>'
+            }
+        }
+    }
+
+    response = await retornarProd("alergia", id)
+
+    if (response) {
+
+        if (response.erro) {
+            console.log("Erro: " + reponse.erro)
+            alert(response.response)
+        } else {
+
+            for (i in response) {
+                element4.innerHTML += '<p>* Contém ' + response[i].alergia + '</p>'
+
+            }
+        }
+    }
+
+    response = await retornarProd("insumo", id)
+
+    if (response) {
+
+        if (response.erro) {
+            console.log("Erro: " + reponse.erro)
+            alert(response.response)
+        } else {
+
+            for (i in response) {
+                element3.innerHTML += '<p>* ' + response[i].nome + '</p>'
+
+            }
+        }
+    }
+
+
 }
+
+// Função async para retornar o produto clicado e alergias
+
+async function retornarProd(filtro, id) {
+
+    list = { "filtro": filtro, "id": id }
+
+    data = await fetch("../php/verproduto.php", {
+        method: "POST",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(list)
+    })
+    if (data) {
+        return await data.json()
+    }
+
+}
+
+// Função do botao para finalizar a comanda
 
 
 async function finalizar() {
 
     let formpag = document.getElementById('formpag').value
     let element = document.getElementById('numcomanda').value
+    let valor = document.getElementById('valorTotal').innerText
+
+    let valor1 = valor.replace(",", ".")
+    let valor2 = parseFloat(valor1)
 
     if (formpag != 0) {
 
-        let result = await finalizarcmd(element);
+        let result = await finalizarcmd(element, formpag, valor2);
 
-        if (result.response == 200) {
+        if (result.erro) {
+            console.log("Erro: " + result.erro)
+            alert(result.response)
+        } else {
             semcomanda()
             semcomanda()
             adccmdativas()
-        } else if (result.response == 0) {
-            alert("Erro no servidor")
         }
     } else {
         alert("Não é possível finalizar a comanda sem uma forma de pagamento")
@@ -400,9 +523,11 @@ async function finalizar() {
 
 }
 
-async function finalizarcmd(num) {
+// Função async que finaliza a comanda
 
-    list = { "finalizar": num }
+async function finalizarcmd(num, forma, valor) {
+
+    list = { "finalizar": num, "formpag": forma, "valor": valor }
 
     let data = await fetch("../php/vendas.php", {
         method: "POST",
@@ -415,7 +540,7 @@ async function finalizarcmd(num) {
     }
 }
 
-
+// Função quando clica na comanda do lado aparecer os dados na comanda principal
 
 async function visucmd(x) {
 
@@ -429,44 +554,51 @@ async function visucmd(x) {
 
     if (result) {
 
+        if (result.erro) {
+            console.log("Erro :" + result.erro)
+            alert(result.response)
+        } else {
 
-        for (i in result) {
+            for (i in result) {
 
-            let element1 = document.getElementById('numcomanda')
-            let element2 = document.getElementById('nocliente')
-            let element3 = document.getElementById('formpag')
-            let element4 = document.getElementById('dataemiss')
+                let element1 = document.getElementById('numcomanda')
+                let element2 = document.getElementById('nocliente')
+                let element3 = document.getElementById('formpag')
+                let element4 = document.getElementById('dataemiss')
 
-            element1.value = result[i].numComanda
+                element1.value = result[i].numComanda
 
-            document.getElementById('hidvenda').value = element1.value
+                document.getElementById('hidvenda').value = element1.value
 
-            element2.value = result[i].nomeCliente
+                element2.value = result[i].nomeCliente
 
-            element1.disabled = true
+                element1.disabled = true
 
-            let data_americana = result[i].data_emissao;
-            let data_brasileira = data_americana.split('-').reverse().join('/');
+                let data_americana = result[i].data_emissao;
+                let data_brasileira = data_americana.split('-').reverse().join('/');
 
-            element4.innerText = data_brasileira
+                element4.innerText = data_brasileira
 
-            element11.innerHTML = result[i].numComanda
+                element11.innerHTML = result[i].numComanda
 
-            if (result[i].formaPagamento == "") {
-                element3.value = "0"
-            } else if (result[i].formaPagamento == "Débito") {
-                element3.value = "1"
-            } else if (result[i].formaPagamento == "Crédito") {
-                element3.value = "2"
-            } else if (result[i].formaPagamento == "Dinheiro") {
-                element3.value = "3"
-            } else if (result[i].formaPagamento == "Pix") {
-                element3.value = "4"
+                if (result[i].formaPagamento == "") {
+                    element3.value = "0"
+                } else if (result[i].formaPagamento == "Débito") {
+                    element3.value = "1"
+                } else if (result[i].formaPagamento == "Crédito") {
+                    element3.value = "2"
+                } else if (result[i].formaPagamento == "Dinheiro") {
+                    element3.value = "3"
+                } else if (result[i].formaPagamento == "Pix") {
+                    element3.value = "4"
+                }
+
+
+
             }
-
-
-
         }
+
+
 
 
 
@@ -476,31 +608,37 @@ async function visucmd(x) {
 
     if (result2) {
 
-        for (i in result2) {
+        if (result2.erro) {
+            console.log("Erro :" + result2.erro)
+            alert(result2.response)
+        } else {
 
-            let tbody = document.getElementById('tbodyitens');
+            for (i in result2) {
 
-            let tr = '<tr id="lineitem' + result2[i].id_produto + '"> </tr>'
+                let tbody = document.getElementById('tbodyitens');
 
-            let icon1 = '<td class="tdicon" id="tdiconexc' + result2[i].id_produto + '"><i class="bi bi-trash exc" id="icondel' + result2[i].id_produto + '" onclick="deletaritem(' + result2[i].id_produto + ')"></i></td>'
+                let tr = '<tr id="lineitem' + result2[i].id_produto + '"> </tr>'
 
-            let icon2 = '<td class="tdicon" id="tdiconedit' + result2[i].id_produto + '"><i class="bi bi-pen edit" onclick= "editarqnt(' + result2[i].id_produto + ')"></i></i></td>'
+                let icon1 = '<td class="tdicon" id="tdiconexc' + result2[i].id_produto + '"><i class="bi bi-trash exc" id="icondel' + result2[i].id_produto + '" onclick="deletaritem(' + result2[i].id_produto + ')"></i></td>'
+
+                let icon2 = '<td class="tdicon" id="tdiconedit' + result2[i].id_produto + '"><i class="bi bi-pen edit" onclick= "editarqnt(' + result2[i].id_produto + ')"></i></i></td>'
 
 
-            let qnt = ' <td class="qnt" id="qntitem' + result2[i].id_produto + '">' + result2[i].qntd + '</td> '
-            let nome = '<td onclick="abrirprod()" class="nomeprod" id="nomeitem' + result2[i].id_produto + '">' + result2[i].nome + '</td>'
+                let qnt = ' <td class="qnt" id="qntitem' + result2[i].id_produto + '">' + result2[i].qntd + '</td> '
+                let nome = '<td onclick="abrirprod(' + result2[i].id_produto + ')" class="nomeprod" id="nomeitem' + result2[i].id_produto + '">' + result2[i].nome + '</td>'
 
-            let valorini = parseFloat(result2[i].valor)
-            let valor1 = valorini * result2[i].qntd
-            let valor2 = valor1.toFixed(2)
-            let valor3 = valor2.replace(".", ",")
+                let valorini = parseFloat(result2[i].valor)
+                let valor1 = valorini * result2[i].qntd
+                let valor2 = valor1.toFixed(2)
+                let valor3 = valor2.replace(".", ",")
 
-            let valor = '<td class="valoritem" id="valoritem' + result2[i].id_produto + '">R$ ' + valor3 + '</td>'
-            let hidden = ' <input type="hidden" name="hidden' + result2[i].id_produto + '" id="' + result2[i].id_produto + '" value="' + result2[i].id_produto + '"> '
+                let valor = '<td class="valoritem" id="valoritem' + result2[i].id_produto + '">R$ ' + valor3 + '</td>'
+                let hidden = ' <input type="hidden" name="hidden' + result2[i].id_produto + '" id="' + result2[i].id_produto + '" value="' + result2[i].id_produto + '"> '
 
-            tbody.innerHTML += tr
-            line = document.getElementById("lineitem" + result2[i].id_produto)
-            line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
+                tbody.innerHTML += tr
+                line = document.getElementById("lineitem" + result2[i].id_produto)
+                line.innerHTML = icon1 + icon2 + qnt + nome + valor + hidden
+            }
         }
     }
 
@@ -508,6 +646,8 @@ async function visucmd(x) {
 
     valorTotal()
 }
+
+// Função para deletar item da lista da comanda
 
 function deletaritem(id) {
 
@@ -519,6 +659,8 @@ function deletaritem(id) {
 
     valorTotal()
 }
+
+// Função para editar a quantidade dos itens
 
 function editarqnt(id) {
 
@@ -562,6 +704,8 @@ function editarqnt(id) {
 
 }
 
+// Função para alterar o subtotal e o valortotal qnd edita a quantidade do item
+
 function setqnt(id, valorProd) {
 
     let inp = document.getElementById('inpqnt' + id).value
@@ -604,6 +748,8 @@ function setqnt(id, valorProd) {
 
 }
 
+// funcão quando clica para cancelar a edição de quantidade de itens
+
 function cancelqnt(id, valorantigo) {
 
     let element = document.getElementById('qntitem' + id)
@@ -628,6 +774,8 @@ function cancelqnt(id, valorantigo) {
 }
 
 
+// Função para mudar o numero da comanda 
+
 function numcmd() {
     let element = document.getElementById('numerocmd')
     let element2 = document.getElementById('numcomanda').value
@@ -637,12 +785,7 @@ function numcmd() {
 
 }
 
-function ativarbotao() {
-
-    let but = document.getElementById('divtrash')
-
-    but.onclick()
-}
+// Função para deletar a comanda
 
 
 async function deletarcmd() {
@@ -671,24 +814,33 @@ async function deletarcmd() {
     }
 }
 
+// Função async para deletar a comanda
 
 async function resDeletarCmd() {
 
     let response = await deletarcmd()
 
     if (response) {
-        for (i in response) {
-            if (response[i] == 200) {
-                alert("Comanda deletada!")
-                semcomanda()
-                adccmdativas()
+
+        if (response.erro) {
+            console.log("Erro :" + response.erro)
+            alert(response.response)
+
+        } else {
+            for (i in response) {
+
+                if (response[i] == 200) {
+                    alert("Comanda deletada!")
+                    semcomanda()
+                    adccmdativas()
+                }
             }
         }
     }
 
 }
 
-
+// Função para filtrar comandas na listinha do lado
 
 async function filtrarcmd() {
 
@@ -700,31 +852,38 @@ async function filtrarcmd() {
 
         if (response) {
 
-            let tbody = document.getElementById('tbodycmd');
+            if (response.erro) {
+                console.log("Erro :" + response.erro)
+                alert(response.response)
+            } else {
+                let tbody = document.getElementById('tbodycmd');
 
-            tbody.innerHTML = ''
+                tbody.innerHTML = ''
 
-            let x = 1;
+                let x = 1;
 
-            for (i in response) {
+                for (i in response) {
 
-                if (response.response == 'none') {
+                    if (response.response == 'none') {
 
-                    tbody.innerHTML = ''
+                        tbody.innerHTML = ''
 
-                } else {
+                    } else {
 
-                    let cmd = response[i].numComanda
-                    let nome = response[i].nomeCliente
-                    let data = response[i].data_emissao
-                    let id = response[i].id
+                        let cmd = response[i].numComanda
+                        let nome = response[i].nomeCliente
+                        let data = response[i].data_emissao
+                        let id = response[i].id
 
-                    estruturacmd(x, cmd, nome, data, id)
+                        estruturacmd(x, cmd, nome, data, id)
 
-                    x++
+                        x++
 
+                    }
                 }
             }
+
+
 
         }
     } else {
@@ -736,7 +895,7 @@ async function filtrarcmd() {
 
 }
 
-
+// Função async para retornar a comanda filtrada
 
 async function consultarcmd(filtro) {
 
@@ -757,7 +916,7 @@ async function consultarcmd(filtro) {
 
 
 
-
+// Função para ver filtrar o produto no popup de adcionar produtos
 
 async function consultarprod(id) {
 
@@ -778,7 +937,7 @@ async function consultarprod(id) {
 
 
 
-
+// Função asyn que retorna o produto filtrado
 
 async function filtrarprod() {
 
@@ -790,29 +949,36 @@ async function filtrarprod() {
 
         let response = await consultarprod(filtro)
 
-        if (response) {
+        if (response.erro) {
+            console.log("Erro :" + response.erro)
+            alert(response.response)
+        } else {
+            if (response) {
 
-            prod.innerHTML = ''
+                prod.innerHTML = ''
 
-            for (i in response) {
+                for (i in response) {
 
-                if (response.response == 'none') {
+                    if (response.response == 'none') {
 
-                    prod.innerHTML = ''
+                        prod.innerHTML = ''
 
-                } else {
+                    } else {
 
-                    let idprod = response[i].id_produto
-                    let nome = response[i].nome
-                    let valor = response[i].valor
+                        let idprod = response[i].id_produto
+                        let nome = response[i].nome
+                        let valor = response[i].valor
 
 
-                    estruturaprod(idprod, nome, valor)
+                        estruturaprod(idprod, nome, valor)
 
+                    }
                 }
-            }
 
+            }
         }
+
+
     } else {
 
         prod.innerHTML = ''
@@ -825,7 +991,7 @@ async function filtrarprod() {
 
 }
 
-
+// Função com a estrutura da tabela de produtos do popup
 
 function estruturaprod(idprod, nomeprod, valorprod) {
 
@@ -858,6 +1024,7 @@ function estruturaprod(idprod, nomeprod, valorprod) {
 
 }
 
+// Função com a estrutura da listinha de comandas ativas
 
 function estruturacmd(x, cmd, nome, data, id) {
 

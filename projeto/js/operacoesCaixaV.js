@@ -18,39 +18,45 @@ async function inserirCaixa() {
 
     if (response) {
 
-        let tbody = document.getElementById('tbody')
+        if (response.erro) {
+            console.log("Erro: " + response.erro)
+            alert(response.response)
+        } else {
 
-        for (i in response) {
+            let tbody = document.getElementById('tbody')
 
-            let tr = '<tr id="trcaixa' + response[i].id_op + '"></tr>'
+            for (i in response) {
 
-            let { dia, mes, ano } = extrairData(response[i].hora_final);
+                let tr = '<tr id="trcaixa' + response[i].id_op + '"></tr>'
+
+                let { dia, mes, ano } = extrairData(response[i].hora_final);
 
 
 
-            
 
-            td1 = '<td>' + dia + "/" + mes+ "/" + ano + '</td>'
-            td2 = '<td>'+ response[i].nome_op +'</td>'
-            td3 = '<td>'+ response[i].nome +'</td>'
 
-            valor1 = parseFloat(response[i].valor_ini)
-            valor2 = valor1.toFixed(2)
-            valor3 = valor2.replace(".",",")
+                td1 = '<td>' + dia + "/" + mes + "/" + ano + '</td>'
+                td2 = '<td>' + response[i].nome_op + '</td>'
+                td3 = '<td>' + response[i].nome + '</td>'
 
-            td4 = '<td>R$ '+ valor3 +'</td>'
+                valor1 = parseFloat(response[i].valor_ini)
+                valor2 = valor1.toFixed(2)
+                valor3 = valor2.replace(".", ",")
 
-            valor1 = parseFloat(response[i].valor_final)
-            valor2 = valor1.toFixed(2)
-            valor3 = valor2.replace(".",",")
+                td4 = '<td>R$ ' + valor3 + '</td>'
 
-            td5 = '<td>R$ '+ valor3 +'</td>'
+                valor1 = parseFloat(response[i].valor_final)
+                valor2 = valor1.toFixed(2)
+                valor3 = valor2.replace(".", ",")
 
-            tbody.innerHTML += tr
+                td5 = '<td>R$ ' + valor3 + '</td>'
 
-            tr = document.getElementById('trcaixa'+response[i].id_op)
+                tbody.innerHTML += tr
 
-            tr.innerHTML = td1 + td2 + td3 + td4 + td5
+                tr = document.getElementById('trcaixa' + response[i].id_op)
+
+                tr.innerHTML = td1 + td2 + td3 + td4 + td5
+            }
         }
     }
 }
