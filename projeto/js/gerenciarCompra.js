@@ -30,7 +30,7 @@ function habilitarCampos(){
 
 async function chamarPHP() {
   const filtro = document.getElementById('inputPesquisa').value;
-  let url = `../php/compra.php?filtro=${encodeURIComponent(filtro)}`;
+  let url = `../php/gerenciarCompra.php?filtro=${encodeURIComponent(filtro)}`;
 
   try {
     const resposta = await fetch(url);
@@ -106,7 +106,7 @@ document.getElementById('btn-salvar').addEventListener('click', async () => {
 
   if (window.adicionandoNovo) {
     try {
-      const resposta = await fetch('../php/compra.php', {
+      const resposta = await fetch('../php/gerenciarCompra.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -125,7 +125,7 @@ document.getElementById('btn-salvar').addEventListener('click', async () => {
     try {
       payload.id = window.itemSelecionado.id_pedido;
 
-      const resposta = await fetch('../php/compra.php', {
+      const resposta = await fetch('../php/gerenciarCompra.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -147,6 +147,31 @@ document.getElementById('buttonPesquisa').addEventListener('click', () => {
   limparCampos();
 });
   
+// Botão DELETAR
+document.getElementById('btn-deletar').addEventListener('click', async () => {
+  try {
+    if (!window.itemSelecionado) {
+      alert('Selecione um item antes.');
+      return;
+    }
+
+    if (!confirm('Tem certeza que deseja excluir este item?')) return;
+
+    const resposta = await fetch(`../php/gerenciarCompra.php?id=${window.itemSelecionado.id_pedido}`, {
+      method: 'DELETE'
+    });
+
+    const resJson = await resposta.json();
+
+    alert('Excluído com sucesso!');
+    chamarPHP();
+    limparCampos();
+    window.itemSelecionado = null;
+  } catch (err) {
+    console.error('Erro ao deletar:', err);
+  }
+});
+
 // Botão ADICIONAR
 document.getElementById('btn-adicionar').addEventListener('click', () => {
   window.adicionandoNovo = true;
@@ -155,6 +180,16 @@ document.getElementById('btn-adicionar').addEventListener('click', () => {
   habilitarCampos();
 });
 
+// Botão EDITAR
+document.getElementById('btn-editar').addEventListener('click', () => {
+  if (!window.itemSelecionado) {
+    alert('Selecione um item para editar');
+    return;
+  }
+  habilitarCampos();
+  window.adicionandoNovo = false;
+});
+  
 async function carregarInsumos() {
   try {
     const response = await fetch('../php/get_insumos.php');
