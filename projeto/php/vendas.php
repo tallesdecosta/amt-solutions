@@ -99,7 +99,7 @@ function filtrarumacmd()
         if (is_numeric($id)) {
 
             $conn = conectar();
-            $queryA = "SELECT * FROM venda WHERE numComanda = '$id' AND statuscmd = 'A'";
+            $queryA = "SELECT id,numComanda,nomeCliente, TIME(data_emissao) AS data_emissao ,formaPagamento,statuscmd,valor FROM venda WHERE numComanda = '$id' AND statuscmd = 'A'";
             $resultadoA = $conn->query($queryA);
 
             if (!$resultadoA) {
@@ -122,7 +122,7 @@ function filtrarumacmd()
         } else if (is_string($id)) {
 
             $conn = conectar();
-            $queryA = "SELECT * FROM venda WHERE nomeCliente = '$id' AND statuscmd = 'A'";
+            $queryA = "SELECT id,numComanda,nomeCliente, TIME(data_emissao) AS data_emissao ,formaPagamento,statuscmd,valor FROM venda WHERE nomeCliente = '$id' AND statuscmd = 'A'";
             $resultadoA = $conn->query($queryA);
 
             if (!$resultadoA) {
@@ -311,7 +311,7 @@ function retornarcmd()
         if ($_POST["tabela"] == "venda" && $_POST["filtro"] == "all" && $_POST["id"] == "") {
 
             $conn = conectar();
-            $query = "SELECT * FROM venda WHERE statuscmd = 'A'";
+            $query = "SELECT id,numComanda,nomeCliente, TIME(data_emissao) AS data_emissao ,formaPagamento,statuscmd,valor FROM venda WHERE statuscmd = 'A'";
             $resultado = $conn->query($query);
 
             if (!$resultado) {
@@ -334,7 +334,7 @@ function retornarcmd()
                 $id = $_POST["id"];
 
                 $conn = conectar();
-                $query = "SELECT * FROM venda WHERE id = '$id' AND statuscmd = 'A'";
+                $query = "SELECT id,numComanda,nomeCliente, TIME(data_emissao) AS data_emissao ,formaPagamento,statuscmd,valor FROM venda WHERE id = '$id' AND statuscmd = 'A'";
                 $resultado = $conn->query($query);
 
                 if (!$resultado) {
