@@ -8,7 +8,7 @@ document.getElementById("btn-divLote").addEventListener("click", () => {
   document.querySelector(".cadastroLote").classList.toggle("esconder");
 });
 
-function limparCampos(){
+function limparCampos() {
   const inputs = document.querySelectorAll('.descricaoItem input');
   inputs.forEach(input => {
     input.value = '';
@@ -34,21 +34,21 @@ function limparCampos(){
   });
 
   const tbody = document.getElementById("tabela-lote-corpo");
-  tbody.innerHTML = ""; 
-  document.querySelectorAll("#span").forEach(span => {span.style.display = "none";});
-  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "none";});
+  tbody.innerHTML = "";
+  document.querySelectorAll("#span").forEach(span => { span.style.display = "none"; });
+  document.querySelectorAll("#spanL").forEach(spanL => { spanL.style.display = "none"; });
 }
 
-function habilitarCampos(){
+function habilitarCampos() {
   document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
-  document.querySelectorAll("#span").forEach(span => {span.style.display = "";});
+  document.querySelectorAll("#span").forEach(span => { span.style.display = ""; });
 }
 
 function habilitarCamposLote() {
   document.querySelectorAll('.descricaoLote input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoLote select').forEach(select => select.removeAttribute('disabled'));
-  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "";});
+  document.querySelectorAll("#spanL").forEach(spanL => { spanL.style.display = ""; });
 }
 
 // Cadastro Insumos
@@ -154,6 +154,8 @@ document.getElementById('btn-salvar').addEventListener('click', async () => {
 
     window.adicionandoNovo = false;
     window.itemSelecionado = null;
+
+    window.location.reload()
 
   } catch (erro) {
     console.error('Erro na requisição:', erro);
@@ -321,6 +323,8 @@ document.getElementById('btn-salvarLote').addEventListener('click', async () => 
     chamarPHP();
     limparCampos();
 
+    window.location.reload()
+
   } catch (err) {
     console.error('Erro ao salvar o lote:', err);
   }
@@ -328,14 +332,14 @@ document.getElementById('btn-salvarLote').addEventListener('click', async () => 
 
 
 document.getElementById('btn-deletarLote').addEventListener('click', () => {
-  if(!window.loteSelecionado){
+  if (!window.loteSelecionado) {
     alert('Selecione um lote antes!');
     return;
   }
 
-  if(!confirm('Tem certeza que deseja excluir este lote?')) return;
+  if (!confirm('Tem certeza que deseja excluir este lote?')) return;
 
-  fetch(`../php/insumoLote.php?id=${window.loteSelecionado.id_Lote}`,{
+  fetch(`../php/insumoLote.php?id=${window.loteSelecionado.id_Lote}`, {
     method: 'DELETE'
   })
     .then(res => res.json())
@@ -356,11 +360,11 @@ document.getElementById("btn-adicionarLote").addEventListener("click", () => {
 })
 
 document.getElementById("btn-editarLote").addEventListener('click', () => {
-  if(!window.loteSelecionado){
+  if (!window.loteSelecionado) {
     alert('Selecione um lote para editar');
     return;
   }
-  habilitarCamposLote(); 
+  habilitarCamposLote();
   window.adicionandoLote = false;
 });
 

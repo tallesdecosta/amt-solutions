@@ -317,6 +317,7 @@ document.getElementById('btn-salvar').addEventListener('click', async () => {
       limparCampos();
       window.adicionandoNovo = false;
       window.itemSelecionado = null;
+      window.location.reload()
 
     } else {
       alert("Todos os campos do formulário são obrigatórios!");
@@ -572,6 +573,7 @@ document.getElementById('btn-salvarLote').addEventListener('click', async () => 
       limparCampos();
       window.adicionandoLote = false;
       window.loteSelecionado = null;
+      window.location.reload()
 
     } else {
       // Editar lote existente
