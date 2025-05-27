@@ -12,6 +12,7 @@ function semcomanda() {
     let element9 = document.getElementById('tbodyitens')
     let element10 = document.getElementById('valorTotal')
     let element11 = document.getElementById('numerocmd')
+    let element12 = document.getElementById('dataemiss')
 
     document.getElementById('hidvenda').value = 0
 
@@ -31,6 +32,7 @@ function semcomanda() {
     element9.innerHTML = ''
     element10.innerHTML = ''
     element11.innerHTML = '#'
+    element11.innerHTML = ''
 
     element7.style.opacity = '0.7'
 
@@ -54,6 +56,7 @@ function criarcomd() {
     let element9 = document.getElementById('tbodyitens')
     let element10 = document.getElementById('valorTotal')
     let element11 = document.getElementById('numerocmd')
+    let element12 = document.getElementById('dataemiss')
 
     document.getElementById('hidvenda').value = 0
 
@@ -76,6 +79,7 @@ function criarcomd() {
 
     element10.innerHTML = ''
     element11.innerHTML = '#'
+    element12.innerHTML = ''
 
     element7.style.opacity = '1'
 }
@@ -574,10 +578,10 @@ async function visucmd(x) {
 
                 element1.disabled = true
 
-                let data_americana = result[i].data_emissao;
-                let data_brasileira = data_americana.split('-').reverse().join('/');
+                // let data_americana = result[i].data_emissao;
+                // let data_brasileira = data_americana.split('-').reverse().join('/');
 
-                element4.innerText = data_brasileira
+                element4.innerText = result[i].data_emissao
 
                 element11.innerHTML = result[i].numComanda
 
