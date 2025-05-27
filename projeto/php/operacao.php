@@ -2,9 +2,10 @@
 
 include 'conectar_bd.php';
 
-$_POST = json_decode(file_get_contents('php://input'), true);
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-if (isset($_POST)) {
+    $_POST = json_decode(file_get_contents('php://input'), true);
+
     switch ($_POST) {
         case isset($_POST["resp"]) && $_POST["op"] == "insert":
             echo json_encode(insert());
@@ -18,45 +19,66 @@ if (isset($_POST)) {
             # code...
             break;
     }
-} else if (isset($_GET)) {
+} else if ($_SERVER['REQUEST_METHOD'] == "GET") {
     echo json_encode(retornarFuncs());
-}
-
-
+} 
 
 
 function insert()
 {
 
-    $resp = intval($_POST["resp"]);
-    $val = floatval($_POST["valor"]);
-    $obs = $_POST["obs"];
-    $nome = $_POST["nome"];
+    try {
 
-    $conn = conectar();
-    $query = "SELECT valor_final FROM caixa ORDER BY id_op DESC LIMIT 1;";
-    $resultado = $conn->query($query);
-    $data = $resultado -> fetch_object();
-
-    
-
-    $ultimo_valor = $data -> valor_final;
-
-    $ajuste = $ultimo_valor + ($val);
-
-    if ($resultado) {
+        $resp = intval($_POST["resp"]);
+        $val = floatval($_POST["valor"]);
+        $obs = $_POST["obs"];
+        $nome = $_POST["nome"];
 
         $conn = conectar();
-        $query = "INSERT INTO caixa(valor_ini,valor_final,id_ini,id_final,nome_op,hora_ini,hora_final,obs) VALUES ('$val','$ajuste','$resp','$resp','$nome',now(),now(),'$obs')";
+        $query = "SELECT valor_final FROM caixa WHERE valor_final IS NOT NULL ORDER BY id_op DESC LIMIT 1;";
         $resultado = $conn->query($query);
 
+        if (!$resultado) {
+            throw new Exception();
+        } else {
+            if ($resultado->num_rows > 0) {
 
-    }
+                $data = $resultado->fetch_object();
 
-    if ($resultado) {
-        return (["result" => 200]);
-    } else {
-        return (["result" => 0]);
+                $ultimo_valor = $data->valor_final;
+
+                $ajuste = $ultimo_valor + ($val);
+
+                if ($resultado) {
+
+                    $conn = conectar();
+                    $query = "INSERT INTO caixa(valor_ini,valor_final,id_ini,id_final,nome_op,hora_ini,hora_final,obs) VALUES ('$val','$ajuste','$resp','$resp','$nome',now(),now(),'$obs')";
+                    $resultado = $conn->query($query);
+                }
+
+                if (!$resultado) {
+                    throw new Exception();
+                } else {
+                    return (["result" => 200]);
+                }
+            } else {
+
+                $conn = conectar();
+                $query = "INSERT INTO caixa(valor_ini,valor_final,id_ini,id_final,nome_op,hora_ini,hora_final,obs) VALUES ('$val','$val','$resp','$resp','$nome',now(),now(),'$obs')";
+                $resultado = $conn->query($query);
+
+                if (!$resultado) {
+                    throw new Exception();
+                } else {
+                    return (["result" => 200]);
+                }
+            }
+        }
+    } catch (Exception $e) {
+
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+
+        return(["response" => "Servidor em manutenção, por favor tente novamente mais tarde!", "erro" => $erro]);
     }
 }
 
@@ -64,50 +86,58 @@ function insert()
 function verificarAcesso()
 {
 
-    $user = $_POST["user"];
-    $senha = $_POST["senha"];
+    try {
 
-    $conn = conectar();
-    $query = "SELECT id_usuario,senha FROM usuario WHERE username = '$user'";
-    $resultado = $conn->query($query);
+        $user = $_POST["user"];
+        $senha = $_POST["senha"];
 
-    if ($resultado) {
+        $conn = conectar();
+        $query = "SELECT id_usuario,senha FROM usuario WHERE username = '$user'";
+        $resultado = $conn->query($query);
 
-        if ($resultado->num_rows > 0) {
+        if (!$resultado) {
+            throw new Exception();
+        } else {
 
-            while ($linha = $resultado->fetch_assoc()) {
+            if ($resultado->num_rows > 0) {
 
-                $id = $linha["id_usuario"];
+                while ($linha = $resultado->fetch_assoc()) {
 
-                $senha_certa = $linha["senha"];
+                    $id = $linha["id_usuario"];
 
-                if (password_verify($senha, $senha_certa)) {
+                    $senha_certa = $linha["senha"];
 
-                    $conn = conectar();
-                    $query = "SELECT gestao FROM permissao WHERE id_usuario = '$id'";
-                    $resultado = $conn->query($query);
+                    if (password_verify($senha, $senha_certa)) {
+
+                        $conn = conectar();
+                        $query = "SELECT gestao FROM permissao WHERE id_usuario = '$id'";
+                        $resultado = $conn->query($query);
 
 
-                    if ($resultado) {
+                        if ($resultado) {
 
-                        while ($linha = $resultado->fetch_assoc()) {
+                            while ($linha = $resultado->fetch_assoc()) {
 
-                            if ($linha["gestao"] == 1) {
-                                return (["acesso" => "autorizado"]);
-                            } else if ($linha["gestao"] == 0) {
-                                return (["acesso" => "negado"]);
+                                if ($linha["gestao"] == 1) {
+                                    return (["acesso" => "autorizado"]);
+                                } else if ($linha["gestao"] == 0) {
+                                    return (["acesso" => "negado"]);
+                                }
                             }
                         }
+                    } else {
+                        return (["acesso" => "negado"]);
                     }
-                } else {
-                    return (["acesso" => "negado"]);
                 }
+            } else {
+                return (["acesso" => "negado"]);
             }
-        } else {
-            return (["acesso" => "negado"]);
         }
-    } else {
-        return (["result" => 401]);
+    } catch (Exception $e) {
+
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+
+        return(["response" => "Servidor em manutenção, por favor tente novamente mais tarde!", "erro" => $erro]);
     }
 }
 
@@ -115,19 +145,30 @@ function verificarAcesso()
 function retornarFuncs()
 {
 
-    $conn = conectar();
-    $query = "SELECT id_usuario, nome FROM usuario";
-    $resultado = $conn->query($query);
+    try {
 
-    if ($resultado) {
+        $conn = conectar();
+        $query = "SELECT id_usuario, nome FROM usuario";
+        $resultado = $conn->query($query);
 
-        $retorno = [];
+        if (!$resultado) {
+            throw new Exception();
 
-        while ($linha = $resultado->fetch_assoc()) {
+        } else {
 
-            $retorno[] = $linha;
+            $retorno = [];
+
+            while ($linha = $resultado->fetch_assoc()) {
+
+                $retorno[] = $linha;
+            }
+
+            return ($retorno);
         }
+    } catch (Exception $e) {
 
-        return ($retorno);
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+
+        return(["response" => "Servidor em manutenção, por favor tente novamente mais tarde!", "erro" => $erro]);
     }
 }
