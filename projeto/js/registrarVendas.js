@@ -705,6 +705,22 @@ function editarqnt(id) {
 
 
 
+    let item1 = document.getElementById('nocliente')
+    let item2 = document.getElementById('formpag')
+    let item3 = document.getElementById('btnsalvar1')
+    let item4 = document.getElementById('btnsalvar2')
+    let item5 = document.getElementById('butadc')
+    let item6 = document.getElementById('divtrash')
+    let item7 = document.getElementById('criarcmd')
+
+    item1.disabled = true
+    item2.disabled = true
+    item3.disabled = true
+    item4.disabled = true
+    item5.disabled = true
+    item6.disabled = true
+    item7.disabled = true
+    item7.style.opacity = '50%'
 
 }
 
@@ -718,38 +734,54 @@ function setqnt(id, valorProd) {
 
     let valor = document.getElementById('valoritem' + id)
 
-    let valorantigo = document.getElementById('valoritem' + id).innerHTML
+    if ((inp != 'e') && (inp > 0)) {
 
-    let qntantiga = document.getElementById('qntitem' + id).innerText
+        let valorAtual = (valorProd * inp)
 
-    let valorAtual = (valorProd * inp)
+        let v1 = valorAtual.toFixed(2)
+        let v2 = v1.replace(".", ",")
 
-    let v1 = valorAtual.toFixed(2)
-    let v2 = v1.replace(".", ",")
+        valor.innerHTML = "R$ " + v2
 
-    valor.innerHTML = "R$ " + v2
+        element.innerHTML = inp
 
-    element.innerHTML = inp
+        let element2 = document.getElementById('tdiconexc' + id)
 
-    let element2 = document.getElementById('tdiconexc' + id)
+        let element3 = document.getElementById('tdiconedit' + id)
 
-    let element3 = document.getElementById('tdiconedit' + id)
+        let elementos = document.querySelectorAll('.tdicon');
 
-    let elementos = document.querySelectorAll('.tdicon');
+        element2.innerHTML = '<i class="bi bi-trash exc" id="icondel' + id + '" onclick="deletaritem(' + id + ')"></i>'
 
-    element2.innerHTML = '<i class="bi bi-trash exc" id="icondel' + id + '" onclick="deletaritem(' + id + ')"></i>'
+        element3.innerHTML = '<i class="bi bi-pen edit" onclick= "editarqnt(' + id + ')"></i>'
 
-    element3.innerHTML = '<i class="bi bi-pen edit" onclick= "editarqnt(' + id + ')"></i>'
+        elementos.forEach(elemento => {
 
-    elementos.forEach(elemento => {
+            elemento.style.visibility = 'visible'
+        });
 
-        elemento.style.visibility = 'visible'
-    });
+        let item1 = document.getElementById('nocliente')
+        let item2 = document.getElementById('formpag')
+        let item3 = document.getElementById('btnsalvar1')
+        let item4 = document.getElementById('btnsalvar2')
+        let item5 = document.getElementById('butadc')
+        let item6 = document.getElementById('divtrash')
+        let item7 = document.getElementById('criarcmd')
 
-    valorTotal()
+        item1.disabled = false
+        item2.disabled = false
+        item3.disabled = false
+        item4.disabled = false
+        item5.disabled = false
+        item6.disabled = false
+        item7.disabled = false
+        item7.style.opacity = '100%'
 
+        valorTotal()
 
-
+    } else {
+        alert("Para alterar a quantidade precisa ser inserido um número positivo")
+    }
 }
 
 // funcão quando clica para cancelar a edição de quantidade de itens
@@ -774,6 +806,23 @@ function cancelqnt(id, valorantigo) {
 
         elemento.style.visibility = 'visible'
     });
+
+    let item1 = document.getElementById('nocliente')
+    let item2 = document.getElementById('formpag')
+    let item3 = document.getElementById('btnsalvar1')
+    let item4 = document.getElementById('btnsalvar2')
+    let item5 = document.getElementById('butadc')
+    let item6 = document.getElementById('divtrash')
+    let item7 = document.getElementById('criarcmd')
+
+    item1.disabled = false
+    item2.disabled = false
+    item3.disabled = false
+    item4.disabled = false
+    item5.disabled = false
+    item6.disabled = false
+    item7.disabled = false
+    item7.style.opacity = '100%'
 
 }
 
