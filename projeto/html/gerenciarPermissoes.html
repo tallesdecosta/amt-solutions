@@ -82,19 +82,24 @@
                     </div>
                     <div class="infos">
                         <div class="esq">
-                            <h3>Informações</h3>
                             <div class="alinhar">
-                                <label for="nome">Nome do funcionário</label>
-                                <input type="text" name="nome" id="nome">
+                                <p style="font-size: 14px;">Todos os campos com <span class="required"> *</span> são obrigatórios.</p>
+                            </div>
+                            <h3><b>Informações</b></h3>
+                            <div class="alinhar">
+                                <label for="nome">Nome do funcionário<span class="required"> *</span></label>
+                                <input type="text" name="nome" id="nome" required>
                             </div>
                             <div class="alinhar">
-                                <label for="user">Usuário do funcionário</label>
-                                <input type="text" name="user" id="user">
+                                <label for="user">Usuário do funcionário<span class="required"> *</span></label>
+                                <input type="text" name="user" id="user" required>
                             </div>
                             <div class="alinhar">
-                                <label for="senha">Senha do funcionário</label>
-                                <input type="password" name="senha" id="senha">
+                                <label for="senha">Senha do funcionário<span class="required"> *</span></label>
+                                <input type="password" name="senha" id="senha" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$" title="A senha deve ter no mínimo 8 caracteres, incluir letras maiúsculas, minúsculas, números e caracteres especiais.">
+                                
                             </div>
+                            
                         </div>
                         <div class="dir">
                             <h3>Permissões</h3>
@@ -115,13 +120,13 @@
                                 <label for="Estoque">Estoque</label>
                             </div>
                             <div class="alinhar">
-                                <label for="cargo">Cargo:</label>
-                                <input type="text" name="cargo" id="cargo">
+                                <label for="cargo">Cargo <span class="required">*</span></label>
+                                <input type="text" name="cargo" id="cargo" required>
                                 
                             </div>
                             <div class="alinhar">
-                                <label for="contato">Contato:</label>
-                                <input type="number" name="contato" id="contato">
+                                <label for="contato">Contato <span class="required">*</span></label>
+                                <input type="number" name="contato" id="contato" required>
                                 
                             </div>
                             <div class="alinhar">
@@ -184,204 +189,8 @@
 
 <script src="../js/nav.js"></script>
 
-
-
 <script src="../js/podeAcessar.js"></script>
 
-
-
-<script>
-    async function verUsuarios() {
-
-        res = await fetch('../php/api/usuario.php', {
-
-            method: "GET",
-            credentials: "include"
-
-        });
-
-        res = await res.json();
-
-        for (i in res) {
-
-
-            btn = document.createElement("button");
-            btn.classList.add("btn-user");
-            btn.textContent = res[i].username;
-            btn.id = res[i].id_usuario;
-            attBtn = document.getElementById('btn-atualizar');
-            deleteBtn = document.createElement("button");
-            deleteBtn.classList.add("deletebtn");
-            deleteBtn.setAttribute("id", res[i].id_usuario);
-            deleteBtn.textContent = '(Deletar)';
-
-            btn.addEventListener('click', function a() {
-
-                getPermissoes(this);
-
-            });
-
-            btn.addEventListener('click', function a() {
-
-                mudarBtnCor(this);
-
-            });
-
-            deleteBtn.addEventListener('click', function a() {
-
-                deleteUser(this);
-
-            });
-
-            btnDiv = document.createElement('div');
-            btnDiv.appendChild(btn);
-            btnDiv.appendChild(deleteBtn);
-            div = document.getElementById('listausers');
-            div.appendChild(btnDiv);
-
-        }
-    }
-
-    async function getPermissoes(a) {
-
-        res = await fetch(`../php/api/permissoes.php?id=${a.getAttribute('id')}`, {
-
-            method: "GET",
-            credentials: "include"
-
-        });
-
-        attBtn.setAttribute('id_usuario', a.getAttribute('id'));
-
-        res = await res.json();
-
-        estoque = document.getElementById('estoque');
-        vendas = document.getElementById('vendas');
-        financeiro = document.getElementById('financeiro');
-        gestao = document.getElementById('gestao');
-
-        estoque.checked = res.estoque === '1';
-        vendas.checked = res.vendas === '1';
-        financeiro.checked = res.financeiro === '1';
-        gestao.checked = res.gestao === '1';
-
-    }
-
-    async function updatePermissoes(id) {
-
-        estoque = document.getElementById('estoque');
-        vendas = document.getElementById('vendas');
-        financeiro = document.getElementById('financeiro');
-        gestao = document.getElementById('gestao');
-
-        res = await fetch(`../php/api/permissoes.php?id=${id.getAttribute('id_usuario')}&estoque=${estoque.checked ? 1 : 0}&vendas=${vendas.checked ? 1 : 0}&financeiro=${financeiro.checked ? 1 : 0}&gestao=${gestao.checked ? 1 : 0}`, {
-
-            method: "PUT",
-            credentials: "include"
-
-        });
-
-        if (res.ok) {
-
-            location.reload();
-        }
-
-
-    }
-
-    function mudarBtnCor(btn) {
-        div = document.getElementById('users');
-        for (i in div.childNodes) {
-
-            thisNode = div.childNodes[i];
-
-            if (thisNode.tagName == "BUTTON" && thisNode.id != btn.getAttribute("id")) {
-
-                thisNode.style.fontWeight = "400";
-            } else if (thisNode.tagName == "BUTTON" && thisNode.id == btn.getAttribute("id")) {
-
-                thisNode.style.fontWeight = "500";
-            }
-
-        }
-
-    }
-
-    function abrirPopup() {
-
-        popup = document.getElementById('popup');
-        popup.style.display = "flex";
-
-
-    }
-
-    function fecharPopup() {
-
-        popup = document.getElementById('popup');
-        popup.style.display = "none";
-
-
-    }
-
-    async function addUser() {
-
-        nome = document.getElementById('nome').value;
-        user = document.getElementById('user').value;
-        senha = document.getElementById('senha').value;
-        cargo = document.getElementById('cargo').value;
-        contato = document.getElementById('contato').value;
-
-        estoque = document.getElementById('estoque-novo');
-        vendas = document.getElementById('vendas-novo');
-        financeiro = document.getElementById('financeiro-novo');
-        gestao = document.getElementById('gestao-novo');
-        adminValue = document.getElementById('admin');
-
-
-
-        estoquePermissao = estoque.checked == true ? 1 : 0;
-        vendasPermissao = vendas.checked == true ? 1 : 0;
-        financeiroPermissao = financeiro.checked == true ? 1 : 0;
-        gestaoPermissao = gestao.checked == true ? 1 : 0;
-        admin = adminValue.checked == true ? 1 : 0;
-
-        body = new URLSearchParams();
-        body.append("user", user);
-        body.append("senha", senha);
-        body.append("nome", nome);
-        body.append("estoque", estoquePermissao);
-        body.append("vendas", vendasPermissao);
-        body.append("financeiro", financeiroPermissao);
-        body.append("gestao", gestaoPermissao);
-        body.append("cargo", cargo);
-        body.append("contato", contato);
-        body.append("admin", admin);
-
-        data = await fetch("../php/api/usuario.php", {
-
-            method: "POST",
-            body: body
-
-        });
-
-        if (data.ok) {
-
-            location.reload();
-
-        }
-    }
-
-    async function deleteUser(btn) {
-
-        res = await fetch(`../php/api/usuario.php?id=${btn.getAttribute('id')}`, {
-
-            method: "DELETE",
-            credentials: "include"
-
-        });
-        location.reload();
-    }
-
-</script>
+<script src="../js/gerenciarAcessos.js"></script>
 
 </html>

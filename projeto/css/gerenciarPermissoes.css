@@ -4,6 +4,9 @@
     align-items: center;
 }
 
+.required {
+    color: red;
+}
 
 .main-content {
     display: flex;
