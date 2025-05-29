@@ -1,0 +1,82 @@
+/* Alertas */
+
+.alertapadrao {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 96vw;
+    height: 92vh;
+    background-color: rgba(0, 0, 0, 0.789);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.alertapadrao .alerta {
+    background-color: white;
+    padding: 50px 50px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.alertapadrao .alerta i{
+    color: rgb(228, 209, 41);
+    font-size: 45px;
+}
+
+.alertapadrao .alerta p {
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    margin: 15px auto 50px auto;
+    width: 400px;
+    word-wrap: break-word;
+}
+
+.alertapadrao .alerta .botoes {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.alertapadrao .alerta .botoes button {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background-color: palegoldenrod;
+    padding: 10px 15px;
+    border-radius: 200px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.alertapadrao .alerta .botoes .but1 {
+    background-color: #3a4186;
+    border: 1px solid #ffffff;
+    color: white;
+}
+
+
+.alertapadrao .alerta .botoes .but2 {
+    background-color: white;
+    border: 1px solid rgb(114, 114, 114);
+    color: #494949;
+}
+
+
+.alertapadrao .alerta .botoes .but1:hover {
+    background-color: #e5e7f3;
+    border: 1px solid rgb(114, 114, 114);
+    color: #080e4d;
+}
+
+
+.alertapadrao .alerta .botoes .but2:hover {
+    background-color: #727272;
+    border: 1px solid white;
+    color: white;
+}
