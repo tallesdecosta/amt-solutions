@@ -57,3 +57,26 @@ async function alterarModulo() {
 }
 
 alterarModulo()
+
+// Função para iniciar a animação da barra de progresso
+function startProgressBar() {
+
+    const progressBar = document.getElementById("progressBarFilled");
+    let width = 0;
+    const duration = 4; // Duração em segundos
+    const interval = 100; // Intervalo de atualização em milissegundos
+
+    const increment = (100 / (duration * 1000 / interval)); // Incremento por intervalo
+
+    const intervalId = setInterval(() => {
+        width += increment;
+        progressBar.style.width = width + "%";
+
+        if (width >= 100) {
+            clearInterval(intervalId);
+        }
+    }, interval);
+}
+
+// Iniciar a barra de progresso assim que a página carregar
+startProgressBar();
