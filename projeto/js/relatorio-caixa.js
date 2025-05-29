@@ -1,5 +1,3 @@
-
-
 async function pesquisar() {
 
     
@@ -14,7 +12,7 @@ async function pesquisar() {
 async function pesquisarDespesa() {
 
     
-    res = await fetch(`../php/api/despesa.php?inicio=${document.getElementById('inicio').value}&fim=${document.getElementById('fim').value}`, {
+  res = await fetch(`../php/api/despesa.php?inicio=${document.getElementById('inicio').value}&fim=${document.getElementById('fim').value}`, {
         method: "GET"
     });
 
@@ -22,108 +20,135 @@ async function pesquisarDespesa() {
 
 }
 
+ async function mostrarDfc() {
 
-async function mostrarDfc() {
-  const dados = await pesquisar();
-  const corpoRelatorio = document.getElementById('report-body');
-  corpoRelatorio.innerHTML = "";
+    tbody = document.getElementById('report-body');
+    data = await pesquisar();
 
-  const vendas = dados.entradas.detalhes
-    .filter(item => item.origem === "venda")
-    .map(e => ({
-      nome: "Recebimento de clientes",
-      valor: parseFloat(e.valor),
-      tipo: "Entrada (+)"
-    }));
+    // limpar tbody.
+    tbody.innerHTML=''; 
 
-  const outrasEntradas = dados.entradas.detalhes
-    .filter(item => item.origem === "caixa")
-    .map(e => ({
-      nome: "Entrada de caixa",
-      valor: parseFloat(e.valor),
-      tipo: "Entrada (+)"
-    }));
+    caixa = []
+    vendas = []
+      
+    // separar as entradas em entrada d caixa e vendas.
+    for (entrada in data.entradas.detalhes) 
+    {
 
-  const saidas = dados.saidas.detalhes
-    .map(s => ({
-      nome: s.descritivo,
-      valor: parseFloat(s.valor),
-      tipo: "Saída (-)"
-    }));
+        if (data.entradas.detalhes[entrada].origem == "caixa") {
 
-  montarGrupo("Vendas", vendas, null, corpoRelatorio, true);
-  montarGrupo("Entradas de Caixa", outrasEntradas, null, corpoRelatorio, true);
-  montarGrupo("Despesas", saidas, null, corpoRelatorio, true);
-}
+            caixa.push(data.entradas.detalhes[entrada]);
+                
+
+        }  else {
+
+            vendas.push(data.entradas.detalhes[entrada]);
+
+        }
 
 
-async function mostrarDespesa() {
-  const dados = await pesquisarDespesa();
-  const grupos = {};
+    }
 
-  for (const despesa of dados) {
-    const categoria = despesa.macro || 'Outras Despesas';
-    if (!grupos[categoria]) grupos[categoria] = [];
-    grupos[categoria].push(despesa);
+    headerVendas = document.createElement("tr");
+    titleVendas = document.createElement("th");
+    titleVendas.textContent = "Venda de produtos"
+    headerVendas.appendChild(titleVendas);
+    tbody.appendChild(headerVendas);
+
+    for (entrada in vendas) 
+    {
+
+        linha = document.createElement('tr');
+        valor = parseFloat(vendas[entrada].valor);
+
+        titulo = document.createElement('td'); 
+        titulo.textContent = 'Venda';
+        tipo = document.createElement('td'); 
+        tipo.textContent = 'Entrada (+)';
+        valorText = document.createElement('td'); 
+
+        valorText.textContent = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s/g, '');
+
+        linha.appendChild(titulo);
+        linha.appendChild(tipo);
+        linha.appendChild(valorText);
+        document.getElementById('report-body').appendChild(linha);
+
+
+    }
+
+    headerCaixa = document.createElement("tr");
+    titleCaixa = document.createElement("th");
+    titleCaixa.textContent = "Entrada de caixa";
+    headerCaixa.appendChild(titleCaixa);
+    tbody.appendChild(headerCaixa);
+
+    
+    for (entrada in caixa) 
+    {
+
+        linha = document.createElement('tr');
+        valor = parseFloat(caixa[entrada].valor);
+
+        titulo = document.createElement('td'); 
+        titulo.textContent = 'Entrada de caixa';
+        tipo = document.createElement('td'); 
+        tipo.textContent = 'Entrada (+)';
+        valorText = document.createElement('td'); 
+
+        valorText.textContent = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s/g, '');
+
+        linha.appendChild(titulo);
+        linha.appendChild(tipo);
+        linha.appendChild(valorText);
+        document.getElementById('report-body').appendChild(linha);
+
+
+    }
+      
+      mostrarDespesa();
+
+
   }
 
-  const corpoRelatorio = document.getElementById('report-body');
-  corpoRelatorio.innerHTML = ""; // limpa antes
 
-  for (const categoria in grupos) {
-    montarGrupo(categoria, grupos[categoria], "Saída (-)", corpoRelatorio, true);
-  }
-}
-
-function montarGrupo(titulo, itens, tipo, container, jaTemTipo = false) {
  
-  const linhaTitulo = document.createElement('tr');
-  const th = document.createElement('th');
-  th.colSpan = 3;
-  th.textContent = titulo;
-  th.style.textAlign = 'left';
-  th.style.backgroundColor = '#eee';
-  th.style.padding = '10px';
-  linhaTitulo.appendChild(th);
-  container.appendChild(linhaTitulo);
 
-  let subtotal = 0;
+  async function mostrarDespesa() {
 
-  for (const item of itens) {
-    const linha = document.createElement('tr');
+    data = await pesquisarDespesa();
 
-    const nome = item.nome || item.descritivo || "Sem descrição";
-    const valor = parseFloat(item.valor);
+    tbody = document.getElementById('report-body');
 
-    const tdNome = criarTd(nome);
-    const tdTipo = criarTd(jaTemTipo ? (item.tipo || tipo) : tipo);
-    const tdValor = criarTd(`R$${valor.toFixed(2).replace('.', ',')}`, 'right');
+    headerDespesas = document.createElement("tr");
+    titleDespesas = document.createElement("th");
+    titleDespesas.textContent = "Despesas"
+    headerDespesas.appendChild(titleDespesas);
+    tbody.appendChild(headerDespesas);
+      
 
-    linha.append(tdNome, tdTipo, tdValor);
-    container.appendChild(linha);
+      for (i in data) {
 
-    subtotal += valor;
+            linha = document.createElement('tr');
+            valor = 0;
+
+
+            
+
+            titulo = document.createElement('td'); 
+            titulo.textContent = data[i].descritivo;
+            tipo = document.createElement('td'); 
+            tipo.textContent = "Saída (-)";
+            valor = document.createElement('td'); 
+            valor.textContent = parseFloat(data[i].valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s/g, '');
+            linha.appendChild(titulo)
+            linha.appendChild(tipo)
+            linha.appendChild(valor)
+            document.getElementById('report-body').appendChild(linha);
+
+          
+    }
   }
-
-  
-  const linhaSubtotal = document.createElement('tr');
-  const tdSubtotalLabel = document.createElement('td');
-  tdSubtotalLabel.colSpan = 2;
-  tdSubtotalLabel.textContent = 'Subtotal';
-
-  const tdSubtotalValor = criarTd(`R$${subtotal.toFixed(2).replace('.', ',')}`, 'right', 'bold');
-
-  linhaSubtotal.append(tdSubtotalLabel, tdSubtotalValor);
-  container.appendChild(linhaSubtotal);
-}
-
-function criarTd(texto, alinhamento = 'left', pesoFonte = 'normal') {
-  const td = document.createElement('td');
-  td.textContent = texto;
-  td.style.textAlign = alinhamento;
-  td.style.fontWeight = pesoFonte;
-  return td;
-}
 
 async function pesquisarSalvo(id) {
 
@@ -137,43 +162,40 @@ async function pesquisarSalvo(id) {
 }
 
 async function mostrarDfcSalvo(id) {
-  const dados = await pesquisarSalvo(id);
 
-  const corpoRelatorio = document.getElementById('report-body');
-  corpoRelatorio.innerHTML = "";
+    data = await pesquisarSalvo(id);
 
-  
-  const vendas = dados.entradas.detalhes
-    .filter(item => item.origem === "venda")
-    .map(e => ({
-      nome: "Recebimento de clientes",
-      valor: parseFloat(e.valor),
-      tipo: "Entrada (+)"
-    }));
+    while (document.getElementById('report-body').firstChild && document.getElementById('report-body').childElementCount != 1) {
+
+        document.getElementById('report-body').removeChild(document.getElementById('report-body').lastChild);
+
+    }
+
+    linha = document.createElement('tr');
+    valor = 0;
+
+    for (item in data) {
+        
+        valor += parseFloat(data[item].total_valor);
+        console.log(data[item].total_valor);
+
+    }
+
+    titulo = document.createElement('td'); 
+    titulo.textContent = 'Recebimento de clientes';
+    tipo = document.createElement('td'); 
+    tipo.textContent = 'Entrada (+)';
+    valorText = document.createElement('td'); 
+    valorText.textContent = `R$${valor.toFixed(2)}`;
+    valorText.textContent = valorText.textContent.replace(".", ",");
+    linha.appendChild(titulo);
+    linha.appendChild(tipo);
+    linha.appendChild(valorText);
+
+    document.getElementById('report-body').appendChild(linha);
 
 
-    //.map(cria outra array a partir de cada item da ultima)
-
-  const outrasEntradas = dados.entradas.detalhes
-    .filter(item => item.origem === "caixa")
-    .map(e => ({
-      nome: "Entrada de caixa",
-      valor: parseFloat(e.valor),
-      tipo: "Entrada (+)"
-    }));
-
-  const saidas = dados.saidas.detalhes
-    .map(s => ({
-      nome: s.descritivo,
-      valor: parseFloat(s.valor),
-      tipo: "Saída (-)"
-    }));
-
-  montarGrupo("Vendas", vendas, null, corpoRelatorio, true);
-  montarGrupo("Entradas de Caixa", outrasEntradas, null, corpoRelatorio, true);
-  montarGrupo("Despesas", saidas, null, corpoRelatorio, true);
 }
-
 
 
 async function getDfcs() {
@@ -192,17 +214,9 @@ async function getDfcs() {
         div = document.createElement('div');
 
         btn = document.createElement('button');
-        btn.style.backgroundColor = "transparent";
-        btn.style.padding = "5px 10px";
-        btn.style.borderRadius = "5px";
-        btn.style.cursor = "pointer";
         btnDelete = document.createElement('button');
-        btnDelete.style.cursor = "pointer";
         btnDelete.setAttribute("id", data[i].id_dfc);
-        btnDelete.textContent = '(deletar)';
-        btnDelete.style.backgroundColor = 'transparent';
-        btnDelete.style.color = 'red';
-        btnDelete.style.border = 'none';
+        btnDelete.textContent = '-';
         btn.textContent = data[i].titulo;
         btn.setAttribute("data-inicio", data[i].dataInicio);
         btn.setAttribute("data-fim", data[i].dataFinal);
@@ -262,7 +276,7 @@ async function saveDfc() {
 async function deletarDfcSalvo(id) {
 
 
-    res = await fetch(`../php/api/dfc.php?id=${encodeURIComponent(id)}`,{ 
+    res = await fetch('../php/api/dfc.php?id=${id}',{ 
         method: "DELETE"
     }
     )
