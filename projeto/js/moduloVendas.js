@@ -61,21 +61,30 @@ alterarModulo()
 // Função para iniciar a animação da barra de progresso
 function startProgressBar() {
 
-    const progressBar = document.getElementById("progressBarFilled");
-    let width = 0;
-    const duration = 4; // Duração em segundos
-    const interval = 100; // Intervalo de atualização em milissegundos
+    let progressBar = document.getElementById("progressBarFilled");
+    let fecha = document.getElementById("fechaCard");
+    let card = document.getElementById('fundoCard')
 
-    const increment = (100 / (duration * 1000 / interval)); // Incremento por intervalo
+    width = 0;
+    let duration = 4; // Duração em segundos
+    let interval = 100; // Intervalo de atualização em milissegundos
 
-    const intervalId = setInterval(() => {
+    let increment = (100 / (duration * 1000 / interval)); // Incremento por intervalo
+
+    let intervalId = setInterval(() => {
         width += increment;
         progressBar.style.width = width + "%";
 
         if (width >= 100) {
             clearInterval(intervalId);
+
+            card.style.display = 'none'
         }
     }, interval);
+
+    fecha.addEventListener("click", () =>{
+        card.style.display = 'none'
+    } )
 }
 
 // Iniciar a barra de progresso assim que a página carregar

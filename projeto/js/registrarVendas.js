@@ -88,10 +88,15 @@ function criarcomd() {
 
 async function salvarcmd() {
 
-    let element1 = document.getElementById("numcomanda")
+    let campo = document.getElementById("numcomanda")
+    let element1 = document.getElementById("numcomanda").value
+    let element2 = document.getElementById("hidvenda")
 
-    if (element1.value == '' || element1.value < 0) {
-        alert("A comanda deve conter um número!")
+    if (element1 == '' || element1 == false || element1 < 0) {
+
+        campo.reportValidity();
+        return;
+
     } else {
 
         let data = await registrovenda("insert", "", "venda", "");
@@ -109,9 +114,12 @@ async function salvarcmd() {
 
                         numcmd.disabled = true
 
+                        element2.value = element1
+
+                        startProgressBar()
 
                     } else if (data.resposta == 1) {
-                        alert("Ja existe uma comanda com este número!")
+                        alert("Ja existe uma comanda ativa com este número!")
                     }
                 }
             }
@@ -1096,4 +1104,55 @@ function estruturacmd(x, cmd, nome, data, id) {
     let hidd = '<input type="hidden" name="hiddcmd' + x + '" id="hiddcmd' + x + '" value="' + id + '">'
 
     tr.innerHTML += ncmd + ncliente + dataemiss + hidd
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Função para iniciar a animação da barra de progresso
+function startProgressBar() {
+
+    let progressBar = document.getElementById("progressBarFilled");
+    // let fecha = document.getElementById("fechaCard");
+    let card = document.getElementById('fundoCard')
+
+    card.style.display = 'flex'
+
+    width = 0;
+    let duration = 4; // Duração em segundos
+    let interval = 100; // Intervalo de atualização em milissegundos
+
+    let increment = (100 / (duration * 1000 / interval)); // Incremento por intervalo
+
+    let intervalId = setInterval(() => {
+        width += increment;
+        progressBar.style.width = width + "%";
+
+        if (width >= 100) {
+            clearInterval(intervalId);
+
+            card.style.display = 'none'
+        }
+    }, interval);
+
+    card.addEventListener("click", () => {
+        card.style.display = 'none'
+    })
 }
