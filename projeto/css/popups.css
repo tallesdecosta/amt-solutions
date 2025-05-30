@@ -1,0 +1,131 @@
+.fundoCard {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #73df77;
+    opacity: 90%;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.253);
+    padding: 20px 0px 0px 0px;
+    cursor: pointer;
+}
+
+.fundoCard .fechaCard {
+    width: 100%;
+    overflow: visible;
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+}
+
+.fundoCard .fechaCard i {
+    font-size: 20px;
+    color: #161616;
+    margin-right: 20px;
+}
+
+.fundoCard #pCard {
+    font-weight: 400;
+    color: #161616;
+    font-size: 12px;
+    margin: 0 20px;
+}
+
+/* Estilo da barra de progresso */
+#progressBar {
+    width: 100%;
+    height: 4px;
+    background-color: #ddd;
+    border-radius: 0px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+#progressBarFilled {
+    height: 100%;
+    width: 0;
+    background-color: #468d48;
+    text-align: center;
+    line-height: 4px;
+    color: white;
+    transition: width 0.1s linear;
+}
+
+
+
+/* Alertas */
+
+.alertapadrao {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 96vw;
+    height: 92vh;
+    background-color: rgba(0, 0, 0, 0.789);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.alertapadrao .alerta {
+    background-color: white;
+    height: 250px;
+    width: 500px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+.alertapadrao .alerta p {
+    font-size: 17px;
+    color: black;
+    text-align: center;
+}
+
+.alertapadrao .alerta .botoes {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.alertapadrao .alerta .botoes button {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background-color: palegoldenrod;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.alertapadrao .alerta .botoes .but1 {
+    background-color: #3a4186;
+    border: 1px solid rgb(114, 114, 114);
+    color: white;
+}
+
+.alertapadrao .alerta .botoes .but1:hover {
+    background-color: #e5e7f3;
+    border: 1px solid rgb(114, 114, 114);
+    color: #080e4d;
+}
+
+.alertapadrao .alerta .botoes .but2 {
+    background-color: white;
+    border: 1px solid rgb(114, 114, 114);
+    color: #494949;
+}
+
+.alertapadrao .alerta .botoes .but2:hover {
+    background-color: #727272;
+    border: 1px solid white;
+    color: white;
+}
