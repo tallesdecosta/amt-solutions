@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="../css/registrarVendas.css">
 
+    <link rel="stylesheet" href="../css/popups.css">
+
     <title>Vendas</title>
 </head>
 <script src="../js/logout.js"></script>
@@ -33,7 +35,7 @@
                 </div>
                 <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
             </div>
-            <div class="conteudo" id="conteudosair"  style="position: relative;z-index: 10000;" onclick="logout();">
+            <div class="conteudo" id="conteudosair" style="position: relative;z-index: 10000;" onclick="logout();">
                 <i class="bi bi-box-arrow-left"></i>
                 <a href>Sair</a>
             </div>
@@ -46,7 +48,8 @@
             <div class="modulos alinha">
                 <i class="bi bi-boxes"></i>
             </div>
-            <div class="icone alinha" id="icon1" nome="vendas" onclick="podeAcessar(this)" onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
+            <div class="icone alinha" id="icon1" nome="vendas" onclick="podeAcessar(this)" onmouseover="aparecertool(1)"
+                onmouseleave="escondertool(1)">
                 <i class="bi bi-cash-coin"></i>
             </div>
             <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)">
@@ -71,12 +74,12 @@
 
         <div class="app">
             <div class="divoltar" onclick="window.location.href='moduloVendas.html'">
-                        <i class="bi bi-arrow-left-circle"></i>
-                        <p>Voltar</p>
-                    </div>
+                <i class="bi bi-arrow-left-circle"></i>
+                <p>Voltar</p>
+            </div>
             <div class="conteudos">
                 <div class="container">
-                    <div class="fundovendas" id="fundovendas" >
+                    <div class="fundovendas" id="fundovendas">
                         <input type="hidden" name="hidvenda" id="hidvenda" value="0">
                         <div class="divesq">
                             <div class="pcomanda">
@@ -86,16 +89,16 @@
                             <div class="fundotable">
                                 <p class="pitem">Itens</p>
                                 <table class="fundoitem" id="fundoitem">
-                                   
-                                        <thead>
-                                            <tr class="legenda">
-                                                <th class="th1"></th>
-                                                <th class="th1"></th>
-                                                <th class="qnt">Qnt</th>
-                                                <th class="produto">Produto</th>
-                                                <th class="subtotal">Sub Total</th>
-                                            </tr>
-                                        </thead>
+
+                                    <thead>
+                                        <tr class="legenda">
+                                            <th class="th1"></th>
+                                            <th class="th1"></th>
+                                            <th class="qnt">Qnt</th>
+                                            <th class="produto">Produto</th>
+                                            <th class="subtotal">Sub Total</th>
+                                        </tr>
+                                    </thead>
 
                                     <tbody id="tbodyitens">
 
@@ -115,13 +118,13 @@
                                             <td onclick="abrirprod()" class="nomeprod" id="nomeitem">Macarrão quatro queijos</td>
                                             <td id="valoritem">R$ 12,00</td>
                                         </tr> -->
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
 
                             <button class="adc" id="butadc" onclick="abrirprods()">
-                                <i class="bi bi-plus-circle-fill" id="adc1"  ></i>
+                                <i class="bi bi-plus-circle-fill" id="adc1"></i>
                             </button>
 
                             <div class="valor">
@@ -130,11 +133,12 @@
                             </div>
                         </div>
                         <div class="divdir">
-                            <button class="divtrash" id="divtrash" onclick="resDeletarCmd()"><i class="bi bi-trash" onclick="ativarbotao()"></i></button>
+                            <button class="divtrash" id="divtrash" onclick="resDeletarCmd()"><i class="bi bi-trash"
+                                    onclick="ativarbotao()"></i></button>
                             <div class="alinhardir">
                                 <div>
                                     <p>Nº da comanda</p>
-                                    <input type="number" name="numcomanda" id="numcomanda" min="0" onchange="numcmd()">
+                                    <input type="number" name="numcomanda" id="numcomanda" min="0" onchange="numcmd()" required oninvalid="this.setCustomValidity('Para prosseguir preencha o campo da comanda')">
                                 </div>
                                 <div>
                                     <p>Nome do cliente</p>
@@ -160,7 +164,7 @@
                                 <button class="bt2" id="btnsalvar2" onclick="finalizar()">Finalizar comanda</button>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                     <button class="criarcmd" id="criarcmd" onclick="criarcomd()">Criar comanda</button>
                 </div>
                 <div class="comandas">
@@ -170,7 +174,8 @@
                             <div class="lupa">
                                 <i class="bi bi-search"></i>
                             </div>
-                            <input type="text" name="" id="filtrocmd" placeholder="Nº da comanda" oninput="filtrarcmd()">
+                            <input type="text" name="" id="filtrocmd" placeholder="Nº da comanda"
+                                oninput="filtrarcmd()">
                         </div>
                         <div class="fundotabela">
                             <table class="fundocomandas">
@@ -188,9 +193,9 @@
                                         <td id="datacmd">08/04/2025</td>
                                     
                                     </tr> -->
-                                    
+
                                 </tbody>
-                                
+
                             </table>
                         </div>
                     </div>
@@ -203,7 +208,8 @@
                     <div class="agrupar">
                         <div class="fundopesq">
                             <div class="divinp2">
-                                <input type="text" name="filtroprod" id="filtroprod" placeholder="Pesquisar produto" oninput="filtrarprod()">
+                                <input type="text" name="filtroprod" id="filtroprod" placeholder="Pesquisar produto"
+                                    oninput="filtrarprod()">
                                 <div class="divlupa2">
                                     <i class="bi bi-search"></i>
                                 </div>
@@ -223,7 +229,7 @@
                                 <tbody id="tbody">
 
 
-                                     <!-- <tr class="tritem">
+                                    <!-- <tr class="tritem">
                                         <td class="check">
                                             <input type="checkbox" name="" id="check1" >
                                         </td>
@@ -248,7 +254,7 @@
                 </div>
 
             </div>
-            
+
             <div class="fundopreto2" id="fundopreto2">
                 <div class="popupprod">
                     <div class="topo">
@@ -258,7 +264,7 @@
                     <div class="descricao">
                         <img src="" alt="" width="160px" height="110px">
                         <div class="info">
-                            <p class="p1" >Nome</p>
+                            <p class="p1">Nome</p>
                             <p class="p2" id="nomedoprod"></p>
                         </div>
                         <div class="info">
@@ -266,13 +272,13 @@
                             <p class="p2" id="classprod"></p>
                         </div>
                     </div>
-                    <div class="ingredientes"> 
+                    <div class="ingredientes">
                         <div class="titulo">
                             <i class="bi bi-egg-fried"></i>
                             <p>Ingredientes</p>
                         </div>
                         <div class="conteudo" id="ingredientesprod">
-                            
+
                         </div>
                     </div>
                     <div class="alergias">
@@ -280,14 +286,23 @@
                             <i class="bi bi-exclamation-triangle-fill"></i>
                         </div>
                         <div class="conteudo" id="alergiasprod">
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="fundoCard" id="fundoCard">
+                <!-- <div class="fechaCard" id="fechaCard"><i class="bi bi-x"></i></div> -->
+                <p class="pCard" id="pCard">Operação realizada com sucesso!</p>
+
+                <div id="progressBar">
+                    <div id="progressBarFilled"></div>
+                </div>
+            </div>
 
         </div>
+
 
     </section>
 
