@@ -24,16 +24,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $_SESSION['nome'] = $data -> nome;
             $_SESSION['cargo'] = $data -> cargo;
             http_response_code(200);
+            echo json_encode(["correto" => true]);
 
         } else {
-            http_response_code(401);
+            http_response_code(200);
+            echo json_encode(["correto" => false]);
 
         }
 
 
     } else {
 
-        http_response_code(401);
+        http_response_code(200);
+        echo json_encode(["correto" => false]);
     }
     
     
