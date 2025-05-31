@@ -134,11 +134,11 @@
                         </div>
                         <div class="divdir">
                             <button class="divtrash" id="divtrash" onclick="resDeletarCmd()"><i class="bi bi-trash"
-                                    onclick="ativarbotao()"></i></button>
+                                    ></i></button>
                             <div class="alinhardir">
                                 <div>
                                     <p>Nº da comanda</p>
-                                    <input type="number" name="numcomanda" id="numcomanda" min="0" onchange="numcmd()" required oninvalid="this.setCustomValidity('Para prosseguir preencha o campo da comanda')">
+                                    <input type="number" name="numcomanda" id="numcomanda" min="0" onchange="numcmd()" required oninvalid="this.setCustomValidity('Para prosseguir preencha o nº da comanda')">
                                 </div>
                                 <div>
                                     <p>Nome do cliente</p>
@@ -292,8 +292,18 @@
                 </div>
             </div>
 
+            <div class="alertapadrao" id="alertaPadrão">
+                <div class="alerta">
+                    <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                    <p id="pAlerta"> </p>
+                    <div class="botoes">
+                        <button class="but1" id="confirmAlerta">Confirmar</button>
+                        <button class="but2" id="cancelAlerta">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="fundoCard" id="fundoCard">
-                <!-- <div class="fechaCard" id="fechaCard"><i class="bi bi-x"></i></div> -->
                 <p class="pCard" id="pCard">Operação realizada com sucesso!</p>
 
                 <div id="progressBar">
