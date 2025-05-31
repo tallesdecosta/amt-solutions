@@ -73,19 +73,25 @@
 
 .alertapadrao .alerta {
     background-color: white;
-    height: 250px;
-    width: 500px;
+    padding: 40px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 40px;
+    align-items: center;
 }
 
 .alertapadrao .alerta p {
     font-size: 17px;
     color: black;
     text-align: center;
+    width: 400px;
+    margin: 10px auto 40px auto;
+}
+
+.alertapadrao .alerta i {
+    color: rgb(208, 174, 63);
+    font-size: 35px;
 }
 
 .alertapadrao .alerta .botoes {
