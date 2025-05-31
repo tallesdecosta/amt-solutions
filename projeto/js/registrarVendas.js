@@ -33,6 +33,7 @@ function semcomanda() {
     element10.innerHTML = ''
     element11.innerHTML = '#'
     element11.innerHTML = ''
+    element12.innerHTML = ''
 
     element7.style.opacity = '0.7'
 
@@ -105,10 +106,11 @@ async function salvarcmd() {
 
             if (data.erro) {
                 console.log("Erro: " + data.erro)
-                alert(data.response)
+                alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
             } else {
 
                 for (i in data) {
+
                     if (data[i] == 200) {
                         let numcmd = document.getElementById('numcomanda')
 
@@ -119,7 +121,7 @@ async function salvarcmd() {
                         startProgressBar()
 
                     } else if (data.resposta == 1) {
-                        alert("Ja existe uma comanda ativa com este número!")
+                        alerta("Ja existe uma comanda ativa com este número!")
                     }
                 }
             }
@@ -134,18 +136,31 @@ async function salvarcmd() {
 
 async function cmdativas(op, filtro, tabela, id) {
 
-    list = { "op": op, "filtro": filtro, "tabela": tabela, "id": id }
+    try {
 
-    let data = await fetch("../php/vendas.php", {
-        method: "POST",
-        credentials: "include",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(list)
-    })
+        list = { "op": op, "filtro": filtro, "tabela": tabela, "id": id }
 
-    if (data) {
-        return await data.json()
+        let data = await fetch("../php/vendas.php", {
+            method: "POST",
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(list)
+        })
+
+        if (!data.ok) {
+            throw new Error(`HTTP error! status: ${data.status}`)
+        } else {
+            return await data.json()
+        }
+
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
+
+
+
 }
 
 // Função para adcionar comanda ativas na listinha do lado
@@ -161,30 +176,35 @@ async function adccmdativas() {
 
     let x = 1;
 
-    if (resultado.erro) {
-        console.log("Erro :" + resultado.erro)
-        alert(resultado.response)
+    if (resultado) {
 
-    } else {
+        if (resultado.erro) {
+            console.log("Erro :" + resultado.erro)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
 
-        for (i in resultado) {
+        } else {
 
-            let cmd = resultado[i].numComanda
-            let nome = resultado[i].nomeCliente
+            for (i in resultado) {
 
-
-            let data_americana = resultado[i].data_emissao;
-            let data_brasileira = data_americana.split('-').reverse().join('/');
+                let cmd = resultado[i].numComanda
+                let nome = resultado[i].nomeCliente
 
 
-            let data = data_brasileira
-            let id = resultado[i].id
+                let data_americana = resultado[i].data_emissao;
+                let data_brasileira = data_americana.split('-').reverse().join('/');
 
-            estruturacmd(x, cmd, nome, data, id)
 
-            x++
+                let data = data_brasileira
+                let id = resultado[i].id
+
+                estruturacmd(x, cmd, nome, data, id)
+
+                x++
+            }
         }
     }
+
+
 
 
 }
@@ -230,20 +250,33 @@ async function registrovenda(op, filtro, tabela, id) {
 
     })
 
-    data = await fetch("../php/vendas.php", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            'Content-Type': 'plain/text'
-        },
-        body: JSON.stringify(cont)
-    })
 
-    if (data) {
-        return await data.json()
-    } else {
-        return "Deu ruim nas vendas"
+    try {
+
+        data = await fetch("../php/vendas.php", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                'Content-Type': 'plain/text'
+            },
+            body: JSON.stringify(cont)
+        })
+        if (!data.ok) {
+
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
+
+
+            if (data) {
+                return await data.json()
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
+
 }
 
 
@@ -264,7 +297,7 @@ async function abrirprods() {
 
         if (resultado.erro) {
             console.log(resultado.erro)
-            alert(resultado.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
             for (i in resultado) {
 
@@ -395,17 +428,31 @@ function cancelar() {
 
 async function verprodutos() {
 
-    list = { "filtro": "all" }
 
-    data = await fetch("../php/verproduto.php", {
-        method: "POST",
-        credentials: "include",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(list)
-    })
-    if (data) {
-        return await data.json()
+    try {
+        list = { "filtro": "all" }
+
+        data = await fetch("../php/verproduto.php", {
+            method: "POST",
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(list)
+        })
+        if (!data.ok) {
+
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
+
+            if (data) {
+                return await data.json()
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
+
 }
 
 // Função que fecha o popup de visualizar produto da comanda
@@ -441,7 +488,7 @@ async function abrirprod(id) {
 
         if (response.erro) {
             console.log("Erro: " + reponse.erro)
-            alert(response.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
 
             for (i in response) {
@@ -457,7 +504,7 @@ async function abrirprod(id) {
 
         if (response.erro) {
             console.log("Erro: " + reponse.erro)
-            alert(response.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
 
             for (i in response) {
@@ -473,7 +520,7 @@ async function abrirprod(id) {
 
         if (response.erro) {
             console.log("Erro: " + reponse.erro)
-            alert(response.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
 
             for (i in response) {
@@ -490,17 +537,31 @@ async function abrirprod(id) {
 
 async function retornarProd(filtro, id) {
 
-    list = { "filtro": filtro, "id": id }
 
-    data = await fetch("../php/verproduto.php", {
-        method: "POST",
-        credentials: "include",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(list)
-    })
-    if (data) {
-        return await data.json()
+    try {
+        list = { "filtro": filtro, "id": id }
+
+        data = await fetch("../php/verproduto.php", {
+            method: "POST",
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(list)
+        })
+        if (!data.ok) {
+
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
+            if (data) {
+                return await data.json()
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
+
+
 
 }
 
@@ -522,14 +583,15 @@ async function finalizar() {
 
         if (result.erro) {
             console.log("Erro: " + result.erro)
-            alert(result.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
             semcomanda()
             semcomanda()
             adccmdativas()
         }
     } else {
-        alert("Não é possível finalizar a comanda sem uma forma de pagamento")
+
+        formpag.reportValidity();
     }
 
 
@@ -539,17 +601,34 @@ async function finalizar() {
 
 async function finalizarcmd(num, forma, valor) {
 
-    list = { "finalizar": num, "formpag": forma, "valor": valor }
 
-    let data = await fetch("../php/vendas.php", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(list)
-    })
+    try {
 
-    if (data) {
-        return await data.json()
+        list = { "finalizar": num, "formpag": forma, "valor": valor }
+
+        let data = await fetch("../php/vendas.php", {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(list)
+        })
+
+        if (!data.ok) {
+
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
+
+            if (data) {
+                return await data.json()
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
+
+
+
 }
 
 // Função quando clica na comanda do lado aparecer os dados na comanda principal
@@ -568,7 +647,7 @@ async function visucmd(x) {
 
         if (result.erro) {
             console.log("Erro :" + result.erro)
-            alert(result.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
 
             for (i in result) {
@@ -622,7 +701,7 @@ async function visucmd(x) {
 
         if (result2.erro) {
             console.log("Erro :" + result2.erro)
-            alert(result2.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
 
             for (i in result2) {
@@ -788,7 +867,7 @@ function setqnt(id, valorProd) {
         valorTotal()
 
     } else {
-        alert("Para alterar a quantidade precisa ser inserido um número positivo")
+        alerta("Para alterar a quantidade precisa ser inserido um número positivo") // ajustar aqui
     }
 }
 
@@ -849,54 +928,76 @@ function numcmd() {
 // Função para deletar a comanda
 
 
-async function deletarcmd() {
+async function deletarcmd(num) {
 
-    let numcmd = document.getElementById('numcomanda').value
 
-    if (numcmd == '') {
-        semcomanda()
-    } else {
+    try {
 
-        if (confirm("Deseja mesmo sair?")) {
+        list = { "op": "delete", "filtro": "one", "tabela": "venda", "id": num }
 
-            list = { "op": "delete", "filtro": "one", "tabela": "venda", "id": numcmd }
+        let data = await fetch("../php/vendas.php", {
+            method: "POST",
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(list)
+        })
 
-            let data = await fetch("../php/vendas.php", {
-                method: "POST",
-                credentials: "include",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(list)
-            })
+        if (!data.ok) {
 
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
             if (data) {
                 return await data.json()
             }
         }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta()
     }
+
+
 }
 
 // Função async para deletar a comanda
 
 async function resDeletarCmd() {
 
-    let response = await deletarcmd()
+    let numcmd = document.getElementById('numcomanda').value
 
-    if (response) {
+    if (numcmd == '') {
+        semcomanda()
+        
+    } else {
 
-        if (response.erro) {
-            console.log("Erro :" + response.erro)
-            alert(response.response)
+        text = "Tem certeza que deseja excluir esta comanda?"
 
-        } else {
-            for (i in response) {
+        alerta(text)
 
-                if (response[i] == 200) {
-                    alert("Comanda deletada!")
-                    semcomanda()
-                    adccmdativas()
+        let confirm = document.getElementById('confirmAlerta')
+
+        confirm.addEventListener("click", async () => {
+
+            let response = await deletarcmd(numcmd)
+
+            if (response) {
+
+                if (response.erro) {
+                    console.log("Erro :" + response.erro)
+                    alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+
+                } else {
+                    for (i in response) {
+
+                        if (response[i] == 200) {
+                            startProgressBar()
+                            semcomanda()
+                            adccmdativas()
+                        }
+                    }
                 }
             }
-        }
+        })
+
     }
 
 }
@@ -915,7 +1016,7 @@ async function filtrarcmd() {
 
             if (response.erro) {
                 console.log("Erro :" + response.erro)
-                alert(response.response)
+                alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
             } else {
                 let tbody = document.getElementById('tbodycmd');
 
@@ -960,19 +1061,30 @@ async function filtrarcmd() {
 
 async function consultarcmd(filtro) {
 
-    let values = { "filtro": "uma comanda", "id": filtro }
 
-    let data = await fetch("../php/vendas.php", {
+    try {
+        let values = { "filtro": "uma comanda", "id": filtro }
 
-        method: "POST",
-        credentials: "include",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-    })
+        let data = await fetch("../php/vendas.php", {
 
-    if (data) {
-        return await data.json()
+            method: "POST",
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values)
+        })
+        if (!data.ok) {
+
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
+            if (data) {
+                return await data.json()
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
 }
 
 
@@ -981,19 +1093,32 @@ async function consultarcmd(filtro) {
 
 async function consultarprod(id) {
 
-    let values = { "filtro": "one", "id": id }
+    try {
+        let values = { "filtro": "one", "id": id }
 
-    let data = await fetch("../php/verproduto.php", {
+        let data = await fetch("../php/verproduto.php", {
 
-        method: "POST",
-        credentials: "include",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values)
-    })
+            method: "POST",
+            credentials: "include",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values)
+        })
+        if (!data.ok) {
 
-    if (data) {
-        return await data.json()
+            throw new Error(`HTTP error! status: ${data.status}`);
+        } else {
+            if (data) {
+                return await data.json()
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao buscar API: " + erro)
+        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
     }
+
+
+
+
 }
 
 
@@ -1012,7 +1137,7 @@ async function filtrarprod() {
 
         if (response.erro) {
             console.log("Erro :" + response.erro)
-            alert(response.response)
+            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
         } else {
             if (response) {
 
@@ -1155,4 +1280,23 @@ function startProgressBar() {
     card.addEventListener("click", () => {
         card.style.display = 'none'
     })
+}
+
+
+function alerta(text) {
+
+    let alerta = document.getElementById('alertaPadrão')
+
+    alerta.style.display = 'flex'
+
+    let cancel = document.getElementById('cancelAlerta')
+    let p = document.getElementById('pAlerta')
+
+    p.innerText = text
+
+    cancel.addEventListener("click", () => {
+        alerta.style.display = 'none'
+
+    })
+
 }
