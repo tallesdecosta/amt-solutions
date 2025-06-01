@@ -353,11 +353,12 @@ label {
 
 
 
+@media (min-width: 700px) and (max-width: 1290px) {
 
-
-
-
-@media (min-width: 700px) and (max-width: 1290px){
+    body{
+        max-height: 100vh;
+        overflow: hidden;
+    }
 
     .secall .app {
         width: 100%;
@@ -421,19 +422,126 @@ label {
         align-items: center;
         border-radius: 10px;
         box-shadow: 0px 1px 4px #00000038;
-        background-color: yellow;
         height: fit-content;
-        width: 90%;
+        width: 700px;
+        padding-top: 20px;
     }
 
     .secall .app .fundo .alinhar {
         height: 100%;
-        width: 80%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        background-color: red;
+    }
+
+}
+
+
+
+@media (max-width: 700px) {
+
+    body{
+        max-height: 100vh;
+        overflow: hidden;
+    }
+
+    .secall .app {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        margin-top: 15vh;
+    }
+
+    .secall .app .fundo {
+        background-color: #ffffff9a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        height: fit-content;
+        width: 90%;
+        padding-top: 20px;
+
+    }
+
+    .secall .app .fundo .alinhar {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .secall .app .fundo .alinhar .div1 {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .secall .app .fundo .alinhar .div1 .inps1 {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-width: 50%;
+        padding: 10px 0px;
+        gap: 6px;
+    }
+
+    .secall .app .fundo .alinhar .div1 .inps2 {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-width: 50%;
+        padding: 10px 0px;
+        gap: 6px;
+    }
+
+    .secall .app .fundo .alinhar .div1 .element1 {
+        margin-left: 0px;
+        min-width: 200px;
+    }
+
+    .secall .app .fundo .alinhar .div1 .element2 {
+        margin-right: 0px;
+    }
+
+
+    .secall .app .fundo .alinhar .div1 div input {
+        width: 200px;
+        height: 30px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .secall .app .fundo .alinhar .div1 div input {
+        width: 190px;
+        height: 30px;
+        padding-left: 10px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .secall .app .fundo .alinhar .div1 div select {
+        width: 190px;
+        height: 30px;
+        padding-left: 10px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .secall .app .fundo .alinhar .div1 div label {
+        width: 200px;
+        font-size: 14px;
     }
 
 }
