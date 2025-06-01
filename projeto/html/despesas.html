@@ -177,31 +177,31 @@
                             <br>
                             <label for="descritivo">Descritivo:</label>
                             <br>
-                            <input type="text" id="descritivo" name="descritivo">
+                            <input type="text" id="descritivo" name="descritivo" required>
                             <br>
                             <br>
                             <label for="valor">Valor da despesa:</label>
                             <br>
-                            <input type="number" id="valor" name="valor">
+                            <input type="number" id="valor" name="valor" required>
                             <br>
                             <br>
                             <label for="data-início">Quando essa dívida iniciou?</label>
                             <br>
-                            <input type="date" name="data-inicio" id="data-inicio">
+                            <input type="date" name="data-inicio" id="data-inicio" required> 
                             <br>
                             <br>
                             <label for="data-fim">Até quando a despesa deve ser paga?</label>
                             <br>
-                            <input type="date" name="data-fim" id="data-fim">
+                            <input type="date" name="data-fim" id="data-fim" required>
                             <br>
                             <br>
                             <label for="status">Está paga?</label>
-                            <input type="checkbox" name="status" id="status">
+                            <input type="checkbox" name="status" id="status" required>
                             <br>
                             <br>
                             <label for="tipo-despesa-select-novo">Qual o tipo de despesa?</label>
                             <br>
-                            <select name="tipo-despesa-select-alterar" id="tipo-despesa-select-alterar" >
+                            <select name="tipo-despesa-select-alterar" id="tipo-despesa-select-alterar" required>
 
                             </select>
                             <br>
@@ -220,27 +220,27 @@
                             <br>
                             <label for="descritivo">Descritivo:</label>
                             <br>
-                            <input type="text" id="descritivo-novo" name="descritivo">
+                            <input type="text" id="descritivo-novo" name="descritivo" required> 
                             <br>
                             <br>
                             <label for="valor">Valor da despesa:</label>
                             <br>
-                            <input type="number" id="valor-novo" name="valor">
+                            <input type="number" id="valor-novo" name="valor" required>
                             <br>
                             <br>
                             <label for="data-início">Quando essa dívida iniciou?</label>
                             <br>
-                            <input type="date" name="data-inicio" id="data-inicio-novo">
+                            <input type="date" name="data-inicio" id="data-inicio-novo" required>
                             <br>
                             <br>
                             <label for="data-fim">Até quando a despesa deve ser paga?</label>
                             <br>
-                            <input type="date" name="data-fim" id="data-fim-novo">
+                            <input type="date" name="data-fim" id="data-fim-novo" required>
                             <br>
                             <br>
                             <label for="tipo-despesa-select-novo">Qual o tipo de despesa?</label>
                             <br>
-                            <select name="tipo-despesa-select-novo" id="tipo-despesa-select-novo" >
+                            <select name="tipo-despesa-select-novo" id="tipo-despesa-select-novo" required>
 
                             </select>
                             
@@ -260,7 +260,7 @@
                             <br>
                             <label for="nome-tipo-despesa-nova">Nome da nova despesa:</label>
                             <br>
-                            <input type="text" id="nome-tipo-despesa-nova" name="nome-tipo-despesa-nova">
+                            <input type="text" id="nome-tipo-despesa-nova" name="nome-tipo-despesa-nova" required>
                             <br>
                             <br>
                             <input type="submit" onclick="addTipoDespesa();" id="alterar-despesa" value="Criar novo tipo">

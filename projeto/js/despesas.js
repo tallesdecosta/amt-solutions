@@ -24,13 +24,25 @@ data90DiasAtras.setDate(hoje.getDate() - diasAtras);
     inicio = formatarData(data90DiasAtras);
     fim = formatarData(hoje);
 
+    try {
+
     res = await fetch(`../php/api/despesa.php?inicio=${inicio}&fim=${fim}`, {
         method: "GET"
     });
 
-    data = await res.json();
+    if (!res.ok) {
+        throw new Error(`HTTP ERROR! Status: ${res.status}`)
+    } else {
+        data = await res.json();
+        return data;
+    }
 
-    return data;
+    
+
+    } catch(erro) {
+        alert("Ocorreu um erro ao se comunicar com nosso servidor.")
+        console.log(erro)
+    }
 
 }
 
@@ -358,25 +370,67 @@ async function addDespesa() {
 
     body = new URLSearchParams();
 
+    if (!document.getElementById('descritivo-novo').checkValidity()) {
+
+        document.getElementById('descritivo-novo').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('valor-novo').checkValidity()) {
+
+        document.getElementById('valor-novo').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('data-inicio-novo').checkValidity()) {
+
+        document.getElementById('data-inicio-novo').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('data-fim-novo').checkValidity()) {
+
+        document.getElementById('data-fim-novo').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('tipo-despesa-select-novo').checkValidity()) {
+
+        document.getElementById('tipo-despesa-select-novo').reportValidity(); 
+        return;
+
+    }
+
     body.append('descritivo', document.getElementById('descritivo-novo').value);
     body.append('valor', document.getElementById('valor-novo').value);
     body.append('dataInicio', document.getElementById('data-inicio-novo').value);
     body.append('dataVencimento', document.getElementById('data-fim-novo').value);
     body.append('tipo_despesa', document.getElementById('tipo-despesa-select-novo').value);
 
-    res = await fetch('../php/api/despesa.php', {
-        method: 'POST',
-        body: body,
-        credentials: "include"
-    });
+    try {
 
-    res = await res.json();
+            res = await fetch('../php/api/despesa.php', {
+            method: 'POST',
+            body: body,
+            credentials: "include"
+        });
 
-    if (res.status = 'ok') {
-        window.location.reload();
-    } else {
+        if (res.ok) {
+            window.location.reload();
+        } else {
+            throw new Error(`HTTP ERROR! Status: ${res.status}`)
+        }
+
+    }  catch(erro) {
         alert("Houve erro ao criar a despesa, favor comunicar ao suporte.")
+        console.log(erro)
+
     }
+        
 
     
 }
@@ -385,6 +439,41 @@ async function alterarDespesa() {
 
     body = new URLSearchParams();
 
+        if (!document.getElementById('descritivo').checkValidity()) {
+
+        document.getElementById('descritivo').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('valor').checkValidity()) {
+
+        document.getElementById('valor').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('data-inicio').checkValidity()) {
+
+        document.getElementById('data-inicio').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('data-fim').checkValidity()) {
+
+        document.getElementById('data-fim').reportValidity(); 
+        return;
+
+    }
+
+    if (!document.getElementById('status').checkValidity()) {
+
+        document.getElementById('status').reportValidity(); 
+        return;
+
+    }
+
     body.append('descritivo', document.getElementById('descritivo').value);
     body.append('valor', document.getElementById('valor').value);
     body.append('data-inicio', document.getElementById('data-inicio').value);
@@ -392,41 +481,59 @@ async function alterarDespesa() {
     body.append('status', document.getElementById('status').checked == true ? 1 : 0);
     body.append('id_despesa', document.getElementById('alterar-despesa').getAttribute('id_despesa'));
     body.append('id_tipo_despesa', document.getElementById('tipo-despesa-select-alterar').value);
+    try {
+    
+            res = await fetch('../php/api/despesa.php', {
+            method: 'PUT',
+            body: body,
+            credentials: "include"
+        });
 
-        res = await fetch('../php/api/despesa.php', {
-        method: 'PUT',
-        body: body,
-        credentials: "include"
-    });
-
-    res = await res.json();
-
-    if (res.status = 'ok') {
-        window.location.reload();
-    } else {
+        if (res.ok) {
+            window.location.reload();
+        } else {
+            throw new Error(`HTTP ERROR! Status: ${res.status}`)
+        }
+    } catch(erro) {
         alert("Houve erro ao criar a despesa, favor comunicar ao suporte.")
+        console.log(erro)
+
     }
     
 }
 
 async function addTipoDespesa() {
 
+    if (!document.getElementById('nome-tipo-despesa-nova').checkValidity()) {
+
+        document.getElementById('nome-tipo-despesa-nova').reportValidity(); 
+        return;
+
+    }
+
     body = new URLSearchParams();
     body.append('nome', document.getElementById('nome-tipo-despesa-nova').value);
 
-    res = await fetch('../php/api/tipo_despesa.php', {
-        method: "POST",
-        body: body
-    });
+    
+    try {
 
-    res = await res.json();
+    
+        res = await fetch('../php/api/tipo_despesa.php', {
+            method: "POST",
+            body: body
+        });
 
+        if (res.ok) {
 
+            window.location.reload();
 
-    if (res.status = 'ok') {
-        window.location.reload();
-    } else {
+        } else {
+            throw new Error(`HTTP ERROR! Status: ${res.status}`)
+            
+        } 
+    } catch(error) {
         alert("Houve erro ao criar o tipo de despesa, favor comunicar ao suporte.")
+        console.log(error)
     }
 
 }
