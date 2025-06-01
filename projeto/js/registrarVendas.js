@@ -92,10 +92,11 @@ async function salvarcmd() {
     let campo = document.getElementById("numcomanda")
     let element1 = document.getElementById("numcomanda").value
     let element2 = document.getElementById("hidvenda")
+    let element3 = document.getElementById("dataemiss")
 
     if (element1 == '' || element1 == false || element1 < 0) {
-
-        campo.reportValidity();
+        campo.setCustomValidity("Para prosseguir insira o nº da comanda")
+        campo.reportValidity()
         return;
 
     } else {
@@ -106,22 +107,42 @@ async function salvarcmd() {
 
             if (data.erro) {
                 console.log("Erro: " + data.erro)
-                alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+                alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
             } else {
 
                 for (i in data) {
 
-                    if (data[i] == 200) {
-                        let numcmd = document.getElementById('numcomanda')
+                    if (data.resposta == 200) {
 
-                        numcmd.disabled = true
+                        if (data.first == true) {
 
-                        element2.value = element1
+                            let numcmd = document.getElementById('numcomanda')
 
-                        startProgressBar()
+                            numcmd.disabled = true
+
+                            element2.value = element1
+
+                            element3.innerText = data.hora
+
+                            console.log(data.hora)
+
+                            startProgressBar()
+                        } else {
+
+                            let numcmd = document.getElementById('numcomanda')
+
+                            numcmd.disabled = true
+
+                            element2.value = element1
+
+                            startProgressBar()
+
+                        }
 
                     } else if (data.resposta == 1) {
-                        alerta("Ja existe uma comanda ativa com este número!")
+                        campo.setCustomValidity("Já existe uma comanda com este número")
+                        campo.reportValidity()
+                        return;
                     }
                 }
             }
@@ -155,7 +176,7 @@ async function cmdativas(op, filtro, tabela, id) {
 
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -180,7 +201,7 @@ async function adccmdativas() {
 
         if (resultado.erro) {
             console.log("Erro :" + resultado.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
 
         } else {
 
@@ -273,7 +294,7 @@ async function registrovenda(op, filtro, tabela, id) {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -297,7 +318,7 @@ async function abrirprods() {
 
         if (resultado.erro) {
             console.log(resultado.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
             for (i in resultado) {
 
@@ -449,7 +470,7 @@ async function verprodutos() {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -488,7 +509,7 @@ async function abrirprod(id) {
 
         if (response.erro) {
             console.log("Erro: " + reponse.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
 
             for (i in response) {
@@ -504,7 +525,7 @@ async function abrirprod(id) {
 
         if (response.erro) {
             console.log("Erro: " + reponse.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
 
             for (i in response) {
@@ -520,7 +541,7 @@ async function abrirprod(id) {
 
         if (response.erro) {
             console.log("Erro: " + reponse.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
 
             for (i in response) {
@@ -557,7 +578,7 @@ async function retornarProd(filtro, id) {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -574,6 +595,9 @@ async function finalizar() {
     let element = document.getElementById('numcomanda').value
     let valor = document.getElementById('valorTotal').innerText
 
+    let campo = document.getElementById('formpag')
+
+
     let valor1 = valor.replace(",", ".")
     let valor2 = parseFloat(valor1)
 
@@ -583,15 +607,15 @@ async function finalizar() {
 
         if (result.erro) {
             console.log("Erro: " + result.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
             semcomanda()
-            semcomanda()
             adccmdativas()
+            startProgressBar()
         }
     } else {
-
-        formpag.reportValidity();
+        campo.setCustomValidity('Para prosseguir selecione a forma de pagamento.')
+        campo.reportValidity();
     }
 
 
@@ -623,7 +647,7 @@ async function finalizarcmd(num, forma, valor) {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -647,7 +671,7 @@ async function visucmd(x) {
 
         if (result.erro) {
             console.log("Erro :" + result.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
 
             for (i in result) {
@@ -701,7 +725,7 @@ async function visucmd(x) {
 
         if (result2.erro) {
             console.log("Erro :" + result2.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
 
             for (i in result2) {
@@ -742,13 +766,25 @@ async function visucmd(x) {
 
 function deletaritem(id) {
 
-    let trash = document.getElementById('tdiconexc' + id)
+    alerta(2, 2, "Tem excluir que deseja deletar este item?", 2)
 
-    let elementoPai = trash.parentNode;
+    document.getElementById("confirmAlerta").addEventListener("click", () => {
 
-    elementoPai.remove()
+        let trash = document.getElementById('tdiconexc' + id)
 
-    valorTotal()
+        let alerta = document.getElementById('alertaPadrão')
+
+        alerta.style.display = 'none'
+
+        let elementoPai = trash.parentNode;
+
+        elementoPai.remove()
+
+        valorTotal()
+    })
+
+
+
 }
 
 // Função para editar a quantidade dos itens
@@ -775,7 +811,7 @@ function editarqnt(id) {
 
     let valorProd = (v3 / v4)
 
-    element.innerHTML = ' <input type="number" name="inpqnt' + id + '" id="inpqnt' + id + '"> '
+    element.innerHTML = ' <input type="number" name="inpqnt' + id + '" id="inpqnt' + id + '" required> '
 
     elementos.forEach(elemento => {
 
@@ -817,11 +853,13 @@ function setqnt(id, valorProd) {
 
     let inp = document.getElementById('inpqnt' + id).value
 
+    let campo = document.getElementById('inpqnt' + id)
+
     let element = document.getElementById('qntitem' + id)
 
     let valor = document.getElementById('valoritem' + id)
 
-    if ((inp != 'e') && (inp > 0)) {
+    if ((inp != 'e') && (inp > 0) && (inp != null || inp != '')) {
 
         let valorAtual = (valorProd * inp)
 
@@ -867,7 +905,8 @@ function setqnt(id, valorProd) {
         valorTotal()
 
     } else {
-        alerta("Para alterar a quantidade precisa ser inserido um número positivo") // ajustar aqui
+        campo.setCustomValidity("Este campo precisa ser preenchido com um número positivo.")
+        campo.reportValidity()
     }
 }
 
@@ -952,7 +991,7 @@ async function deletarcmd(num) {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta()
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -966,12 +1005,10 @@ async function resDeletarCmd() {
 
     if (numcmd == '') {
         semcomanda()
-        
+
     } else {
 
-        text = "Tem certeza que deseja excluir esta comanda?"
-
-        alerta(text)
+        alerta(2, 2, "Tem certeza que deseja deletar esta comanda?", 2)
 
         let confirm = document.getElementById('confirmAlerta')
 
@@ -983,15 +1020,20 @@ async function resDeletarCmd() {
 
                 if (response.erro) {
                     console.log("Erro :" + response.erro)
-                    alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+                    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
 
                 } else {
                     for (i in response) {
 
                         if (response[i] == 200) {
-                            startProgressBar()
+
+                            let alerta = document.getElementById('alertaPadrão')
+
+                            alerta.style.display = 'none'
+
                             semcomanda()
                             adccmdativas()
+                            startProgressBar()
                         }
                     }
                 }
@@ -1016,7 +1058,7 @@ async function filtrarcmd() {
 
             if (response.erro) {
                 console.log("Erro :" + response.erro)
-                alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+                alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
             } else {
                 let tbody = document.getElementById('tbodycmd');
 
@@ -1082,7 +1124,7 @@ async function consultarcmd(filtro) {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 }
@@ -1113,7 +1155,7 @@ async function consultarprod(id) {
         }
     } catch (erro) {
         console.log("Erro ao buscar API: " + erro)
-        alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
 
 
@@ -1137,7 +1179,7 @@ async function filtrarprod() {
 
         if (response.erro) {
             console.log("Erro :" + response.erro)
-            alerta("Estamos com problemas de conexão, por favor tente novamente mais tarde.")
+            alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
         } else {
             if (response) {
 
@@ -1283,20 +1325,59 @@ function startProgressBar() {
 }
 
 
-function alerta(text) {
+function alerta(icone, cor, text, nBotoes) {
+
+    let icones = ['bi bi-cone-striped', 'bi bi-check-circle-fill', 'bi bi-exclamation-diamond-fill'] // 0 = cone, 1 = check, 2 = alert
+
+    let cores = ['#d0ae3f', '#73df77', '#ebeb31', '#dd3f3f']// 0 = laranja, 1 = verder, 2 = amarelo, 3 = vermelho
 
     let alerta = document.getElementById('alertaPadrão')
 
     alerta.style.display = 'flex'
 
-    let cancel = document.getElementById('cancelAlerta')
     let p = document.getElementById('pAlerta')
+    let i = document.getElementById('iconeAlerta')
 
+    i.className = icones[icone]
+    i.style.color = `${cores[cor]}`
     p.innerText = text
 
-    cancel.addEventListener("click", () => {
-        alerta.style.display = 'none'
+    if (nBotoes == 2) {
 
-    })
+        let botoes = document.getElementById('botoesAlerta')
+
+        but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+        but2 = '<button class="but2" id="cancelAlerta">Cancelar</button>'
+
+        botoes.innerHtml = but1 + but2
+
+        botoes.style.justifyContent = 'center'
+
+        let cancel = document.getElementById('cancelAlerta')
+
+        cancel.addEventListener("click", () => {
+            alerta.style.display = 'none'
+
+        })
+
+    } else if (nBotoes == 1) {
+
+        let botoes = document.getElementById('botoesAlerta')
+
+        but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+
+        botoes.innerHTML = but1
+
+        botoes.style.justifyContent = 'end'
+
+        but1 = document.getElementById("confirmAlerta")
+
+        but1.innerText = 'OK'
+
+        but1.addEventListener("click", () => {
+            alerta.style.display = 'none'
+
+        })
+    }
 
 }
