@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="../css/saidaDeCaixa.css">
 
+    <link rel="stylesheet" href="../css/popups.css">
+
     <title>Vendas</title>
 </head>
 <script src="../js/logout.js"></script>
@@ -78,18 +80,18 @@
                     <div class="div1">
                         <div class="inps1">
                             <label for="" class="element1">Responsável</label>
-                            <select name="respon" id="respon" class="element1">
+                            <select name="respon" id="respon" class="element1" required>
                                 <option value="0"></option>
                             </select>
                         </div>
                         <div class="inps2">
                             <label for="valor" class="element2">Valor da saída</label>
-                            <div><input type="number" name="valor" id="valor" class="element2" ></div>
+                            <div><input type="number" name="valor" id="valor" class="element2" required oninvalid="this.setCustomValidity('Para prosseguir preencha um valor diferente de zero')"></div>
                         </div>
                     </div>
                     <div class="div2">
                         <label for="">Observações</label>
-                        <textarea name="" id="obs" cols="70" rows="6"></textarea>
+                        <textarea name="" id="obs" cols="70" rows="6"></textarea required>
                     </div>
                     <div class="divbut">
                         <button id="but" onclick="salvar()">Registrar saída</button>
@@ -111,19 +113,29 @@
                         <div class="usericon">
                             <i class="bi bi-person"></i>
                         </div>
-                        <input type="text" name="usuario" id="usuario" placeholder="Username">
+                        <input type="text" name="usuario" id="usuario" placeholder="Username" required oninvalid="this.setCustomValidity('Para prosseguir preencha o usuario')">
                     </div>
                     <div class="campos">
                         <div class="usericon">
                             <i class="bi bi-key iconsenha"></i>
                         </div>
-                        <input type="password" name="senha" id="senha" placeholder="Senha">
+                        <input type="password" name="senha" id="senha" placeholder="Senha" required oninvalid="this.setCustomValidity('Para prosseguir preencha a senha')">
                     </div>
 
                     <button class="but" onclick="verifacess()">Entrar</button>
                 </div>
             </div>
 
+            <div class="alertapadrao" id="alertaPadrão">
+                <div class="alerta">
+                    <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                    <p id="pAlerta"> </p>
+                    <div class="botoes" id="botoesAlerta">
+                        <button class="but1" id="confirmAlerta">Confirmar</button>
+                        <button class="but2" id="cancelAlerta">Cancelar</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -143,4 +155,4 @@
 
 <script src="../js/podeAcessar.js"></script>
 
-<script src="../js/entradaDeCaixa.js"></script>
+<script src="../js/saidaDeCaixa.js"></script>

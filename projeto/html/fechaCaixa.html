@@ -11,10 +11,13 @@
 
     <link rel="stylesheet" href="../css/fechaCaixa.css">
 
+    <link rel="stylesheet" href="../css/popups.css">
+
     <title>Vendas</title>
 </head>
 <script src="../js/logout.js"></script>
 <script src="../js/perfil.js"></script>
+
 <body onclick="getInfo();">
 
     <div class="container1" id="container1">
@@ -30,7 +33,7 @@
                 </div>
                 <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
             </div>
-            <div class="conteudo" id="conteudosair"  style="position: relative;z-index: 1000;" onclick="logout();">
+            <div class="conteudo" id="conteudosair" style="position: relative;z-index: 1000;" onclick="logout();">
                 <i class="bi bi-box-arrow-left"></i>
                 <a href>Sair</a>
             </div>
@@ -43,7 +46,8 @@
             <div class="modulos alinha">
                 <i class="bi bi-boxes"></i>
             </div>
-            <div class="icone alinha" id="icon1" nome="vendas" onmouseover="aparecertool(1)" onclick="podeAcessar(this)" onmouseleave="escondertool(1)">
+            <div class="icone alinha" id="icon1" nome="vendas" onmouseover="aparecertool(1)" onclick="podeAcessar(this)"
+                onmouseleave="escondertool(1)">
                 <i class="bi bi-cash-coin"></i>
             </div>
             <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)">
@@ -80,13 +84,15 @@
                     <div class="div1">
                         <div class="inps1">
                             <label for="" class="element1">Responsável</label>
-                            <select name="respon" id="respon" class="element1">
+                            <select name="respon" id="respon" class="element1" required
+                                oninvalid="this.setCustomValidity('Para prosseguir selecione o responsável')">
                                 <option value="0"></option>
                             </select>
                         </div>
                         <div class="inps2">
                             <label for="" class="element2">Valor Atual do Caixa</label>
-                            <input type="number" name="" id="valor" class="element2">
+                            <input type="number" name="" id="valor" class="element2" required
+                                oninvalid="this.setCustomValidity('Para prosseguir preencha o valor')">
                         </div>
                     </div>
                     <div class="inps3">
@@ -110,7 +116,17 @@
                     </div>
                 </div>
             </div>
-            
+
+            <div class="alertapadrao" id="alertaPadrão">
+                <div class="alerta">
+                    <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                    <p id="pAlerta"> </p>
+                    <div class="botoes" id="botoesAlerta">
+                        <button class="but1" id="confirmAlerta">Confirmar</button>
+                        <button class="but2" id="cancelAlerta">Cancelar</button>
+                    </div>
+                </div>
+            </div>
 
 
         </div>

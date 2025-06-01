@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="../css/historicoVendas.css">
 
+    <link rel="stylesheet" href="../css/popups.css">
+
     <title>Operações do caixa</title>
 
 </head>
@@ -94,15 +96,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbodyVendas">
-                            <tr id="trvenda1">
-                                <td id="data1">25/05/2025</td>
-                                <td id="numcmd">1</td>
-                                <td id="nome1">Joao Barros da Silva</td>
-                                <td id="forma1">Débito</td>
-                                <td id="valor1">R$ 300,90</td>
-                                <td><i class="bi bi-file-text"></i></td>
-                            </tr>
-
+                            
                         </tbody>
                     </table>
                 </div>
@@ -138,8 +132,8 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbodycmd">
-                                    
-                                    
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -150,6 +144,17 @@
                         <p>Valor total:</p>
                         <p class="p1" id="pvalor">R$ </p>
 
+                    </div>
+                </div>
+            </div>
+
+            <div class="alertapadrao" id="alertaPadrão">
+                <div class="alerta">
+                    <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                    <p id="pAlerta"> </p>
+                    <div class="botoes" id="botoesAlerta">
+                        <button class="but1" id="confirmAlerta">Confirmar</button>
+                        <button class="but2" id="cancelAlerta">Cancelar</button>
                     </div>
                 </div>
             </div>
