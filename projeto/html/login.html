@@ -23,21 +23,21 @@
 
         <div class="divdir">
             <p>Login</p>
-            <form action="">
+            <form action="" id="form1">
                 <div class="campos">
                     <div class="usericon">
                         <i class="bi bi-person"></i>
                     </div>
-                    <input type="text" name="username" id="username" placeholder="Username" required>
+                    <input type="text" name="username" id="username" placeholder="Username">
                 </div>
                 <div class="campos">
                     <div class="usericon">
                         <i class="bi bi-key iconsenha"></i>
                     </div>
-                    <input type="password" name="senha" id="senha" placeholder="Senha" required>
+                    <input type="password" name="senha" id="senha" placeholder="Senha">
                 </div>
             </form>
-            <button class="but" id="btn-entrar">Entrar</button>
+            <button class="but" id="btn-entrar" onkeydown="logar()">Entrar</button>
             <img src="../img/Logotipo.png" alt="">
         </div>
         
