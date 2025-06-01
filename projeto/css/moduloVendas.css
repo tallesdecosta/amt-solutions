@@ -1,41 +1,3 @@
-.navegation {
-    background-color: white;
-    width: 4vw;
-    height: 92vh;
-    box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.192);
-}
-
-
-.navegation .icone {
-    height: 50px;
-    font-size: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    cursor: pointer;
-}
-
-.alinha {
-    color: black !important;
-    cursor: default !important;
-}
-
-
-.navegation .modulos {
-    height: 100px;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #00000059;
-}
-
-#icon1 {
-    color: black !important;
-    cursor: pointer !important;
-}
-
 /*      SECTION DO CONTEUDO      */
 
 .secall .app {
@@ -107,3 +69,96 @@
 
 
 
+
+
+@media (max-width: 1000px) {
+    /*      SECTION DO CONTEUDO      */
+
+    .secall .app {
+        width: 100vw;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        margin-top: 15vh;
+    }
+
+    .secall .app .fundo {
+        gap: 15px;
+        width: 100vw;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 50px;
+        
+        background-color: #EDEDED;
+    }
+
+    .secall .app #pfunc {
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.637);
+        margin: 0;
+        min-width: 80%;
+        display: flex;
+        margin: 0px auto 20px auto ;
+        text-align: left;
+    }
+
+    .secall .app .fundo .modulosVendas {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .secall .app .fundo .modulosVendas .func {
+        min-height: 10vh;
+        min-width: 80%;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        cursor: pointer;
+        gap: 20px;
+
+    }
+
+    .secall .app .fundo .modulosVendas .func:hover {
+        background-color: white;
+        border: 0.5px solid rgb(192, 192, 192);
+    }
+
+    .secall .app .fundo .modulosVendas .func i {
+        font-size: 22px;
+        margin-left: 20%;
+    }
+
+
+    .secall .app .fundo .modulosVendas .func p {
+        font-size: 16px;
+        margin: 10px 0px;
+        color: black;
+    }
+
+
+    .secall .app .fundo .modulosVendas .func1 {
+        background-color: #5664ff59;
+    }
+
+    .secall .app .fundo .modulosVendas .func2 {
+        background-color: #5664ffa6;
+    }
+
+    .secall .app .fundo .modulosVendas .func3 {
+        background-color: #6e7aff;
+    }
+
+
+
+
+}
