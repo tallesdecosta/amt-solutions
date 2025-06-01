@@ -227,7 +227,12 @@ function registrarcmd()
                     }
                 }
 
-                return ["resposta" => 200];
+                date_default_timezone_set('America/Sao_Paulo');
+                
+                $hora_atual = date('G:i:s');
+
+                return ["resposta" => 200,"hora" => $hora_atual,"first" => true];
+
             } else if ($resultadoA->num_rows != 0) {
 
 
@@ -281,14 +286,11 @@ function registrarcmd()
                                     $query1 = "INSERT INTO venda_produto(id_produto,id_venda,qntd) VALUES ('$idprod','$idvenda','$qnt')";
 
                                     $resultado1 = $conn->query($query1);
-
-                                    if (!$resultado1) {
-                                        throw new Exception();
-                                    } else {
-                                        return ["response" => 200];
-                                    }
                                 }
                             }
+
+
+                            return ["response" => 200];
                         }
                     }
                 }
@@ -464,7 +466,7 @@ function retornar()
         $query = "SELECT * FROM venda WHERE statuscmd = 'F' ORDER BY id DESC;";
         $resultado = $conn->query($query);
 
-        if (!$resultado){
+        if (!$resultado) {
             throw new Exception();
         } else {
 
