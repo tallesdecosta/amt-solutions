@@ -18,7 +18,7 @@
     <script src="../js/checarAcesso.js"></script>
 
 
-    <body onload="esta_logado(), chamarPHP(); getInfo(); checarAcesso('estoque');">
+    <body onload="esta_logado(), tratarResposta(); getInfo(); checarAcesso('estoque');">
 
         <div class="container1" id="container1">
             <div class="logo">
@@ -82,25 +82,19 @@
                 <div class="buttonItens">
 
                     <div>
-                        <button id="btn-adicionar">
+                        <button class="buttonPadrao" id="btn-adicionar">
                           <img src="../img/adicionar.png" alt="">
                         </button>
                     </div>
 
                     <div>
-                      <button id="btn-editar">
+                      <button class="buttonPadrao" id="btn-editar">
                         <img src="../img/botaoEditar.png" alt="">
                       </button>
                     </div>
-                  
+                                  
                     <div>
-                      <button id="btn-salvar">
-                        <img src="../img/salvar.png" alt="">
-                      </button>
-                    </div>
-                  
-                    <div>
-                      <button id="btn-deletar">
+                      <button class="buttonPadrao" id="btn-deletar" onclick="btnDeletar()">
                         <img src="../img/excluir.png" alt="">
                       </button>
                     </div>
@@ -111,22 +105,22 @@
 
                         <div class="info">
                             <label for="insumo">Insumo<span id="span" style="display: none">*</span></label><br>
-                            <select id="id_insumo" disabled></select>
+                            <select id="id_insumo" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')"></select>
                         </div>
 
                         <div class="info">
                             <label for="usuario">Solicitante<span id="span" style="display: none">*</span></label><br>
-                            <select id="id_usuario" disabled></select>
+                            <select id="id_usuario" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')"></select>
                         </div>
                         
                         <div class="info">
                             <label for="">Data de Emissão<span id="span" style="display: none">*</span></label><br>
-                            <input type="date" id="dataEmissao" disabled>
+                            <input type="date" id="dataEmissao" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
                         </div>
                         
                         <div class="info">
                             <label for="">Status<span id="span" style="display: none">*</span></label><br>
-                            <select id="pedido_status" disabled>
+                            <select id="pedido_status" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
                                 <option value="Pendente">Pendente</option>
                                 <option value="Concluido">Concluido</option>
                             </select>
@@ -135,10 +129,8 @@
 
                         <div class="info">
                             <label for="">Quantidade de compra<span id="span" style="display: none">*</span></label><br>
-                            <input type="number" id="qntComprar" disabled>
+                            <input type="number" id="qntComprar" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
                         </div>
-
-                        
 
                     </div>
 
@@ -146,6 +138,10 @@
                         <label for="">Observação</label><br>
                         <textarea name="" id="observacao" disabled></textarea>
                         
+                    </div>
+
+                    <div class="buttonSalvar">
+                        <button class="buttonPadrao" id="btn-salvar" onclick="btnSalvar()" style="display: none;">Salvar</button>
                     </div>
                 </div>
                 
