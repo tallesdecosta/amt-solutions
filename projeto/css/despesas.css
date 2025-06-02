@@ -68,7 +68,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    height: 92vh;
+    height: 100vh;
     justify-content: center;
     
 }
@@ -157,3 +157,55 @@ img, button {
     z-index:2;
 }
 
+@media (max-width: 1007px) {
+
+    p, span, button {
+        font-size: 10px!important;
+    }
+
+    h2 {
+        font-size: 12px!important;
+    }
+
+    th {
+        font-size: 10px!important;
+    }
+    
+}
+
+@media (max-width: 780px) {
+
+    .main-wrapper {
+        flex-direction: column!important;
+    }
+
+    .report {
+        width: 100%!important;
+    }
+
+    .resumo-tipo-wrapper {
+        width: 100%!important;
+        height: 50%!important;
+        gap: 10px;
+    }
+
+    .tipos-despesas {
+
+        height: 100px!important;
+
+    }
+
+    .total-despesas {
+        height: fit-content;
+    }
+
+    .main-before {
+
+        justify-content: center;
+        align-items: center;
+    }
+
+    #bg-blur {
+        height: 150vh!important;
+    }
+}

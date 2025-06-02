@@ -21,7 +21,7 @@
     </head>
 
     <body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); iniciar();">
-        <div id="bg-blur" style="position:absolute; width:100vw; height:100vh; z-index:1;"></div>
+        <div id="bg-blur" style="position:absolute; width:100vw; height:100vh; z-index:2;"></div>
         <div class="container1" id="container1">
             <div class="logo">
                 <img src="../img/account.png" width="80px" height="30px" alt>
@@ -74,11 +74,11 @@
                     </div>
                 </div>
             </div>
-            <div style="display: flex; justify-content: center; align-items: center; width: 100vw; ">
+            <div class="main-before" style="display: flex; justify-content: center; align-items: center; width: 100vw; ">
                 <main>
                     <h1>Gestão de despesas</h1>
                     <div class="main-wrapper">
-                        <div style="display: flex; justify-content: space-between; flex-direction: column; width: 22%;">
+                        <div class="resumo-tipo-wrapper" style="display: flex; justify-content: space-between; flex-direction: column; width: 22%;">
                             <section class="total-despesas bento">
                                 <h2>Resumo de despesas</h2>
                                 <div>
@@ -96,7 +96,7 @@
                                     
                                 </div>
                                 
-                                <section class="tipos-despesas" id="tipos-despesas">
+                                <section style="overflow-y: auto;" class="tipos-despesas" id="tipos-despesas">
 
                                 </section>
                             </section>
