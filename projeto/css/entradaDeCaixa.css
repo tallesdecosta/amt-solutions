@@ -1,14 +1,15 @@
-.secall .app{
+.secall .app {
     width: 100%;
-    height: 100%;   
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
 }
-.secall .app .alinhar{
+
+.secall .app .alinhar {
     width: 80%;
-    height: 100%;   
+    height: 100%;
     display: flex;
 }
 
@@ -23,7 +24,7 @@
     border-radius: 10px;
 }
 
-.secall .app .fundo .alinhar{
+.secall .app .fundo .alinhar {
     height: 100%;
     width: 80%;
     display: flex;
@@ -32,7 +33,7 @@
     justify-content: center;
 }
 
-.secall .app .fundo .alinhar .voltar{
+.secall .app .fundo .alinhar .voltar {
     width: fit-content;
     display: flex;
     gap: 10px;
@@ -40,33 +41,35 @@
     color: #000000ce;
     margin: 0px auto 0px 30px;
     cursor: pointer;
-    
+
 }
 
-.secall .app .fundo .alinhar .voltar p{
+.secall .app .fundo .alinhar .voltar p {
     margin: 0;
     font-size: 14px;
     cursor: pointer;
 }
 
-.secall .app .fundo .alinhar .voltar i{
+.secall .app .fundo .alinhar .voltar i {
     font-size: 22px;
     cursor: pointer;
 }
 
 
-.secall .app .fundo .alinhar h1{
+.secall .app .fundo .alinhar h1 {
     text-align: center;
     margin: 0px 0px 100px 0px;
-    color: rgba(0, 0, 0, 0.838);    
+    color: rgba(0, 0, 0, 0.838);
     font-size: 20px;
     font-weight: 400;
 }
-.secall .app .fundo .alinhar .div1{
+
+.secall .app .fundo .alinhar .div1 {
     display: flex;
     width: 100%;
 }
-.secall .app .fundo .alinhar .div1 .inps1{
+
+.secall .app .fundo .alinhar .div1 .inps1 {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -75,7 +78,8 @@
     padding: 10px 0px;
     gap: 6px;
 }
-.secall .app .fundo .alinhar .div1 .inps2{
+
+.secall .app .fundo .alinhar .div1 .inps2 {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -85,22 +89,23 @@
     gap: 6px;
 }
 
-.secall .app .fundo .alinhar .div1 .element1{
+.secall .app .fundo .alinhar .div1 .element1 {
     margin-left: 30px;
 }
-.secall .app .fundo .alinhar .div1 .element2{
+
+.secall .app .fundo .alinhar .div1 .element2 {
     margin-right: 30px;
 }
 
 
-.secall .app .fundo .alinhar .div1  div input{
+.secall .app .fundo .alinhar .div1 div input {
     width: 200px;
     height: 30px;
     border-radius: 10px;
     border: 1px solid black;
 }
 
-.secall .app .fundo .alinhar .div1  div input{
+.secall .app .fundo .alinhar .div1 div input {
     width: 190px;
     height: 30px;
     padding-left: 10px;
@@ -108,14 +113,15 @@
     border: 1px solid black;
 }
 
-.secall .app .fundo .alinhar .div1 div select{
+.secall .app .fundo .alinhar .div1 div select {
     width: 190px;
     height: 30px;
     padding-left: 10px;
     border-radius: 10px;
     border: 1px solid black;
 }
-.secall .app .fundo .alinhar .div1 div label{
+
+.secall .app .fundo .alinhar .div1 div label {
     width: 200px;
 
 }
@@ -130,24 +136,26 @@
     gap: 6px;
     margin-top: 20px;
 }
-.secall .app .fundo .alinhar .div2 textarea{
+
+.secall .app .fundo .alinhar .div2 textarea {
     border-radius: 10px;
     border: 1px solid black;
     margin-left: 30px;
 
 }
 
-.secall .app .fundo .alinhar .div2  label{
+.secall .app .fundo .alinhar .div2 label {
     margin-left: 30px;
 }
 
-.secall .app .fundo .alinhar .divbut{
+.secall .app .fundo .alinhar .divbut {
     width: 100%;
     padding: 30px 0px 20px 0px;
     display: flex;
     justify-content: right;
 }
-.secall .app .fundo .alinhar .divbut  button{
+
+.secall .app .fundo .alinhar .divbut button {
     background-color: #B4C5FF;
     padding: 5px 10px;
     border-radius: 10px;
@@ -159,14 +167,14 @@
     cursor: pointer;
 }
 
-label{
+label {
     color: rgba(0, 0, 0, 0.848);
     font-size: 14px;
 }
 
 
 
-.secall .app .verifacess{
+.secall .app .verifacess {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,7 +187,7 @@ label{
 }
 
 
-.secall .app .verifacess .popup{
+.secall .app .verifacess .popup {
     display: flex;
     flex-direction: column;
     padding: 20px 40px 40px 40px;
@@ -190,17 +198,17 @@ label{
     gap: 20px;
 }
 
-.secall .app .verifacess .popup .p1{
+.secall .app .verifacess .popup .p1 {
     color: #000000ce;
     font-weight: 500;
 }
 
-.secall .app .verifacess .popup .campos{
+.secall .app .verifacess .popup .campos {
     display: flex;
-    
+
 }
 
-.secall .app .verifacess .popup .campos .usericon{
+.secall .app .verifacess .popup .campos .usericon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -215,7 +223,7 @@ label{
 
 }
 
-.secall .app .verifacess .popup .campos input{
+.secall .app .verifacess .popup .campos input {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -231,7 +239,7 @@ label{
     padding-left: 20px;
 }
 
-.secall .app .verifacess .popup .campos input::placeholder{
+.secall .app .verifacess .popup .campos input::placeholder {
     font-size: 13px;
     margin: auto;
     text-align: center;
@@ -239,11 +247,11 @@ label{
     font-weight: 500;
 }
 
-.iconsenha{
+.iconsenha {
     transform: rotate(-45deg);
 }
 
-.secall .app .verifacess .popup .but{
+.secall .app .verifacess .popup .but {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -259,13 +267,13 @@ label{
     cursor: pointer;
 }
 
-.secall .app .verifacess .popup .but:hover{
+.secall .app .verifacess .popup .but:hover {
     background-color: #b9bfff;
     border: 1px solid #6363639f;
     color: black;
 }
 
-.secall .app .verifacess .popup .voltar{
+.secall .app .verifacess .popup .voltar {
     width: 100%;
     display: flex;
     gap: 10px;
@@ -273,14 +281,512 @@ label{
     color: #000000ce;
 }
 
-.secall .app .verifacess .popup .voltar p{
+.secall .app .verifacess .popup .voltar p {
     margin: 0;
     font-size: 14px;
     cursor: pointer;
 }
 
-.secall .app .verifacess .popup .voltar i{
+.secall .app .verifacess .popup .voltar i {
     font-size: 22px;
     cursor: pointer;
 }
 
+
+
+
+@media (min-width: 700px) and (max-width: 1290px) {
+
+    .secall .app {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        margin-top: 20vh;
+    }
+
+    .secall .app .esq {
+        width: 25%;
+        height: 100%;
+    }
+
+    .secall .app .dir {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+        align-items: start;
+    }
+
+    .secall .app .fundo {
+        height: 90%;
+        width: 50%;
+        background-color: #ffffff9a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+    }
+
+    .secall .app .dir .fundoValCaixa {
+        margin: 0px 15px;
+        width: 80%;
+        height: 200px;
+        background-color: #ffffff9a;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p1 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+    .secall .app .fundo {
+        background-color: #ffffff9a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        height: fit-content;
+        width: 700px;
+        padding-top: 20px;
+    }
+
+    .secall .app .fundo .alinhar {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+}
+
+
+@media (max-width: 1365px) {
+
+    .secall .app {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        background-color: #EDEDED;
+        padding-bottom: 50px;
+    }
+
+    .secall .app .esq {
+        width: 0px;
+        height: 0px;
+    }
+
+    .secall .app .dir {
+        width: 100%;
+        margin-left: 0px;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        margin: 40px auto;
+    }
+
+    .secall .app .dir .fundoValCaixa {
+        margin: 0px 15px;
+        width: 50%;
+        height: fit-content;
+        background-color: #ffffff9a;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 50px;
+        padding: 30px 0px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p1 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+
+
+
+
+    .secall .app .fundo .alinhar .div2 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .secall .app .fundo .alinhar .div2 label {
+        margin-left: 30px;
+    }
+
+    .secall .app .fundo .alinhar .div2 textarea {
+
+        width: 450px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .secall .app {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        margin-top: 15vh;
+    }
+
+    .secall .app .fundo {
+        background-color: #ffffff9a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        height: fit-content;
+        width: 90%;
+        padding-top: 20px;
+
+    }
+
+    .secall .app .fundo .alinhar {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .secall .app .fundo .alinhar .div1 {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .secall .app .fundo .alinhar .div1 .inps1 {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-width: 50%;
+        padding: 10px 0px;
+        gap: 6px;
+    }
+
+    .secall .app .fundo .alinhar .div1 .inps2 {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-width: 50%;
+        padding: 10px 0px;
+        gap: 6px;
+    }
+
+    .secall .app .fundo .alinhar .div1 .element1 {
+        margin-left: 0px;
+        min-width: 200px;
+    }
+
+    .secall .app .fundo .alinhar .div1 .element2 {
+        margin-right: 0px;
+    }
+
+
+    .secall .app .fundo .alinhar .div1 div input {
+        width: 200px;
+        height: 30px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .secall .app .fundo .alinhar .div1 div input {
+        width: 190px;
+        height: 30px;
+        padding-left: 10px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .secall .app .fundo .alinhar .div1 div select {
+        width: 190px;
+        height: 30px;
+        padding-left: 10px;
+        border-radius: 10px;
+        border: 1px solid black;
+    }
+
+    .secall .app .fundo .alinhar .div1 div label {
+        width: 200px;
+        font-size: 14px;
+    }
+
+
+    .secall .app .fundo .alinhar .div2 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .secall .app .fundo .alinhar .div2 label {
+        width: 200px;
+        margin: 0;
+    }
+
+    .secall .app .fundo .alinhar .div2 textarea {
+
+        width: 200px;
+        margin: 0;
+    }
+
+    .secall .app .fundo .alinhar .voltar {
+        width: fit-content;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: #000000ce;
+        margin: 0px auto 0px 30px;
+        cursor: pointer;
+        margin-bottom: 40px;
+
+    }
+
+    .secall .app .fundo .alinhar h1 {
+        text-align: center;
+        margin: 0px 0px 40px 0px;
+        color: rgba(0, 0, 0, 0.838);
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    #verifacess {
+        position: absolute;
+        z-index: 2;
+        width: 100vw;
+        height: 82vh;
+        top: 0;
+        transform: translateY(-27px);
+    }
+
+    #verifacess {
+        position: absolute;
+        z-index: 2;
+        width: 100vw;
+        height: 82vh;
+        top: 0;
+        transform: translateY(-27px);
+    }
+
+    .secall .app .verifacess .popup {
+        display: flex;
+        flex-direction: column;
+        padding: 40px 30px;
+        border-radius: 10px;
+        background-color: #f8f8f8;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .secall .app .verifacess .popup .p1{
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .secall .app .verifacess .popup .p1 {
+        color: #000000ce;
+        font-weight: 500;
+    }
+
+    .secall .app .verifacess .popup .campos {
+        display: flex;
+
+    }
+
+    .secall .app .verifacess .popup .campos .usericon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: #d1d5ff57;
+        width: 40px;
+        height: 37px;
+        border: 1px solid #959EFF;
+        color: #202CA9;
+
+    }
+
+    .secall .app .verifacess .popup .campos input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: white;
+        height: 35px;
+        border: 1px solid #959EFF;
+        width: 160px;
+        border-left: 0px;
+        padding-left: 20px;
+    }
+
+    .secall .app .verifacess .popup .campos input::placeholder {
+        font-size: 13px;
+        margin: auto;
+        text-align: center;
+        transform: translateX(-20px);
+        font-weight: 500;
+    }
+
+    .iconsenha {
+        transform: rotate(-45deg);
+    }
+
+    .secall .app .verifacess .popup .but {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        border-radius: 10px;
+        background-color: #3F4482;
+        min-width: 100%;
+        height: 35px;
+        border: 1px solid #959EFF;
+        width: 180px;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+}
+
+
+@media (min-width: 1000px) and (max-width: 1365px) {
+
+    body {
+        background-color: #EDEDED;
+    }
+
+    .secall {
+        background-color: transparent;
+    }
+
+    .secall .app {
+        width: 96vw;
+        height: fit-content;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        padding-bottom: 50px;
+        margin-left: 4vw;
+    }
+
+
+}
+
+
+@media (min-width: 1290px) and (max-width: 1366px) {
+
+    #fundo {
+        margin-top: 40px;
+    }
+
+}
+
+@media (min-width: 1000px) and (max-width: 1290px) {
+
+    .secall {
+        height: 92vh;
+    }
+
+    .app {
+        height: 92vh;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    #fundo {
+        transform: translateY(-85px);
+    }
+
+}
+
+
+@media (min-width: 701px) and (max-width: 1000px){
+    #verifacess{
+        width: 100vw;
+        top: -20vh;
+        height: 105vh;
+    }
+}
+
+
+@media (min-width: 1000px) and (max-width: 1290px){
+    #verifacess{
+        width: 96vw;
+        top: -20vh;
+        height: 94vh;
+    }
+}

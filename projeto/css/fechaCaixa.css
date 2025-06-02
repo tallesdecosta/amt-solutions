@@ -355,11 +355,6 @@ label {
 
 @media (min-width: 700px) and (max-width: 1290px) {
 
-    body{
-        max-height: 100vh;
-        overflow: hidden;
-    }
-
     .secall .app {
         width: 100%;
         height: fit-content;
@@ -376,11 +371,21 @@ label {
     }
 
     .secall .app .dir {
-        width: 25%;
-        height: 90%;
+        width: 100%;
         display: flex;
         justify-content: left;
         align-items: start;
+    }
+
+    .secall .app .fundo {
+        height: 90%;
+        width: 50%;
+        background-color: #ffffff9a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
     }
 
     .secall .app .dir .fundoValCaixa {
@@ -439,13 +444,93 @@ label {
 }
 
 
+@media (max-width: 1365px) {
+
+    .secall .app {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        background-color: #EDEDED;
+        padding-bottom: 50px;
+    }
+
+    .secall .app .esq {
+        width: 0px;
+        height: 0px;
+    }
+
+    .secall .app .dir {
+        width: 100%;
+        margin-left: 0px;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        margin: 40px auto;
+    }
+
+    .secall .app .dir .fundoValCaixa {
+        margin: 0px 15px;
+        width: 50%;
+        height: fit-content;
+        background-color: #ffffff9a;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 50px;
+        padding: 30px 0px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p1 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+
+
+
+
+    .secall .app .fundo .alinhar .inps3 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .secall .app .fundo .alinhar .inps3 label {
+        margin-left: 30px;
+    }
+
+    .secall .app .fundo .alinhar .inps3 textarea {
+        
+        width: 450px;
+    }
+}
+
 
 @media (max-width: 700px) {
-
-    body{
-        max-height: 100vh;
-        overflow: hidden;
-    }
 
     .secall .app {
         width: 100%;
@@ -543,5 +628,130 @@ label {
         width: 200px;
         font-size: 14px;
     }
+
+
+
+    .secall .app .dir {
+        width: 100%;
+        margin-left: 0px;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        margin: 40px auto;
+    }
+
+    .secall .app .dir .fundoValCaixa {
+        margin: 0px 15px;
+        width: 90%;
+        height: fit-content;
+        background-color: #ffffff9a;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 50px;
+        padding: 30px 0px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p1 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 300;
+            
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa .p2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+
+
+
+    .secall .app .fundo .alinhar .inps3 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .secall .app .fundo .alinhar .inps3 label {
+        width: 200px;
+        margin: 0;
+    }
+
+    .secall .app .fundo .alinhar .inps3 textarea {
+        
+        width: 200px;
+        margin: 0;
+    }
+
+}
+
+
+@media (max-width: 500px){
+    .secall .app .dir .fundoValCaixa {
+        margin: 0px 15px;
+        width: 90%;
+        height: fit-content;
+        background-color: #ffffff9a;
+        border-radius: 10px;
+        box-shadow: 0px 1px 4px #00000038;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 50px;
+        padding: 30px 0px;
+    }
+
+    .secall .app .dir .fundoValCaixa .caixa {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-left: 20px;
+        gap: 10px;
+    }
+}
+
+
+
+
+
+@media (min-width: 1000px) and (max-width: 1365px) {
+
+    body{
+        background-color: #EDEDED;
+    }
+
+    .secall{
+        background-color: transparent;
+    }
+    .secall .app {
+        width: 96vw;
+        height: fit-content;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        padding-bottom: 50px;
+        margin-left: 4vw;
+        z-index: -1;
+    }
+    
 
 }

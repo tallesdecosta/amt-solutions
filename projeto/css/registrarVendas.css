@@ -158,12 +158,13 @@
 .secall .app .fundovendas .divesq .fundoitem .legenda .th1 {
     text-align: left;
     min-width: 20px;
-    max-width: 20px; 
-    padding: 10px 10px; 
+    max-width: 20px;
+    padding: 10px 10px;
 }
+
 .secall .app .fundovendas .divesq .fundoitem .legenda .produto {
     min-width: 150px;
-    max-width: 150px;  
+    max-width: 150px;
 }
 
 .secall .app .fundovendas .divesq .fundoitem td {
@@ -226,14 +227,15 @@
 }
 
 
-.secall .app .fundovendas .divesq .fundoitem .qnt input{
+.secall .app .fundovendas .divesq .fundoitem .qnt input {
     text-align: center;
     width: 20px;
     border: 1px solid black;
     border-radius: 4px;
 }
 
-.secall .app .fundovendas .divesq .fundoitem .qnt input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
+.secall .app .fundovendas .divesq .fundoitem .qnt input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
 
@@ -313,7 +315,7 @@
     flex-direction: column;
     gap: 5px;
     margin: 0px 40px;
-    
+
 }
 
 .secall .app .fundovendas .divdir .divtrash {
@@ -655,7 +657,7 @@
     position: relative;
 }
 
-.secall .app .fundopreto .popup .produtos .tr1 th{
+.secall .app .fundopreto .popup .produtos .tr1 th {
     background-color: #dbdbdb;
     font-size: 13px;
     padding: 10px 10px;
@@ -669,25 +671,25 @@
 }
 
 
-.secall .app .fundopreto .popup .produtos .tr1 .th3{
+.secall .app .fundopreto .popup .produtos .tr1 .th3 {
     text-align: left;
     padding: 10px 0px;
     text-indent: 20px;
 }
 
-.secall .app .fundopreto .popup .produtos .tr1 .th5{
+.secall .app .fundopreto .popup .produtos .tr1 .th5 {
     padding: 10px 0px;
     text-align: center;
     max-width: 50px;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem{
+.secall .app .fundopreto .popup .produtos .tritem {
     min-width: 100%;
     background-color: white;
 }
 
 
-.secall .app .fundopreto .popup .produtos .tritem td{
+.secall .app .fundopreto .popup .produtos .tritem td {
     border-bottom: 0.5px solid #00000060;
     font-size: 14px;
     padding: 10px 20px;
@@ -699,16 +701,16 @@
 
 
 
-.secall .app .fundopreto .popup .produtos .tritem .check{ 
+.secall .app .fundopreto .popup .produtos .tritem .check {
     width: 15%;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .id{ 
+.secall .app .fundopreto .popup .produtos .tritem .id {
     width: 5%;
     text-align: center;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .prod{ 
+.secall .app .fundopreto .popup .produtos .tritem .prod {
     max-width: 120px;
     min-width: 120px;
     text-align: left;
@@ -716,13 +718,13 @@
     overflow: hidden;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .qntd{ 
+.secall .app .fundopreto .popup .produtos .tritem .qntd {
     width: 15%;
     padding: 10px 0px;
     text-align: center;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .qntd input{ 
+.secall .app .fundopreto .popup .produtos .tritem .qntd input {
     height: 30px;
     width: 40px;
     border-radius: 5px;
@@ -731,7 +733,7 @@
 
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .valor{ 
+.secall .app .fundopreto .popup .produtos .tritem .valor {
     max-width: 50px;
     text-align: center;
     font-size: 13px;
@@ -739,14 +741,14 @@
 
 
 
-.secall .app .fundopreto .popup .buts{
+.secall .app .fundopreto .popup .buts {
     display: flex;
     justify-content: end;
     gap: 30px;
     width: 80%;
 }
 
-.secall .app .fundopreto .popup .buts button{ 
+.secall .app .fundopreto .popup .buts button {
     padding: 5px 15px;
     border-radius: 10px;
     border: 1px solid rgb(161, 161, 161);
@@ -756,25 +758,25 @@
     box-shadow: 0px 2px 2px #a3a3a3;
 }
 
-.secall .app .fundopreto .popup .buts .adcbut{ 
+.secall .app .fundopreto .popup .buts .adcbut {
     background-color: white;
     color: #33ad0d;
     border: 1.5px solid #33ad0d;
 }
 
-.secall .app .fundopreto .popup .buts .cancelar{ 
+.secall .app .fundopreto .popup .buts .cancelar {
     background-color: white;
     color: #525252;
     border: 1.5px solid #525252;
 }
 
-.secall .app .fundopreto .popup .buts .adcbut:hover{ 
+.secall .app .fundopreto .popup .buts .adcbut:hover {
     color: white;
     background-color: #33ad0d;
     border: 1.5px solid #33ad0d;
 }
 
-.secall .app .fundopreto .popup .buts .cancelar:hover{ 
+.secall .app .fundopreto .popup .buts .cancelar:hover {
     color: white;
     background-color: #525252;
     border: 1.5px solid #525252;
@@ -795,7 +797,7 @@
     display: none;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .secall .app .fundopreto2 .popupprod {
@@ -808,17 +810,17 @@
     justify-content: space-between;
 }
 
-.secall .app .fundopreto2 .popupprod .topo{
+.secall .app .fundopreto2 .popupprod .topo {
     width: 100%;
     max-height: 0px;
     display: flex;
     justify-content: end;
     align-items: end;
     overflow: visible;
-    
+
 }
 
-.secall .app .fundopreto2 .popupprod .topo i{
+.secall .app .fundopreto2 .popupprod .topo i {
     margin-right: 20px;
     font-size: 30px;
     cursor: pointer;
@@ -826,13 +828,13 @@
     transform: rotate(45deg);
 }
 
-.secall .app .fundopreto2 .popupprod .descricao{
+.secall .app .fundopreto2 .popupprod .descricao {
     display: flex;
     justify-content: space-evenly;
     align-items: end;
 }
 
-.secall .app .fundopreto2 .popupprod .descricao .info{
+.secall .app .fundopreto2 .popupprod .descricao .info {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -840,24 +842,24 @@
     gap: 10px;
 }
 
-.secall .app .fundopreto2 .popupprod .descricao img{
+.secall .app .fundopreto2 .popupprod .descricao img {
     border-radius: 10px;
     border: 2px solid rgb(221, 221, 221);
 }
 
-.secall .app .fundopreto2 .popupprod .descricao .info .p1{
+.secall .app .fundopreto2 .popupprod .descricao .info .p1 {
     font-size: 13px;
     margin: 0;
     color: #000000bd;
 }
 
 
-.secall .app .fundopreto2 .popupprod .descricao .info .p2{
+.secall .app .fundopreto2 .popupprod .descricao .info .p2 {
     font-size: 16px;
     margin: 0;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes{
+.secall .app .fundopreto2 .popupprod .ingredientes {
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -879,7 +881,7 @@
 }
 
 
-.secall .app .fundopreto2 .popupprod .ingredientes .titulo{
+.secall .app .fundopreto2 .popupprod .ingredientes .titulo {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -889,21 +891,21 @@
     background-color: white;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes .titulo img{
+.secall .app .fundopreto2 .popupprod .ingredientes .titulo img {
     width: 20px;
     height: 20px;
     margin: 0;
 }
 
 
-.secall .app .fundopreto2 .popupprod .ingredientes .conteudo{
+.secall .app .fundopreto2 .popupprod .ingredientes .conteudo {
     display: flex;
     max-width: 100%;
     flex-wrap: wrap;
     font-size: 14px;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes .conteudo p{
+.secall .app .fundopreto2 .popupprod .ingredientes .conteudo p {
     min-width: 33%;
     max-width: 33%;
     overflow: hidden;
@@ -912,14 +914,14 @@
 
 
 
-.secall .app .fundopreto2 .popupprod .alergias{
+.secall .app .fundopreto2 .popupprod .alergias {
     background-color: #E6FF56;
     padding: 5px 0px;
     border-radius: 0px 0px 10px 10px;
     display: flex;
 }
 
-.secall .app .fundopreto2 .popupprod .alergias .divicon{
+.secall .app .fundopreto2 .popupprod .alergias .divicon {
     display: flex;
     font-size: 30px;
     width: 30px;
@@ -928,7 +930,7 @@
     align-items: center;
 }
 
-.secall .app .fundopreto2 .popupprod .alergias .conteudo{
+.secall .app .fundopreto2 .popupprod .alergias .conteudo {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -937,8 +939,133 @@
     flex-wrap: wrap;
 }
 
-.secall .app .fundopreto2 .popupprod .alergias .conteudo p{
+.secall .app .fundopreto2 .popupprod .alergias .conteudo p {
     margin: 0;
     max-width: 30%;
     font-size: 14px;
+}
+
+
+
+@media (max-width: 1250px) {
+
+    #usericon {
+        font-size: 22px;
+        cursor: pointer;
+        margin: auto 20px auto 0px;
+        visibility: visible;
+    }
+
+    .secall {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+        margin-bottom: 50px;
+        max-height: fit-content;
+    }
+
+    .navegation {
+        background-color: white;
+        width: 100vw;
+        max-height: 10vh;
+        box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.192);
+        display: flex;
+        justify-content: space-evenly;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+
+    }
+
+    .navegation .modulos {
+        width: 50px;
+        height: 100%;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00000059;
+    }
+
+
+    .navegation .icone {
+        width: 50px;
+        height: 100%;
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        cursor: pointer;
+    }
+
+    .body {
+        height: fit-content;
+    }
+
+    .app {
+        flex-direction: column;
+        height: fit-content;
+        min-width: 100vw;
+        z-index: 3;
+        margin: 0;
+        transform: translateY(-35vh);
+        width: 100vw;
+    }
+
+    .secall {
+        height: fit-content;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .divoltar {
+        transform: translateY(-270px);
+    }
+
+    .conteudos {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100vw;
+        align-items: center;
+    }
+
+    .comandas {
+        min-width: 100vw;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+
+     
+    .comandas .fundotable {
+        width: 762px;
+        height: 300px;
+    }
+
+
+    .secall .app .comandas .fundotable .fundotabela {
+        overflow: auto;
+        border-radius: 0px 0px 10px 10px;
+        max-height: 300px;
+    }
+
+    .secall .app .comandas .fundocomandas {
+        border-spacing: 0px 0px;
+        max-height: 100px;
+        width: 100%;
+    }
+
+    #tbodycmd{
+        background-color: yellow;
+        min-height: 200px;
+        max-height: 200px;
+
+    } 
 }
