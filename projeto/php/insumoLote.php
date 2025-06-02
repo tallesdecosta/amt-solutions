@@ -1,20 +1,119 @@
 <?php
 include 'conectar_bd.php';
 
-$conn = conectar();
+header('Content-Type: application/json');
 
-try {
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $filtro = $_GET['id_insumo'] ?? null;
+if($_SERVER['REQUEST_METHOD'] == "POST"){
 
-        $sql = "SELECT il.id_Lote, il.id_insumo, i.nome AS nome_insumo, il.lote, il.vencimento, il.fornecedor, il.quantidade
-                FROM insumoLote il
-                JOIN insumo i ON il.id_insumo = i.id_insumo";
+    $_POST = json_decode(file_get_contents("php://input"), true);
 
-        if ($filtro) {
-            $filtro = (int)$filtro;
-            $sql .= " WHERE il.id_insumo = $filtro";
+    $acao = isset($_POST['id']) ? 'atualizar' : 'inserir';
+
+    switch ($acao) {
+        case 'atualizar':
+            echo json_encode(atualizar($_POST));
+            break;
+        case 'inserir':
+            echo json_encode(inserir($_POST));
+            break;
+    }
+}elseif($_SERVER["REQUEST_METHOD"] === "GET"){
+    echo json_encode(retornarFuncs());
+}elseif($_SERVER["REQUEST_METHOD"] === "DELETE"){
+    echo json_encode(deletar());
+}
+
+function atualizar($data){
+    try{
+        $id = (int)$data['id'];
+        $id_insumo = (int)$data['id_insumo'];
+        $lote = $data['lote'];
+        $vencimento = $data['vencimento'];
+        $fornecedor = $data['fornecedor'];
+        $quantidade = (int)$data['quantidade'];
+
+        $conn = conectar();
+
+        $sql = "UPDATE insumoLote SET 
+            id_insumo = $id_insumo, 
+            lote = '$lote', 
+            vencimento = '$vencimento', 
+            fornecedor = '$fornecedor', 
+            quantidade = $quantidade
+            WHERE id_Lote = $id
+        ";
+
+        $resultado = $conn->query($sql);
+        
+        if(!$resultado){
+            throw new Exception();
+        }else{
+            return ["response" => "Atualizado com sucesso"];
         }
+    }catch(Exception $e){
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+    
+        return(["response" => "Servidor em manutenção, por favor tente novamente mais tarde!", "erro" => $erro]);
+    }
+}
+
+function inserir($data){
+    try{
+        $id_insumo = (int)$data['id_insumo'];
+        $lote = $data['lote'];
+        $vencimento = $data['vencimento'];
+        $fornecedor = $data['fornecedor'];
+        $quantidade = (int)$data['quantidade'];
+        
+        $conn = conectar();
+
+        $sql = "INSERT INTO insumoLote (id_insumo, lote, vencimento, fornecedor, quantidade) VALUES (
+            $id_insumo,
+            '$lote',
+            '$vencimento',
+            '$fornecedor',
+            $quantidade
+        )";
+
+        $resultado = $conn->query($sql);
+        
+        if(!$resultado){
+            throw new Exception();
+        }else{
+            return ["response" => "Atualizado com sucesso"];
+        }
+    }catch(Exception $e){
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+    
+        return(["response" => "Servidor em manutenção, por favor tente novamente mais tarde!", "erro" => $erro]);
+    }
+}
+
+function retornarFuncs(){
+    try{
+        $filtro = $_GET['filtro'] ?? '';
+        $conn = conectar();
+
+        $sql = "
+            SELECT il.id_Lote, il.id_insumo, i.nome AS nome_insumo, il.lote, il.vencimento, il.fornecedor, il.quantidade
+            FROM insumoLote il
+            JOIN insumo i ON il.id_insumo = i.id_insumo
+        ";
+
+        if ($filtro !== null && $filtro !== '') {
+            $filtro = $conn->real_escape_string($filtro);
+            $sql .= "
+                WHERE (
+                    il.id_insumo = '$filtro' OR 
+                    i.nome LIKE '%$filtro%' OR 
+                    il.vencimento LIKE '%$filtro%' OR 
+                    il.lote LIKE '%$filtro%' OR 
+                    i.classificacao LIKE '%$filtro%'
+                )
+            ";
+        }
+
+        $sql .= " ORDER BY il.vencimento ASC";
 
         $resultado = $conn->query($sql);
 
@@ -24,72 +123,52 @@ try {
             $dados[] = $row;
         }
 
-        header('Content-Type: application/json');
-        echo json_encode($dados);
+        return $dados;
 
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $dados = json_decode(file_get_contents('php://input'), true);
+    }catch(Exception $e){
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+        return(["response" => "Servidor em manutenção, por favor tente novamente mais tarde!", "erro" => $erro]);
+    }
+}
 
-        if (isset($dados['id'])) {
-            $id = (int)$dados['id'];
-            $id_insumo = (int)$dados['id_insumo'];
-            $lote = $dados['lote'];
-            $vencimento = $dados['vencimento'];
-            $fornecedor = $dados['fornecedor'];
-            $quantidade = (int)$dados['quantidade'];
-
-            $sql = "UPDATE insumoLote SET 
-                    id_insumo = $id_insumo, 
-                    lote = '$lote', 
-                    vencimento = '$vencimento', 
-                    fornecedor = '$fornecedor', 
-                    quantidade = $quantidade
-                    WHERE id_Lote = $id";
-
-        } else {
-            $id_insumo = (int)$dados['id_insumo'];
-            $lote = $dados['lote'];
-            $vencimento = $dados['vencimento'];
-            $fornecedor = $dados['fornecedor'];
-            $quantidade = (int)$dados['quantidade'];
-
-            $sql = "INSERT INTO insumoLote (id_insumo, lote, vencimento, fornecedor, quantidade) VALUES (
-                $id_insumo,
-                '$lote',
-                '$vencimento',
-                '$fornecedor',
-                $quantidade
-            )";
-        }
-
-        if ($conn->query($sql) === TRUE) {
-            header('Content-Type: application/json');
-            echo json_encode(["Status" => "Sucesso"]);
-        } else {
-            http_response_code(500);
-            header('Content-Type: application/json');
-            echo json_encode(["erro" => "Erro ao salvar ou atualizar o Lote"]);
-        }
-
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+function deletar(){
+    try{
         parse_str($_SERVER['QUERY_STRING'], $params);
         $id = (int)($params['id'] ?? 0);
 
-        $sql = "DELETE FROM insumoLote WHERE id_Lote = $id";
+        $conn = conectar();
 
-        if ($conn->query($sql) === TRUE) {
-            echo json_encode(["status" => "deletado"]);
-        } else {
-            http_response_code(500);
-            echo json_encode(["erro" => "Erro ao deletar"]);
+        // Verifica se há vínculos com produto
+        $sql = "SELECT COUNT(*) AS total FROM produtoLoteInsumo WHERE id_insumoLote = $id";
+        $resultado = $conn->query($sql);
+
+        if (!$resultado) {
+            throw new Exception("Erro ao verificar vínculos: " . $conn->error);
         }
+
+        $dados = $resultado->fetch_assoc();
+
+        if ($dados['total'] > 0) {
+            return [
+                "status" => "erro",
+                "mensagem" => "Não foi possível deletar pois o lote possui vínculo a produto."
+            ];
+        }
+
+        $sql = "DELETE FROM insumoLote WHERE id_Lote = $id";
+        if (!$conn->query($sql)) {
+            throw new Exception("Erro ao deletar lote: " . $conn->error);
+        }
+
+        return ["status" => "sucesso"];
+        
+    } catch (Exception $e) {
+        $erro = $e->getMessage() . " - " . $e->getLine() . " - " . $e->getFile();
+        return [
+            "status" => "erro",
+            "mensagem" => "Servidor em manutenção, por favor tente novamente mais tarde.",
+            "erro" => $erro
+        ];
     }
-
-} catch (Exception $e) {
-    http_response_code(500);
-    header('Content-Type: application/json');
-    echo json_encode(["erro" => $e->getMessage()]);
 }
-
-$conn->close();
 ?>
