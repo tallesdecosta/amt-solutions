@@ -165,37 +165,99 @@ async function mostrarDfcSalvo(id) {
 
     data = await pesquisarSalvo(id);
 
-    while (document.getElementById('report-body').firstChild && document.getElementById('report-body').childElementCount != 1) {
 
-        document.getElementById('report-body').removeChild(document.getElementById('report-body').lastChild);
+    
+    tbody = document.getElementById('report-body');
+
+    // limpar tbody.
+    tbody.innerHTML=''; 
+
+    caixa = []
+    vendas = []
+      
+    // separar as entradas em entrada d caixa e vendas.
+    for (entrada in data.entradas.detalhes) 
+    {
+
+        if (data.entradas.detalhes[entrada].origem == "caixa") {
+
+            caixa.push(data.entradas.detalhes[entrada]);
+                
+
+        }  else {
+
+            vendas.push(data.entradas.detalhes[entrada]);
+
+        }
+
 
     }
 
-    linha = document.createElement('tr');
-    valor = 0;
+    headerVendas = document.createElement("tr");
+    titleVendas = document.createElement("th");
+    titleVendas.textContent = "Venda de produtos"
+    headerVendas.appendChild(titleVendas);
+    tbody.appendChild(headerVendas);
 
-    for (item in data) {
-        
-        valor += parseFloat(data[item].total_valor);
-        console.log(data[item].total_valor);
+    for (entrada in vendas) 
+    {
+
+        linha = document.createElement('tr');
+        valor = parseFloat(vendas[entrada].valor);
+
+        titulo = document.createElement('td'); 
+        titulo.textContent = 'Venda';
+        tipo = document.createElement('td'); 
+        tipo.textContent = 'Entrada (+)';
+        valorText = document.createElement('td'); 
+
+        valorText.textContent = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s/g, '');
+
+        linha.appendChild(titulo);
+        linha.appendChild(tipo);
+        linha.appendChild(valorText);
+        document.getElementById('report-body').appendChild(linha);
+
 
     }
 
-    titulo = document.createElement('td'); 
-    titulo.textContent = 'Recebimento de clientes';
-    tipo = document.createElement('td'); 
-    tipo.textContent = 'Entrada (+)';
-    valorText = document.createElement('td'); 
-    valorText.textContent = `R$${valor.toFixed(2)}`;
-    valorText.textContent = valorText.textContent.replace(".", ",");
-    linha.appendChild(titulo);
-    linha.appendChild(tipo);
-    linha.appendChild(valorText);
+    headerCaixa = document.createElement("tr");
+    titleCaixa = document.createElement("th");
+    titleCaixa.textContent = "Entrada de caixa";
+    headerCaixa.appendChild(titleCaixa);
+    tbody.appendChild(headerCaixa);
 
-    document.getElementById('report-body').appendChild(linha);
+    
+    for (entrada in caixa) 
+    {
+
+        linha = document.createElement('tr');
+        valor = parseFloat(caixa[entrada].valor);
+
+        titulo = document.createElement('td'); 
+        titulo.textContent = 'Entrada de caixa';
+        tipo = document.createElement('td'); 
+        tipo.textContent = 'Entrada (+)';
+        valorText = document.createElement('td'); 
+
+        valorText.textContent = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace(/\s/g, '');
+
+        linha.appendChild(titulo);
+        linha.appendChild(tipo);
+        linha.appendChild(valorText);
+        document.getElementById('report-body').appendChild(linha);
 
 
-}
+    }
+      
+      mostrarDespesa();
+
+
+  }
+
+    
+
+
 
 
 async function getDfcs() {
@@ -215,8 +277,16 @@ async function getDfcs() {
 
         btn = document.createElement('button');
         btnDelete = document.createElement('button');
+        btn.style.borderRadius = '10px';
+        btn.style.padding = '4px';
         btnDelete.setAttribute("id", data[i].id_dfc);
-        btnDelete.textContent = '-';
+        btnDelete.textContent = '- Apagar';
+        btnDelete.style.backgroundColor = "red";
+        btnDelete.style.color = "white";
+        btnDelete.style.fontWeight = "bold";
+        btnDelete.style.border = "1px solid red";
+        btnDelete.style.padding = "4px";
+        btnDelete.style.borderRadius = '10px';
         btn.textContent = data[i].titulo;
         btn.setAttribute("data-inicio", data[i].dataInicio);
         btn.setAttribute("data-fim", data[i].dataFinal);

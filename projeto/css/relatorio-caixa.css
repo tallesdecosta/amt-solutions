@@ -70,6 +70,32 @@ main {
     height: 100%;
 }
 
-h1 {
+@media (max-width: 763px) {
+
+    main {
+        flex-direction: column;
+    }
+
+    .filter-wrapper {
+        flex-direction: column;
+        height: fit-content;
+    }
+
+    th, p, td {
+        font-size: 10px;
+        
+    }
+
+    .report-wrapper {
+        padding: 0px;
+    }
+
+    h1 {
+        font-size: 16px;
+    }
+
+    .saved-reports {
+        width: 100%;
+    }
 
 }
