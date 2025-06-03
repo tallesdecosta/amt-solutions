@@ -275,20 +275,39 @@ async function addUser() {
     body.append("gestao", gestaoPermissao);
     body.append("cargo", cargo.value);
     body.append("contato", contato.value);
-    body.append("admin", admin.value);
+    body.append("admin", admin.checked);
 
-    data = await fetch("../php/api/usuario.php", {
+    try {
 
-        method: "POST",
-        body: body
+        data = await fetch("../php/api/usuario.php", {
 
-    });
+            method: "POST",
+            body: body
+    
+        });
+    
+        if (!data.ok) {
+    
+            
 
-    if (data.ok) {
+            if (data.status == 409) {
+                throw new Error(`ÈRRO: esse usuário já existe na base de dados.`)
+            } else {
+                throw new Error(`ÈRRO: dificuldades em se comunicar com nossa base de dados, tente novamente mais tarde.`)
+            }
+    
+        } else {
+            location.reload();
+        }
 
-        location.reload();
+        
 
+    } catch(error) {
+
+        alert(error);
     }
+
+    
 }
 
 async function deleteUser(btn) {
