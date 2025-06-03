@@ -7,9 +7,9 @@ async function buscarHistorico() {
         })
 
         if (data.redirected) {
-    window.location.href = data.url;
-    return;
-  }
+            window.location.href = data.url;
+            return;
+        }
 
         if (!data.ok) {
             throw new Error(`HTTP error! status: ${data.status}`)
@@ -45,7 +45,12 @@ async function listarVendas() {
 
                 tbody.innerHTML += tr
 
-                let td1 = '<td id="data' + response[i].id + '">' + response[i].data_emissao + '</td>'
+                let data = new Date(response[i].data_emissao);
+                data1 =  data.toLocaleDateString('pt-BR');
+
+    
+
+                let td1 = '<td id="data' + response[i].id + '">' + data1 + '</td>'
                 let td2 = '<td id="numcmd' + response[i].id + '">' + response[i].numComanda + '</td>'
                 let td3 = '<td id="nome' + response[i].id + '">' + response[i].nomeCliente + '</td>'
                 let td4 = '<td id="forma' + response[i].id + '">' + response[i].formaPagamento + '</td>'
@@ -133,7 +138,7 @@ async function visucmd(id) {
                 element1.innerText += " " + data[i].nomeCliente
                 element2.innerText += " " + data[i].numComanda
                 element3.innerText += " " + data[i].formaPagamento
-                element4.innerText += " " + data[i].data_emissao
+                element4.innerText += " " + data1
 
             }
 
