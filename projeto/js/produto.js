@@ -10,18 +10,18 @@ const pictureImageTxt = 'Choose an image';
 pictureImage.innerHTML = pictureImageTxt;
 
 // Quando carregar a página, só se tiver src, mostrar imagem
-if(pictureImgPreview.src && pictureImgPreview.src !== window.location.href) {
+if (pictureImgPreview.src && pictureImgPreview.src !== window.location.href) {
   pictureImage.innerHTML = '';
   pictureImage.appendChild(pictureImgPreview);
 }
 
-inputFile.addEventListener('change', function(e) {
+inputFile.addEventListener('change', function (e) {
   const file = e.target.files[0];
 
   if (file) {
     const reader = new FileReader();
 
-    reader.addEventListener('load', function(e) {
+    reader.addEventListener('load', function (e) {
       // Limpa o texto e mostra a imagem com o src do arquivo
       pictureImage.innerHTML = '';
       pictureImgPreview.src = e.target.result;
@@ -53,37 +53,37 @@ function getImagem() {
 // --------------- Funções relacionadas ao cadastro do PRODUTO --------------- //
 
 // Receber dados do cadastro de produtos
-async function chamarPHP(){
+async function chamarPHP() {
   const filtro = document.getElementById('inputPesquisa').value;
   const url = `../php/produto.php?filtro=${encodeURIComponent(filtro)}`;
 
-  try{
+  try {
     const resposta = await fetch(url);
-    
-    if(!resposta.ok){
+
+    if (!resposta.ok) {
       throw new Error(`HTTP error! status: ${resposta.status}`)
-    }else{
+    } else {
       return resposta.json();
     }
 
-  }catch(erro){
+  } catch (erro) {
     console.log("Erro ao buscar API: " + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 };
 
 // Tratativa dos dados dos produtos
-async function tratarResposta(){
+async function tratarResposta() {
   dados = await chamarPHP();
 
-  if(dados){
-    if(dados.erro){
-      alert(dados.resposta);
+  if (dados) {
+    if (dados.erro) {
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
       console.log("Erro " + dados.erro);
-    }else{
+    } else {
       const tbody = document.getElementById('tabela-corpo');
       tbody.innerHTML = '';
-      
+
       dados.forEach((item, index) => {
 
         // Insere linha com os dados na tabela tbody
@@ -141,7 +141,7 @@ async function tratarResposta(){
 };
 
 // Botão salvar PRODUTO method POST
-async function btnSalvar(){
+async function btnSalvar() {
   if (!validarCampos()) return;
   // Pegar os valores dos campos do cadastro
   let nome = document.getElementById("nome").value;
@@ -177,25 +177,25 @@ async function btnSalvar(){
   });
 
   // Verifica se é para adicionar ou editar e se os campos estão preenchidos
-  if(window.adicionandoNovo || window.itemSelecionado){
-    
+  if (window.adicionandoNovo || window.itemSelecionado) {
+
     const imagemFile = await getImagem();
 
     // Verificar se é adicionar item ou editar item + Validação de imagem
-    if(window.adicionandoNovo){
+    if (window.adicionandoNovo) {
       // Adcionado imagem em dadosEnviar para novos produtos
       dadosEnviar.imagem = imagemFile;
-    }else if(imagemFile){
+    } else if (imagemFile) {
       // Caso selecionar um item, e esse item tenha imagem, irá carregar a imagem e adicionar em dadosEnviar para method UPDATE
       dadosEnviar.imagem = imagemFile;
       dadosEnviar.id = window.itemSelecionado.id_produto;
-    }else{
+    } else {
       // Caso selecionar um item, e esse item NÃO tenha imagem, irá adicionar apenas o ID em dadosEnviar para method UPDATE
       dadosEnviar.id = window.itemSelecionado.id_produto;
     }
   }
 
-  try{
+  try {
     // Envia os dados para o PHP
     const resposta = await fetch('../php/produto.php', {
       method: 'POST',
@@ -205,10 +205,16 @@ async function btnSalvar(){
 
     const resJson = await resposta.json();
 
-    alert(window.adicionandoNovo ? 'Inserido com sucesso!' : 'Salvo com sucesso!');
+
+
+    if (window.adicionandoNovo) {
+      alerta(1, 1, "Inserido com sucesso!", 1)
+    } else {
+      alerta(1, 1, "Salvo com sucesso!", 1)
+    }
 
     // Caso tenha alergia, será enviado para o PHP produtoAlergia, vinculando alergia e produto no BD
-    if(!naoAlergia){
+    if (!naoAlergia) {
       const alergiasResposta = await fetch('../php/produtoAlergia.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -233,44 +239,44 @@ async function btnSalvar(){
     window.itemSelecionado = null;
     window.location.reload()
 
-  }catch(erro){
+  } catch (erro) {
     console.error('Erro ao buscar API: ' + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde.");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 }
 
 // Receber dados do cadastro de produtos ALERGIAS
-async function carregarAlergiasVinculadas(idProduto){
+async function carregarAlergiasVinculadas(idProduto) {
   try {
     const resposta = await fetch(`../php/produtoAlergia.php?id_produto=${idProduto}`);
-    
-    if(!resposta.ok){
+
+    if (!resposta.ok) {
       throw new Error(`HTTP error! status: ${resposta.status}`);
-    }else{
+    } else {
       return resposta.json();
     }
-  }catch(erro){
+  } catch (erro) {
     console.log("Erro ao buscar API: " + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 }
 
 // Tratativa dos dados dos produtos ALERGIAS
-async function tratarAlergiasVinculadar(idProduto){
+async function tratarAlergiasVinculadar(idProduto) {
   alergias = await carregarAlergiasVinculadas(idProduto);
 
-  if(alergias){
-    if(alergias.erro){
-      alert(alergias.resposta);
+  if (alergias) {
+    if (alergias.erro) {
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
       console.log("Erro: " + alergias.erro);
-    }else{
+    } else {
       const container = document.getElementById('lista-alergias');
       container.innerHTML = '';
 
       alergias.forEach(alergia => {
         const div = document.createElement('div');
         div.classList.add('insumo-alergia');
-        
+
         div.innerHTML = `
           <select class="alergia-select" disabled>
             <option value="${alergia.id_alergia}" selected>${alergia.nome}</option>
@@ -286,37 +292,42 @@ async function tratarAlergiasVinculadar(idProduto){
 // --------------- Botões div cadastro PRODUTO --------------- //
 
 // Botão Deletar
-async function btnDeletar(){
+async function btnDeletar() {
   // Verificar se algum item foi selecionado
   if (!window.itemSelecionado) {
-      alert('Selecione um item antes.');
-      return;
+    alerta(2, 2, "Selecione o item que deseja excluir.", 1)
+    return;
   }
-    
+
   // Confirmação se deseja deletar
-  if (!confirm('Tem certeza que deseja excluir este item?')) return;
-  
-  try{
-    const resposta = await fetch(`../php/produto.php?id=${window.itemSelecionado.id_produto}`, {
-      method: 'DELETE'
-    });
 
-    const resultado = await resposta.json();
+  alerta(2, 2, "Tem certeza que deseja excluir este item?", 2)
 
-    if (!resposta.ok) {
-      alert(resultado.erro || "Erro ao deletar produto.");
-      return;
+  document.getElementById("confirmAlerta").addEventListener("click", async () => {
+    try {
+      const resposta = await fetch(`../php/produto.php?id=${window.itemSelecionado.id_produto}`, {
+        method: 'DELETE'
+      });
+
+      const resultado = await resposta.json();
+
+      if (!resposta.ok) {
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
+        return;
+      }
+
+      alerta(1, 1, "Produto excluido com sucesso!", 1)
+      tratarResposta();
+      limparCampos();
+      window.adicionandoNovo = false;
+      window.itemSelecionado = null;
+    } catch (erro) {
+      console.error("Erro ao deletar:", erro);
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
+  })
 
-    alert("Produto deletado com sucesso!");
-    tratarResposta();
-    limparCampos();
-    window.adicionandoNovo = false;
-    window.itemSelecionado = null;
-  } catch (erro) {
-    console.error("Erro ao deletar:", erro);
-    alert("Erro ao deletar o produto. Tente novamente.");
-  }
+
 }
 
 // Botão ADICIONAR
@@ -330,7 +341,7 @@ document.getElementById('btn-adicionar').addEventListener('click', () => {
 // Botão EDITAR
 document.getElementById('btn-editar').addEventListener('click', () => {
   if (!window.itemSelecionado) {
-    alert('Selecione um item para editar');
+    alerta(2, 2, "Selecione um item para editar.", 1)
     return;
   }
   habilitarCampos();
@@ -369,7 +380,7 @@ document.getElementById("btn-adicionarAlergia").addEventListener("click", async 
     });
   } catch (error) {
     console.error('Erro ao carregar alergias:', error);
-    alert('Erro ao carregar alergias. Tente novamente.');
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 });
 
@@ -401,7 +412,7 @@ document.getElementById('buttonPesquisa').addEventListener('click', () => {
 });
 
 // Função limpar campos
-function limparCampos(){
+function limparCampos() {
   const inputs = document.querySelectorAll('.descricaoItem input');
   inputs.forEach(input => {
     input.value = '';
@@ -428,35 +439,35 @@ function limparCampos(){
   pictureLabel.style.backgroundColor = '#ddd';
   pictureLabel.style.border = '2px dashed #aaa';
 
-  document.querySelectorAll("#span").forEach(span => {span.style.display = "none";});
-  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "none";}); 
+  document.querySelectorAll("#span").forEach(span => { span.style.display = "none"; });
+  document.querySelectorAll("#spanL").forEach(spanL => { spanL.style.display = "none"; });
 
   document.getElementById('quantidadeTotal').textContent = "";
-  
+
   document.getElementById('btn-adicionarAlergia').style.display = 'none';
   document.getElementById('btn-salvar').style.display = 'none';
   document.querySelectorAll('.btnRemoverAlergia').forEach(btn => {
-      btn.style.display = 'none';
-    });
+    btn.style.display = 'none';
+  });
 }
 
 // Função habilita campos div cadastro PRODUTO
-function habilitarCampos(){
-    document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
-    document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
-    document.querySelectorAll("#span").forEach(span => {span.style.display = "";});
-    document.querySelectorAll("#btn-adicionarAlergia").forEach(btnAlergia => btnAlergia.removeAttribute('disabled'));
+function habilitarCampos() {
+  document.querySelectorAll('.descricaoItem input').forEach(input => input.removeAttribute('disabled'));
+  document.querySelectorAll('.descricaoItem select').forEach(select => select.removeAttribute('disabled'));
+  document.querySelectorAll("#span").forEach(span => { span.style.display = ""; });
+  document.querySelectorAll("#btn-adicionarAlergia").forEach(btnAlergia => btnAlergia.removeAttribute('disabled'));
 
-    document.getElementById('btn-adicionarAlergia').style.display = 'block';
-    document.getElementById('btn-salvar').style.display = 'block';
-    document.querySelectorAll('.btnRemoverAlergia').forEach(btn => {
-      btn.style.display = 'block';
-    });
+  document.getElementById('btn-adicionarAlergia').style.display = 'block';
+  document.getElementById('btn-salvar').style.display = 'block';
+  document.querySelectorAll('.btnRemoverAlergia').forEach(btn => {
+    btn.style.display = 'block';
+  });
 
-    document.querySelectorAll('#lista-alergias .insumo-alergia').forEach(item => {
-      item.querySelector('.alergia-select').disabled = false;
-      item.querySelector('button').disabled = false;
-    });
+  document.querySelectorAll('#lista-alergias .insumo-alergia').forEach(item => {
+    item.querySelector('.alergia-select').disabled = false;
+    item.querySelector('button').disabled = false;
+  });
 
 }
 
@@ -465,8 +476,7 @@ function validarCampos() {
   for (let i = 0; i < camposObrigatorios.length; i++) {
     const campo = document.getElementById(camposObrigatorios[i]);
     if (!campo.value) {
-      alert("Todos os campos do formulário são obrigatórios!");
-      campo.reportValidity(); 
+      campo.reportValidity();
       campo.focus();
       return false;
     }
@@ -475,3 +485,75 @@ function validarCampos() {
 }
 
 window.onload = tratarResposta;
+
+
+
+
+
+
+function alerta(icone, cor, text, nBotoes) {
+
+  let icones = ['bi bi-cone-striped', 'bi bi-check-circle-fill', 'bi bi-exclamation-diamond-fill'] // 0 = cone, 1 = check, 2 = alert
+
+  let cores = ['#d0ae3f', '#73df77', '#ebeb31', '#dd3f3f']// 0 = laranja, 1 = verder, 2 = amarelo, 3 = vermelho
+
+  let alerta = document.getElementById('alertaPadrão')
+
+  let body = document.querySelector('body')
+
+  body.style.overflow = 'hidden'
+
+  alerta.style.display = 'flex'
+
+  let p = document.getElementById('pAlerta')
+  let i = document.getElementById('iconeAlerta')
+
+  i.className = icones[icone]
+  i.style.color = `${cores[cor]}`
+  p.innerText = text
+
+  if (nBotoes == 2) {
+
+    let botoes = document.getElementById('botoesAlerta')
+
+    but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+    but2 = '<button class="but2" id="cancelAlerta">Cancelar</button>'
+
+    botoes.innerHtml = but1 + but2
+
+    botoes.style.justifyContent = 'center'
+
+    let cancel = document.getElementById('cancelAlerta')
+
+    cancel.addEventListener("click", () => {
+
+      alerta.style.display = 'none'
+
+      body.style.overflow = 'auto'
+
+    })
+
+  } else if (nBotoes == 1) {
+
+    let botoes = document.getElementById('botoesAlerta')
+
+    but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+
+    botoes.innerHTML = but1
+
+    botoes.style.justifyContent = 'end'
+
+    but1 = document.getElementById("confirmAlerta")
+
+    but1.innerText = 'OK'
+
+    but1.addEventListener("click", () => {
+
+      alerta.style.display = 'none'
+
+      body.style.overflow = 'auto'
+
+    })
+  }
+
+}
