@@ -29,14 +29,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Data de hoje
+
     const hoje = new Date();
 
-    // Data de 7 dias atrás
+
     const umaSemanaAtras = new Date();
     umaSemanaAtras.setDate(hoje.getDate() - 7);
 
-    // Formata como "YYYY-MM-DD"
+    // formata como "YYYY-MM-DD"
     const formatarData = (data) => data.toISOString().split("T")[0];
 
     const dataInicio = formatarData(umaSemanaAtras);
@@ -144,6 +144,8 @@ async function atualizarRelatorio(data) {
         style: 'currency',
         currency: 'BRL'
         }).replace(/\s/g, '');
+        const ticketMedioPassado = document.getElementById('passado_ticket');
+        ticketMedioPassado.textContent =  `${data.ticket_medio.crescimento}% vs período anterior`;
 
     const volumeVendas = document.getElementById('volume_vendas');
     const volumeVendasPassado = document.getElementById('passado_vendas');
@@ -157,6 +159,9 @@ async function atualizarRelatorio(data) {
     } else {
         margemLucro.textContent = data.margem_lucro.atual == null ? "0%" : `${parseFloat(data.margem_lucro.atual).toFixed(2)}%`;
     }
+
+    const margemPassado = document.getElementById('passado_margem');
+        margemPassado.textContent =  `${data.margem_lucro.crescimento}% vs período anterior`;
 
     const lucroReal = document.getElementById('lucro_real');
     lucroReal.textContent = parseFloat(data.lucro_real.atual).toLocaleString('pt-BR', {
@@ -172,6 +177,9 @@ async function atualizarRelatorio(data) {
         style: 'currency',
         currency: 'BRL'
         }).replace(/\s/g, '');
+
+        const receitaPassado = document.getElementById('passado_receita');
+    receitaPassado.textContent =  `${data.receita.crescimento}% vs período anterior`;
     
     
 
