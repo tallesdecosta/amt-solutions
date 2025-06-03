@@ -51,8 +51,23 @@
         $financeiro_form = intval($_POST['financeiro']);
         
         $sql = "INSERT INTO usuario(nome, senha, username, ehAdm, contato, cargo) VALUES('".$nome_form."','".password_hash($senha_form, PASSWORD_BCRYPT)."','".$user_form."','".$admin_form."','".$contato_form."','".$cargo_form."');";
+    
 
         $conn = conectar();
+
+
+        $result = $conn->query("SELECT * FROM usuario WHERE username = '".$user_form."'");
+
+        if ($result && $result->num_rows > 0) {
+            
+            http_response_code(409);
+            echo json_encode(["erro" => "duplicado"]);
+            exit;
+
+        } 
+
+
+
         $conn->query($sql);
 
         $sql1 = "SELECT id_usuario FROM usuario WHERE username = '".$user_form."'";
