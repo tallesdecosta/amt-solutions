@@ -36,6 +36,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    text-align: center;
 }
 
 .secall .app .fundo .modulosVendas .func:hover {
