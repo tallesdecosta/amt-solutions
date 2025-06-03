@@ -3,7 +3,7 @@ session_start();
 
 
 //900 segundos, 10 minutos
-$timeout = 20; 
+$timeout = 900; 
 
 
 //retorna o tempo em segundos, tempo atual - última atividade n pode ser maior que dez minutos

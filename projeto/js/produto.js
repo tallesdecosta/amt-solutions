@@ -60,16 +60,12 @@ async function chamarPHP() {
   try {
     const resposta = await fetch(url);
 
-<<<<<<< HEAD
-    if (!resposta.ok) {
-=======
     if (resposta.redirected) {
     window.location.href = resposta.url;
     return;
   }
     
     if(!resposta.ok){
->>>>>>> f4213c0 (timeout)
       throw new Error(`HTTP error! status: ${resposta.status}`)
     } else {
       return resposta.json();

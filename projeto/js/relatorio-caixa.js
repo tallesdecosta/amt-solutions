@@ -351,7 +351,7 @@ async function saveDfc() {
 async function deletarDfcSalvo(id) {
 
 
-    res = await fetch('../php/api/dfc.php?id=${id}',{ 
+    res = await fetch(`../php/api/dfc.php?id=${id}`,{ 
         method: "DELETE"
     }
     )
