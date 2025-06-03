@@ -1,190 +1,206 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <link id="link1" rel="stylesheet" href="../css/nav.css">
+    <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/insumo.css">
+    <link rel="stylesheet" href="../css/insumo.css">
 
-        <title>Estoque de insumos</title>
-    </head>
-    <script src="../js/checarAcesso.js"></script>
-    <script src="../js/estaLogado.js"></script>
-    <body onload="getInfo(), esta_logado(), chamarPHP(); tratarResposta(); checarAcesso('estoque')">
+    <link rel="stylesheet" href="../css/popups.css">
 
-        <div class="container1" id="container1">
-            <div class="logo">
-                <img src="../img/account.png" width="80px" height="30px" alt>
-            </div>
-            <script src="../js/logout.js"></script>
-            
-            <div class="perfil" id="perfil">
-                <div class="topo">
-                    <div class="username" id="username">
-                        <p class="p1" id="p1"></p>
-                        <p class="p2" id="p2"></p>
-                    </div>
-                    <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
+    <title>Estoque de insumos</title>
+</head>
+<script src="../js/checarAcesso.js"></script>
+<script src="../js/estaLogado.js"></script>
+
+<body onload="getInfo(), esta_logado(), chamarPHP(); tratarResposta(); checarAcesso('estoque')">
+
+    <div class="container1" id="container1">
+        <div class="logo">
+            <img src="../img/account.png" width="80px" height="30px" alt>
+        </div>
+        <script src="../js/logout.js"></script>
+
+        <div class="perfil" id="perfil">
+            <div class="topo">
+                <div class="username" id="username">
+                    <p class="p1" id="p1"></p>
+                    <p class="p2" id="p2"></p>
                 </div>
-                <div class="conteudo" id="conteudosair"  style="position: relative;z-index: 1000;" onclick="logout();">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <a href>Sair</a>
-                </div>
+                <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
             </div>
-            
+            <div class="conteudo" id="conteudosair" style="position: relative;z-index: 1000;" onclick="logout();">
+                <i class="bi bi-box-arrow-left"></i>
+                <a href>Sair</a>
+            </div>
         </div>
 
-        <section class="secall">
-            <nav class="navegation">
-                <div class="modulos alinha">
-                    <i class="bi bi-boxes"></i>
-                </div>
-                <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)"
-                    onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
-                    <i class="bi bi-cash-coin"></i>
-                </div>
-                <div class="icone alinha" id="icon2" nome="estoque"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-box-seam"></i>
-                </div>
-                <div class="icone alinha" id="icon3"  nome="financeiro"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-piggy-bank"></i>
-                </div>
-                <div class="icone alinha" id="icon4"  nome="gestao"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-clipboard2-data"></i>
-                </div>
-            </nav>
-            <div class="tooltips">
-                <div class="top"></div>
-                <div class="tool" id="tool1">
-                    <div class="ponta aparecer"></div>
-                    <div class="balao aparecer">
-                        <p>Vendas</p>
-                    </div>
+    </div>
+
+    <section class="secall">
+        <nav class="navegation">
+            <div class="modulos alinha">
+                <i class="bi bi-boxes"></i>
+            </div>
+            <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)" onmouseover="aparecertool(1)"
+                onmouseleave="escondertool(1)">
+                <i class="bi bi-cash-coin"></i>
+            </div>
+            <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <div class="icone alinha" id="icon3" nome="financeiro" onclick="podeAcessar(this)">
+                <i class="bi bi-piggy-bank"></i>
+            </div>
+            <div class="icone alinha" id="icon4" nome="gestao" onclick="podeAcessar(this)">
+                <i class="bi bi-clipboard2-data"></i>
+            </div>
+        </nav>
+        <div class="tooltips">
+            <div class="top"></div>
+            <div class="tool" id="tool1">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Vendas</p>
                 </div>
             </div>
+        </div>
 
-            <div class="app">
-                <div class="titulo">
-                    <p>Cadastro de Insumos</p>
+        <div class="alertapadrao" id="alertaPadrão">
+            <div class="alerta">
+                <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                <p id="pAlerta"> </p>
+                <div class="botoes" id="botoesAlerta">
+                    <button class="but1" id="confirmAlerta">Confirmar</button>
+                    <button class="but2" id="cancelAlerta">Cancelar</button>
                 </div>
+            </div>
+        </div>
 
-                <div class="cadastroInsumo">
-                        <div class="buttonItens">
-                            <div>
-                                <button class="buttonPadrao" id="btn-adicionar">
-                                    <img src="../img/adicionar.png" alt="">
-                                </button>
-                            </div>
+        <div class="app">
+            <div class="titulo">
+                <p>Cadastro de Insumos</p>
+            </div>
 
-                            <div>
-                                <button class="buttonPadrao" id="btn-editar">
-                                    <img src="../img/botaoEditar.png" alt="">
-                                </button>
-                            </div>
-                        
-                            <div>
-                                <button class="buttonPadrao" id="btn-deletar" onclick="btnDeletar()">
-                                <img src="../img/excluir.png" alt="">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="descricaoItem">
-                        <div class="infoItem">
-                            <div class="info">
-                                <label for="">Nome <span id="span" style="display: none">*</span></label><br>
-                                <input type="text" id="nome" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-                            
-                            <div class="info">
-                                <label for="">Classificação<span id="span" style="display: none">*</span></label><br>
-                                <select name="" id="classificacao" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                                    <option value="Farinhas e cereais">Farinhas e cereais</option>
-                                    <option value="Carnes e derivados">Carnes e derivados</option>
-                                    <option value="Laticínios">Laticínios</option>
-                                    <option value="Legumes e verduras">Legumes e verduras</option>
-                                    <option value="Frutas e polpas">Frutas e polpas</option>
-                                    <option value="Grãos e sementes">Grãos e sementes</option>
-                                    <option value="Temperos e condimentos">Temperos e condimentos</option>
-                                    <option value="Açúcares e adoçantes">Açúcares e adoçantes</option>
-                                    <option value="Bebidas e líquidos alimentares">Bebidas e líquidos alimentares</option>
-                                    <option value="Aditivos e conservantes">Aditivos e conservantes</option>
-                                </select>
-                            </div>
-
-                            <div class="info">
-                                <label for="">Qtd. Mínima<span id="span" style="display: none">*</span></label><br>
-                                <input type="number" id="qntMinima" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-
-                            <div class="info">
-                                <label for="">Insp. recebimento<span id="span" style="display: none">*</span></label><br>
-                                <select name="" id="inspReceb" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                                    <option value="Sim">Sim</option>
-                                    <option value="Não">Não</option>
-                                </select>
-                            </div>
-
-                            <div class="info">
-                                <label for="">Localização<span id="span" style="display: none">*</span></label><br>
-                                <input type="text" id="localizacao" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-
-                            <div class="info">
-                                <label for="">Quantidade</label><br>
-                                <label id="quantidadeTotal"></label>
-                            </div>
-                        </div>
-                        <div class="buttonSalvar">
-                            <button class="buttonPadrao" id="btn-salvar" onclick="btnSalvar()" style="display: none;">Salvar</button>
-                        </div>
-                    </div>
-
-                    
-                </div>
-            
-                <div class="barraPesquisa">
-                    <div class="barraPesquisaButton">
-                        <button id="buttonPesquisa">
-                            <img src="../img/lupa.png" alt="Icone">
+            <div class="cadastroInsumo">
+                <div class="buttonItens">
+                    <div>
+                        <button class="buttonPadrao" id="btn-adicionar">
+                            <img src="../img/adicionar.png" alt="">
                         </button>
                     </div>
-                    <div class="barraPesquisaInput">
-                        <input id="inputPesquisa" type="text" placeholder="Pesquisar item">
+
+                    <div>
+                        <button class="buttonPadrao" id="btn-editar">
+                            <img src="../img/botaoEditar.png" alt="">
+                        </button>
+                    </div>
+
+                    <div>
+                        <button class="buttonPadrao" id="btn-deletar" onclick="btnDeletar()">
+                            <img src="../img/excluir.png" alt="">
+                        </button>
                     </div>
                 </div>
-                <div class="tabelaContainer ">
-                    <table id="tabela-insumos">
-                        <thead>
-                            <tr>
-                                <th class="thInsumo">Código</th>
-                                <th class="thInsumo">Descrição</th>
-                                <th class="thInsumo">Classificação</th>
-                                <th class="thInsumo">Quantidade</th>
-                                <th class="thInsumo">Qtd.Mínima</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabela-corpo">
 
-                        </tbody>
-                                               
-                    </table>
+                <div class="descricaoItem">
+                    <div class="infoItem">
+                        <div class="info">
+                            <label for="">Nome <span id="span" style="display: none">*</span></label><br>
+                            <input type="text" id="nome" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+
+                        <div class="info">
+                            <label for="">Classificação<span id="span" style="display: none">*</span></label><br>
+                            <select name="" id="classificacao" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                                <option value="Farinhas e cereais">Farinhas e cereais</option>
+                                <option value="Carnes e derivados">Carnes e derivados</option>
+                                <option value="Laticínios">Laticínios</option>
+                                <option value="Legumes e verduras">Legumes e verduras</option>
+                                <option value="Frutas e polpas">Frutas e polpas</option>
+                                <option value="Grãos e sementes">Grãos e sementes</option>
+                                <option value="Temperos e condimentos">Temperos e condimentos</option>
+                                <option value="Açúcares e adoçantes">Açúcares e adoçantes</option>
+                                <option value="Bebidas e líquidos alimentares">Bebidas e líquidos alimentares</option>
+                                <option value="Aditivos e conservantes">Aditivos e conservantes</option>
+                            </select>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Qtd. Mínima<span id="span" style="display: none">*</span></label><br>
+                            <input type="number" id="qntMinima" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+
+                        <div class="info">
+                            <label for="">Insp. recebimento<span id="span" style="display: none">*</span></label><br>
+                            <select name="" id="inspReceb" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                                <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                            </select>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Localização<span id="span" style="display: none">*</span></label><br>
+                            <input type="text" id="localizacao" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+
+                        <div class="info">
+                            <label for="">Quantidade</label><br>
+                            <label id="quantidadeTotal"></label>
+                        </div>
+                    </div>
+                    <div class="buttonSalvar">
+                        <button class="buttonPadrao" id="btn-salvar" onclick="btnSalvar()"
+                            style="display: none;">Salvar</button>
+                    </div>
                 </div>
+
 
             </div>
 
-        </section>
+            <div class="barraPesquisa">
+                <div class="barraPesquisaButton">
+                    <button id="buttonPesquisa">
+                        <img src="../img/lupa.png" alt="Icone">
+                    </button>
+                </div>
+                <div class="barraPesquisaInput">
+                    <input id="inputPesquisa" type="text" placeholder="Pesquisar item">
+                </div>
+            </div>
+            <div class="tabelaContainer ">
+                <table id="tabela-insumos">
+                    <thead>
+                        <tr>
+                            <th class="thInsumo">Código</th>
+                            <th class="thInsumo">Descrição</th>
+                            <th class="thInsumo">Classificação</th>
+                            <th class="thInsumo">Quantidade</th>
+                            <th class="thInsumo">Qtd.Mínima</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo">
 
-    </body>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
 
 </html>
 

@@ -1,173 +1,189 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <link id="link1" rel="stylesheet" href="../css/nav.css">
+    <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/insumoEstoque.css">
+    <link rel="stylesheet" href="../css/insumoEstoque.css">
 
-        <title>Estoque de insumos</title>
-    </head>
-    <script src="../js/checarAcesso.js"></script>
-    <script src="../js/estaLogado.js"></script>
-    <body onload="getInfo(); esta_logado(); checarAcesso('estoque')">
+    <link rel="stylesheet" href="../css/popups.css">
 
-        <div class="container1" id="container1">
-            <div class="logo">
-                <img src="../img/account.png" width="80px" height="30px" alt>
-            </div>
-            <script src="../js/logout.js"></script>
-            
-            <div class="perfil" id="perfil">
-                <div class="topo">
-                    <div class="username" id="username">
-                        <p class="p1" id="p1"></p>
-                        <p class="p2" id="p2"></p>
-                    </div>
-                    <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
+    <title>Estoque de insumos</title>
+</head>
+<script src="../js/checarAcesso.js"></script>
+<script src="../js/estaLogado.js"></script>
+
+<body onload="getInfo(); esta_logado(); checarAcesso('estoque')">
+
+    <div class="container1" id="container1">
+        <div class="logo">
+            <img src="../img/account.png" width="80px" height="30px" alt>
+        </div>
+        <script src="../js/logout.js"></script>
+
+        <div class="perfil" id="perfil">
+            <div class="topo">
+                <div class="username" id="username">
+                    <p class="p1" id="p1"></p>
+                    <p class="p2" id="p2"></p>
                 </div>
-                <div class="conteudo" id="conteudosair"  style="position: relative;z-index: 1000;" onclick="logout();">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <a href>Sair</a>
-                </div>
+                <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
             </div>
-            
+            <div class="conteudo" id="conteudosair" style="position: relative;z-index: 1000;" onclick="logout();">
+                <i class="bi bi-box-arrow-left"></i>
+                <a href>Sair</a>
+            </div>
         </div>
 
-        <section class="secall">
-            <nav class="navegation">
-                <div class="modulos alinha">
-                    <i class="bi bi-boxes"></i>
-                </div>
-                <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)"
-                    onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
-                    <i class="bi bi-cash-coin"></i>
-                </div>
-                <div class="icone alinha" id="icon2" nome="estoque"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-box-seam"></i>
-                </div>
-                <div class="icone alinha" id="icon3"  nome="financeiro"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-piggy-bank"></i>
-                </div>
-                <div class="icone alinha" id="icon4"  nome="gestao"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-clipboard2-data"></i>
-                </div>
-            </nav>
-            <div class="tooltips">
-                <div class="top"></div>
-                <div class="tool" id="tool1">
-                    <div class="ponta aparecer"></div>
-                    <div class="balao aparecer">
-                        <p>Vendas</p>
-                    </div>
+    </div>
+
+    <section class="secall">
+        <nav class="navegation">
+            <div class="modulos alinha">
+                <i class="bi bi-boxes"></i>
+            </div>
+            <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)" onmouseover="aparecertool(1)"
+                onmouseleave="escondertool(1)">
+                <i class="bi bi-cash-coin"></i>
+            </div>
+            <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <div class="icone alinha" id="icon3" nome="financeiro" onclick="podeAcessar(this)">
+                <i class="bi bi-piggy-bank"></i>
+            </div>
+            <div class="icone alinha" id="icon4" nome="gestao" onclick="podeAcessar(this)">
+                <i class="bi bi-clipboard2-data"></i>
+            </div>
+        </nav>
+        <div class="tooltips">
+            <div class="top"></div>
+            <div class="tool" id="tool1">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Vendas</p>
                 </div>
             </div>
+        </div>
 
-            <div class="app">
-                <div class="titulo">
-                    <p>Estoque de Insumos</p>
+        <div class="alertapadrao" id="alertaPadrão">
+            <div class="alerta">
+                <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                <p id="pAlerta"> </p>
+                <div class="botoes" id="botoesAlerta">
+                    <button class="but1" id="confirmAlerta">Confirmar</button>
+                    <button class="but2" id="cancelAlerta">Cancelar</button>
                 </div>
+            </div>
+        </div>
 
-                <div class="cadastroLote">
+        <div class="app">
+            <div class="titulo">
+                <p>Estoque de Insumos</p>
+            </div>
 
-                    <div class="buttonItens">
-                        <div>
-                            <button class="buttonPadrao" id="btn-adicionarLote">
-                                <img src="../img/adicionar.png" alt="">
-                            </button>
-                        </div>
+            <div class="cadastroLote">
 
-                        <div>
-                            <button class="buttonPadrao" id="btn-editarLote">
-                                <img src="../img/botaoEditar.png" alt="">
-                            </button>
-                        </div>
-                                   
-                        <div>
-                            <button class="buttonPadrao" id="btn-deletarLote" onclick="btnDeletarLote()">
-                                <img src="../img/excluir.png" alt="">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="descricaoLote">
-                        <div class="infoItem">
-                                <div class="info">
-                                <label for="insumo">Insumo<span id="spanL" style="display: none">*</span></label><br>
-                                <select id="id_insumo" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')"></select>
-                            </div>
-
-                            <div class="info">
-                                <label for="">Lote<span id="spanL" style="display: none">*</span></label><br>
-                                <input type="text" id="lote" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-
-                            <div class="info">
-                                <label for="">Vencimento<span id="spanL" style="display: none">*</span></label><br>
-                                <input type="date" id="vencimento" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-
-                            <div class="info">
-                                <label for="">Fornecedor<span id="spanL" style="display: none">*</span></label><br>
-                                <input type="text" id="fornecedor" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-
-                            <div class="info">
-                                <label for="">Quantidade<span id="spanL" style="display: none">*</span></label><br>
-                                <input type="number" id="quantidade" disabled required oninvalid="this.setCustomValidity('Campo obrigatório')">
-                            </div>
-                        </div>
-                        <div class="buttonSalvar">
-                            <button class="buttonPadrao" id="btn-salvarLote" onclick="btnSalvarLote()" style="display: none;">Salvar</button>
-                        </div>     
-                    </div>
-
-                </div>
-             
-                <div class="barraPesquisa">
-                    <div class="barraPesquisaButton">
-                        <button id="buttonPesquisa">
-                            <img src="../img/lupa.png" alt="Icone">
+                <div class="buttonItens">
+                    <div>
+                        <button class="buttonPadrao" id="btn-adicionarLote">
+                            <img src="../img/adicionar.png" alt="">
                         </button>
                     </div>
-                    <div class="barraPesquisaInput">
-                        <input id="inputPesquisa" type="text" placeholder="Pesquisar item">
+
+                    <div>
+                        <button class="buttonPadrao" id="btn-editarLote">
+                            <img src="../img/botaoEditar.png" alt="">
+                        </button>
+                    </div>
+
+                    <div>
+                        <button class="buttonPadrao" id="btn-deletarLote" onclick="btnDeletarLote()">
+                            <img src="../img/excluir.png" alt="">
+                        </button>
                     </div>
                 </div>
-                
-                <div class="tabelaContainerLotes">
-                    <table id="tabela-lote">
-                        <thead>
-                            <tr>
-                                <th class="thLote">Código</th>
-                                <th class="thLote">Insumo</th>
-                                <th class="thLote">Lote</th>
-                                <th class="thLote">Vencimento</th>
-                                <th class="thLote">Fornecedor</th>
-                                <th class="thLote">Quantidade</th>
-                            </tr>
-                        </thead>
-                        <tbody class="tabela-lote-corpo" id="tabela-lote-corpo">
-                        
-                        </tbody>
-                                            
-                    </table>
+
+                <div class="descricaoLote">
+                    <div class="infoItem">
+                        <div class="info">
+                            <label for="insumo">Insumo<span id="spanL" style="display: none">*</span></label><br>
+                            <select id="id_insumo" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')"></select>
+                        </div>
+
+                        <div class="info">
+                            <label for="">Lote<span id="spanL" style="display: none">*</span></label><br>
+                            <input type="text" id="lote" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+
+                        <div class="info">
+                            <label for="">Vencimento<span id="spanL" style="display: none">*</span></label><br>
+                            <input type="date" id="vencimento" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+
+                        <div class="info">
+                            <label for="">Fornecedor<span id="spanL" style="display: none">*</span></label><br>
+                            <input type="text" id="fornecedor" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+
+                        <div class="info">
+                            <label for="">Quantidade<span id="spanL" style="display: none">*</span></label><br>
+                            <input type="number" id="quantidade" disabled required
+                                oninvalid="this.setCustomValidity('Campo obrigatório')">
+                        </div>
+                    </div>
+                    <div class="buttonSalvar">
+                        <button class="buttonPadrao" id="btn-salvarLote" onclick="btnSalvarLote()"
+                            style="display: none;">Salvar</button>
+                    </div>
                 </div>
 
             </div>
 
-        </section>
+            <div class="barraPesquisa">
+                <div class="barraPesquisaButton">
+                    <button id="buttonPesquisa">
+                        <img src="../img/lupa.png" alt="Icone">
+                    </button>
+                </div>
+                <div class="barraPesquisaInput">
+                    <input id="inputPesquisa" type="text" placeholder="Pesquisar item">
+                </div>
+            </div>
 
-    </body>
+            <div class="tabelaContainerLotes">
+                <table id="tabela-lote">
+                    <thead>
+                        <tr>
+                            <th class="thLote">Código</th>
+                            <th class="thLote">Insumo</th>
+                            <th class="thLote">Lote</th>
+                            <th class="thLote">Vencimento</th>
+                            <th class="thLote">Fornecedor</th>
+                            <th class="thLote">Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tabela-lote-corpo" id="tabela-lote-corpo">
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
 
 </html>
 
