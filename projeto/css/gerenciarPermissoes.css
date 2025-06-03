@@ -176,7 +176,7 @@
 }
 
 
-.popup {
+.popup, .popup-senha {
 
     position: absolute;
     bottom: 0;
@@ -190,7 +190,7 @@
 
 }
 
-.popup .fundo {
+.popup .fundo, .popup-senha .fundo {
     background-color: white;
     border: 1px solid black;
     border-radius: 15px;
@@ -201,7 +201,7 @@
 
 }
 
-.popup .fundo .topo {
+.popup .fundo .topo, .popup-senha .fundo .topo{
     width: 100%;
     display: flex;
     justify-content: end;
@@ -212,35 +212,35 @@
 
 }
 
-.popup .fundo .topo button {
+.popup .fundo .topo button,  .popup-senha .fundo .topo button{
     cursor: pointer;
     background-color: transparent;
     font-size: 16px;
     border: none;
 }
 
-.popup .fundo .infos {
+.popup .fundo .infos, .popup-senha .fundo .infos {
     width: 100%;
     padding: 10px;
     display: flex;
     gap: 50px;
 }
 
-.popup .fundo .infos .esq {
+.popup .fundo .infos .esq,  .popup-senha .fundo .infos .esq{
     padding: 20px;
     gap: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.popup .fundo .infos .dir {
+.popup .fundo .infos .dir,  .popup-senha .fundo .infos .dir{
     padding: 20px;
     gap: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.popup .fundo .infos .dir div{
+.popup .fundo .infos .dir div, .popup-senha .fundo .infos .dir div{
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -248,25 +248,25 @@
 
 }
 
-.popup .fundo .infos .alinhar {
+.popup .fundo .infos .alinhar, .popup-senha .fundo .infos .alinhar {
     height: fit-content;
     min-width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.popup .fundo h3 {
+.popup .fundo h3, .popup-senha .fundo h3 {
     color: rgba(0, 0, 0, 0.708);
     font-size: 15px;
     font-weight: 400;
 }
 
-.popup .fundo .alinhar label {
+.popup .fundo .alinhar label, .popup-senha .fundo .alinhar label {
     color: black;
     font-size: 14px;
 }
 
-.popup .fundo .alinhar input {
+.popup .fundo .alinhar input, .popup-senha .fundo .alinhar input {
     border-radius: 5px;
     border: 1px solid #393939;
     height: 28px;
@@ -319,4 +319,24 @@
 .secall .app .voltar i{
     font-size: 22px;
     cursor: pointer;
+}
+
+@media (max-width: 984px) {
+
+    .main-content {
+        width: 90%!important;
+    }
+
+    label, p, button {
+        font-size: 12px!important;
+    }
+
+    .alinhar {
+        flex-direction: column;
+    }
+
+    #listausers, #acessos {
+        width: 100%!important;
+    }
+
 }

@@ -59,6 +59,8 @@ async function getPermissoes(a) {
     });
 
     attBtn.setAttribute('id_usuario', a.getAttribute('id'));
+    document.getElementById('alterar-senha-btn').setAttribute('id_usuario', a.getAttribute('id'));
+    
 
     res = await res.json();
 
@@ -118,6 +120,62 @@ function abrirPopup() {
 
     popup = document.getElementById('popup');
     popup.style.display = "flex";
+
+
+}
+
+async function atualizarSenhaPopup() {
+    popup = document.getElementById('popup-senha');
+    popup.style.display = "flex";
+    
+}
+
+async function atualizarSenha() {
+    body = new URLSearchParams();
+
+        senha = document.getElementById('nova-senha');
+
+        id = document.getElementById("alterar-senha-btn").getAttribute("id_usuario");
+
+        if (!senha.checkValidity()) {
+
+            senha.reportValidity(); 
+            return;
+
+        }
+    
+    try {
+
+        
+
+        body.append("senha", senha.value)
+        body.append("id", id)
+
+        res = await fetch(`../php/api/senha.php`, {
+            method: "POST",
+            body: body
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP ERROR! ${res.status}`);
+        } else {
+location.reload()
+        }
+
+        
+
+    }catch(error) {
+        console.log(error)
+        alert("Erro no servidor.")
+    }
+
+
+}
+
+function fecharPopupSenha() {
+
+    popup = document.getElementById('popup-senha');
+    popup.style.display = "none";
 
 
 }

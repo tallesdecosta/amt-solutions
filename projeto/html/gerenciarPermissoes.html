@@ -138,6 +138,26 @@
                     </div>
                 </div>
             </div>
+            <div class="popup-senha" id="popup-senha">
+                <div class="fundo">
+                    <div class="topo">
+                        <button onclick="fecharPopupSenha();">X</button>
+                    </div>
+                    <div class="infos">
+                        <div class="esq">
+                            <div class="alinhar">
+                                <p style="font-size: 14px;">Todos os campos com <span class="required"> *</span> são obrigatórios.</p>
+                            </div>
+                            <div class="alinhar">
+                                <label for="nome">Nova senha do funcionário<span class="required"> *</span></label>
+                                <input type="password" name="senha-nova" id="nova-senha" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$" title="A senha deve ter no mínimo 8 caracteres, incluir letras maiúsculas, minúsculas, números e caracteres especiais.">
+                                <div class="divbtnsalvar"><button class="btnsalvar" onclick="atualizarSenha();">Trocar senha</button></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="main-content" id="fundo">
                 <div class="voltar">
                         <i class="bi bi-arrow-left-circle" onclick="window.location.href='moduloGestao.html'"></i>
@@ -175,6 +195,10 @@
                         <div class="botao">
                             <button id_usuario="" id="btn-atualizar"
                                 onclick="updatePermissoes(this);">Atualizar</button>
+                        </div>
+                        <div class="botao">
+                            <button id_usuario="" id="alterar-senha-btn"
+                                onclick="atualizarSenhaPopup(this);">Trocar senha</button>
                         </div>
                     </div>
                 </div>
