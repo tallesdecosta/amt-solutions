@@ -48,6 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             credentials: "include"
         });
 
+        if (resposta.redirected) {
+    window.location.href = resposta.url;
+    return;
+  }
+
         const dados = await resposta.json();
         await atualizarSemanal(dados);
     } catch (erro) {
@@ -62,6 +67,8 @@ async function atualizarSemanal(dados) {
         style: 'currency',
         currency: 'BRL'
         }).replace(/\s/g, '');
+
+        
     const receitaDif = document.getElementById('receita-semanal-dif');
     receitaDif.textContent = dados.receita.crescimento;
 

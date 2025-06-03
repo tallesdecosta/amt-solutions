@@ -1,6 +1,7 @@
 <?php
 include 'conectar_bd.php';
 header('Content-Type: application/json');
+require 'timeout.php';
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
 

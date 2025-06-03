@@ -168,6 +168,11 @@ async function cmdativas(op, filtro, tabela, id) {
             body: JSON.stringify(list)
         })
 
+        if (data.redirected) {
+    window.location.href = data.url;
+    return;
+  }
+
         if (!data.ok) {
             throw new Error(`HTTP error! status: ${data.status}`)
         } else {

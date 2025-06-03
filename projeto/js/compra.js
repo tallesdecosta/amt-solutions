@@ -8,6 +8,11 @@ async function chamarPHP(){
   try{
     const resposta = await fetch(url);
 
+    if (resposta.redirected) {
+    window.location.href = resposta.url;
+    return;
+  }
+
     if(!resposta.ok){
       throw new Error(`HTTP error! status: ${resposta.status}`)
     }else{

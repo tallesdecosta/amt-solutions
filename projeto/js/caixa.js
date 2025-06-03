@@ -7,6 +7,11 @@ async function buscarfunc() {
             credentials: "include",
         })
 
+        if (data.redirected) {
+    window.location.href = data.url;
+    return;
+  }
+
         if (!data.ok) {
             throw new Error(`HTTP error! status: ${data.status}`)
         } else {

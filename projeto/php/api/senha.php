@@ -1,7 +1,7 @@
 <?php
 
-session_start();
     require '../conectar_bd.php';
+    require '../timeout.php';
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':

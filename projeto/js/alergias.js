@@ -33,6 +33,10 @@ async function chamarPHP(){
   let url = `../php/alergias.php?filtro=${filtro}`;
     try{
       const resposta = await fetch(url);
+      if (resposta.redirected) {
+    window.location.href = resposta.url;
+    return;
+  }
       const dados = await resposta.json();
 
       const tbody = document.getElementById('tabela-corpo');

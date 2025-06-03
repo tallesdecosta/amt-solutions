@@ -1,5 +1,6 @@
 <?php
 include 'conectar_bd.php';
+require 'timeout.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 

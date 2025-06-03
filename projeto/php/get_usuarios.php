@@ -1,6 +1,7 @@
 <?php
 include 'conectar_bd.php';
 $conn = conectar();
+require 'timeout.php';
 
 $sql = "SELECT id_usuario, nome FROM usuario";
 $resultado = $conn->query($sql);

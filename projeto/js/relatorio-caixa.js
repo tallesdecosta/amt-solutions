@@ -266,6 +266,11 @@ async function getDfcs() {
         method: "GET"
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
     data = await res.json();
     
 

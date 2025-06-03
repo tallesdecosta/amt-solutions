@@ -1,6 +1,6 @@
 <?php
+require 'timeout.php';
 
-    session_start();
     require 'conectar_bd.php';
 
     switch ($_SERVER['REQUEST_METHOD']) {
@@ -40,6 +40,7 @@ function retornarMetricas() {
         $stmt->bind_param("ss", $inicio, $fim);
         $stmt->execute();
         $res = $stmt->get_result()->fetch_assoc();
+
 
         $receita = floatval($res['receita'] ?? 0);
         $volumeVendas = intval($res['volume_vendas'] ?? 0);

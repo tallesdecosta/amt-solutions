@@ -7,6 +7,11 @@ async function podeAcessar(ref) {
 
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
     modulo = ref.getAttribute('nome')
 
     arr = await res.json()

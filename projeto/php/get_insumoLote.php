@@ -1,5 +1,6 @@
 <?php
 include 'conectar_bd.php';
+require 'timeout.php';
 $conn = conectar();
 
 if (isset($_GET['id_insumo'])) {

@@ -30,6 +30,11 @@ data90DiasAtras.setDate(hoje.getDate() - diasAtras);
         method: "GET"
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
     if (!res.ok) {
         throw new Error(`HTTP ERROR! Status: ${res.status}`)
     } else {
@@ -419,6 +424,11 @@ async function addDespesa() {
             credentials: "include"
         });
 
+        if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
         if (res.ok) {
             window.location.reload();
         } else {
@@ -489,6 +499,11 @@ async function alterarDespesa() {
             credentials: "include"
         });
 
+        if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
         if (res.ok) {
             window.location.reload();
         } else {
@@ -522,6 +537,11 @@ async function addTipoDespesa() {
             method: "POST",
             body: body
         });
+
+        if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
 
         if (res.ok) {
 

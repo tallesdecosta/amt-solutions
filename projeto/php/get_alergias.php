@@ -1,5 +1,6 @@
 <?php
 include 'conectar_bd.php';
+require 'timeout.php';
 $conn = conectar();
 
 $sql = "SELECT id_alergia, nome FROM alergia";

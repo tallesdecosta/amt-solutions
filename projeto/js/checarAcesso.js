@@ -7,6 +7,11 @@ async function checarAcesso(modulo) {
 
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
 
     arr = await res.json()
 

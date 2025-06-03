@@ -9,6 +9,11 @@ async function esta_logado() {
 
         });
 
+        if (response.redirected) {
+    window.location.href = response.url;
+    return;
+  }
+
         if (response.status === 401) {
 
             window.location.href = '../html/login.html';

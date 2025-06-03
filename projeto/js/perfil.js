@@ -8,6 +8,11 @@ async function getInfo() {
         credentials: "include"
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
     data = await res.json();
 
     document.getElementById('p1').textContent = data.cargo;

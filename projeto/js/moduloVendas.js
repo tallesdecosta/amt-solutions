@@ -9,6 +9,11 @@ async function verificarCaixa() {
         body: JSON.stringify(list)
     })
 
+    if (data.redirected) {
+    window.location.href = data.url;
+    return;
+  }
+
     if (data) {
         return data.json()
     }

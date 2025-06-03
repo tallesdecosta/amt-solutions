@@ -7,6 +7,11 @@ async function verUsuarios() {
 
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
     res = await res.json();
 
     for (i in res) {
@@ -58,6 +63,11 @@ async function getPermissoes(a) {
 
     });
 
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
+
     attBtn.setAttribute('id_usuario', a.getAttribute('id'));
     document.getElementById('alterar-senha-btn').setAttribute('id_usuario', a.getAttribute('id'));
     
@@ -89,6 +99,11 @@ async function updatePermissoes(id) {
         credentials: "include"
 
     });
+
+    if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
 
     if (res.ok) {
 
@@ -155,6 +170,11 @@ async function atualizarSenha() {
             method: "POST",
             body: body
         });
+
+        if (res.redirected) {
+    window.location.href = res.url;
+    return;
+  }
 
         if (!res.ok) {
             throw new Error(`HTTP ERROR! ${res.status}`);

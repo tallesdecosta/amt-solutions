@@ -1,8 +1,10 @@
 <?php
 
 include 'conectar_bd.php';
+require 'timeout.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
 
     $_POST = json_decode(file_get_contents('php://input'), true);
 
