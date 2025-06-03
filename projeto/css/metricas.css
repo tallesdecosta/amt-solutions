@@ -101,3 +101,16 @@ input[type="date"] {
 label {
     color: #343434;
 }
+
+@media (max-width: 469px) {
+
+
+    .filter-wrapper {
+        flex-direction: column;
+    }
+
+    .resumo-cards-wrapper {
+        flex-wrap: wrap;
+    }
+
+}
