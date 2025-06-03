@@ -74,25 +74,42 @@ function salvarInsumos($dados) {
             $id_insumoLote = intval($insumo['id_insumoLote']);
             $quantidade_utilizada = floatval($insumo['quantidade']);
             $insumosRecebidos[] = $id_insumoLote;
-
+                
+            // Buscar quantidade atual em estoque
+            $sqlBuscaEstoque = "SELECT quantidade FROM insumoLote WHERE id_Lote = $id_insumoLote";
+            $resEstoque = $conn->query($sqlBuscaEstoque);
+            if (!$resEstoque || $resEstoque->num_rows === 0) {
+                throw new Exception("Lote de insumo não encontrado: $id_insumoLote");
+            }
+            $estoqueAtual = floatval($resEstoque->fetch_assoc()['quantidade']);
+        
             $quantidade_anterior = $insumosAtuais[$id_insumoLote] ?? 0;
             $quantidade_diff = $quantidade_anterior - $quantidade_utilizada;
-
+            $estoqueFinal = $estoqueAtual + $quantidade_diff;
+        
+            // Validação de estoque
+            if ($estoqueFinal < 0) {
+                throw new Exception("Estoque insuficiente para o insumo (lote $id_insumoLote). Disponível: $estoqueAtual, requisitado: $quantidade_utilizada");
+            }
+        
             if (isset($insumosAtuais[$id_insumoLote])) {
                 $sqlUpdate = "UPDATE produtoLoteInsumo SET quantidade_utilizada = $quantidade_utilizada 
                               WHERE id_produtoLote = $idLote AND id_insumoLote = $id_insumoLote";
                 if (!$conn->query($sqlUpdate)) throw new Exception("Erro no update: " . $conn->error);
-
-                $sqlEstoque = "UPDATE insumoLote SET quantidade = quantidade + $quantidade_diff WHERE id_Lote = $id_insumoLote";
+            
+                $sqlEstoque = "UPDATE insumoLote SET quantidade = $estoqueFinal WHERE id_Lote = $id_insumoLote";
                 if (!$conn->query($sqlEstoque)) throw new Exception("Erro no update estoque: " . $conn->error);
-
             } else {
+                // Novo vínculo
+                if ($quantidade_utilizada > $estoqueAtual) {
+                    throw new Exception("Estoque insuficiente para o novo vínculo do insumo (lote $id_insumoLote).");
+                }
+            
                 $sqlInsert = "INSERT INTO produtoLoteInsumo (id_produtoLote, id_insumoLote, quantidade_utilizada) 
                               VALUES ($idLote, $id_insumoLote, $quantidade_utilizada)";
                 if (!$conn->query($sqlInsert)) throw new Exception("Erro no insert: " . $conn->error);
-
-                $quantidade_diff = -$quantidade_utilizada;
-                $sqlEstoque = "UPDATE insumoLote SET quantidade = quantidade + $quantidade_diff WHERE id_Lote = $id_insumoLote";
+            
+                $sqlEstoque = "UPDATE insumoLote SET quantidade = quantidade - $quantidade_utilizada WHERE id_Lote = $id_insumoLote";
                 if (!$conn->query($sqlEstoque)) throw new Exception("Erro no update estoque: " . $conn->error);
             }
         }

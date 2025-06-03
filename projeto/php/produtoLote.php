@@ -92,11 +92,13 @@ function atualizar($data) {
 function retornarFuncs() {
     try {
         $conn = conectar();
-        $filtro = $conn->real_escape_string($_GET['filtro'] ?? '');
+        $filtro = $_GET['filtro'] ?? '';
 
-        $sql = "SELECT pl.id_Lote, pl.id_produto, p.nome AS nome_produto, pl.lote, pl.vencimento, pl.fornecedor, pl.quantidade
+        $sql = "
+                SELECT pl.id_Lote, pl.id_produto, p.nome AS nome_produto, pl.lote, pl.vencimento, pl.fornecedor, pl.quantidade
                 FROM produtoLote pl
-                JOIN produto p ON pl.id_produto = p.id_produto";
+                JOIN produto p ON pl.id_produto = p.id_produto
+        ";
 
         // Aplica o filtro
         if ($filtro !== null && $filtro !== '') {

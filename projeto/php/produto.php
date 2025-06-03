@@ -160,6 +160,20 @@ function deletar() {
         return ["erro" => "Não é possível deletar o produto. Existem lotes cadastrados para este produto."];
     }
 
+    // Verifica se existe alergia vinculado ao produto
+    $verificaAlergia = $conn->query("SELECT COUNT(*) as total FROM produto_alergia WHERE id_produto = $id");
+    if (!$verificaAlergia) {
+        http_response_code(500);
+        return ["erro" => "Erro ao verificar lotes: " . $conn->error];
+    }
+
+    $totalAlergias = $verificaAlergia->fetch_assoc()['total'];
+
+    if ($totalAlergias > 0) {
+        http_response_code(409); 
+        return ["erro" => "Não é possível deletar o produto. Existem alergias cadastrados neste produto."];
+    }
+
     // Se não tiver lote deletar
     $query = "DELETE FROM produto WHERE id_produto=$id";
     $resultado = $conn->query($query);

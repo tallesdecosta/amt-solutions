@@ -139,6 +139,20 @@ function deletar(){
             return ["erro" => "Não é possível deletar o insumo. Existem lotes cadastrados para este insumo."];
         }
 
+        // Verifica se existe pedido de compras vinculado ao insumo
+        $verificaCompras = $conn->query("SELECT COUNT(*) as total FROM pedidocompra WHERE id_insumo = $id");
+        if (!$verificaCompras) {
+            http_response_code(500);
+            return ["erro" => "Erro ao verificar lotes: " . $conn->error];
+        }
+
+        $totalCompras = $verificaCompras->fetch_assoc()['total'];
+
+        if ($totalCompras > 0) {
+            http_response_code(409);
+            return ["erro" => "Não é possível deletar o insumo. Existem pedido de compras cadastrados para este insumo."];
+        }
+
         $sql = "DELETE FROM insumo WHERE id_insumo = $id";
 
         $resultado = $conn->query($sql);
