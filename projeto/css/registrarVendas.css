@@ -398,7 +398,6 @@ input::-webkit-outer-spin-button {
 .secall .app .fundovendas .divdir .buts .bt1 {
     background-color: #C0FFAD;
     border: 1.5px solid #9F9F9F;
-
 }
 
 .secall .app .fundovendas .divdir .buts .bt2 {
@@ -947,7 +946,13 @@ input::-webkit-outer-spin-button {
 
 
 
-@media (max-width: 1250px) {
+@media (min-width: 800px) and (max-width: 1250px) {
+
+    body {
+        height: fit-content;
+        width: 100vw;
+        background-color: #EDEDED;
+    }
 
     #usericon {
         font-size: 22px;
@@ -963,6 +968,7 @@ input::-webkit-outer-spin-button {
         position: relative;
         margin-bottom: 50px;
         max-height: fit-content;
+        background-color: transparent;
     }
 
     .navegation {
@@ -974,7 +980,7 @@ input::-webkit-outer-spin-button {
         justify-content: space-evenly;
         position: absolute;
         top: 0;
-        z-index: 1;
+        z-index: 4;
 
     }
 
@@ -1000,9 +1006,7 @@ input::-webkit-outer-spin-button {
         cursor: pointer;
     }
 
-    .body {
-        height: fit-content;
-    }
+
 
     .app {
         flex-direction: column;
@@ -1029,9 +1033,12 @@ input::-webkit-outer-spin-button {
 
     .conteudos {
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         width: 100vw;
         align-items: center;
+        justify-content: center;
+        gap: 100px;
+        height: 200vh;
     }
 
     .comandas {
@@ -1043,7 +1050,7 @@ input::-webkit-outer-spin-button {
         height: 300px;
     }
 
-     
+
     .comandas .fundotable {
         width: 762px;
         height: 300px;
@@ -1062,10 +1069,414 @@ input::-webkit-outer-spin-button {
         width: 100%;
     }
 
-    #tbodycmd{
-        background-color: yellow;
+    #tbodycmd {
         min-height: 200px;
         max-height: 200px;
+    }
 
-    } 
+    .container {
+        margin-bottom: 100px;
+    }
+}
+
+@media (max-width: 800px) {
+
+    html {
+        width: 100vw;
+    }
+
+    body {
+        height: 1500px;
+        width: 100vw;
+        background-color: #EDEDED;
+        padding-bottom: 50px;
+    }
+
+    .secall {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+        margin-bottom: 50px;
+        max-height: fit-content;
+        width: 100vw;
+    }
+
+    .navegation {
+        background-color: white;
+        min-width: 100vw;
+        max-height: 10vh;
+        box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.192);
+        display: flex;
+        justify-content: space-evenly;
+        position: absolute;
+        top: 0;
+        z-index: 4;
+    }
+
+    .navegation .modulos {
+        width: 50px;
+        height: 100%;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00000059;
+    }
+
+
+    .navegation .icone {
+        width: 50px;
+        height: 100%;
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        cursor: pointer;
+    }
+
+    .body {
+        height: fit-content;
+        background-color: #EDEDED
+    }
+
+    .app {
+        flex-direction: column;
+        height: fit-content;
+        min-width: 100vw;
+        z-index: 3;
+        margin: 0;
+        transform: translateY(-35vh);
+        width: 100vw;
+        background-color: #EDEDED;
+    }
+
+    .secall {
+        height: fit-content;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #EDEDED
+    }
+
+    .divoltar {
+        transform: translateY(-290px);
+    }
+
+    .conteudos {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        align-items: center;
+        justify-content: center;
+        margin-top: 80px;
+    }
+
+    .comandas {
+        min-width: 100vw;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+
+
+    .comandas .fundotable {
+        width: 95vw
+    }
+
+
+    .secall .app .comandas .fundotable .fundotabela {
+        overflow: auto;
+        border-radius: 0px 0px 10px 10px;
+        max-height: 300px;
+    }
+
+    .secall .app .comandas .fundocomandas {
+        border-spacing: 0px 0px;
+        max-height: 100px;
+        width: 100%;
+    }
+
+    #tbodycmd {
+        min-height: 200px;
+        max-height: 200px;
+    }
+
+    .container {
+        margin-bottom: 100px;
+    }
+
+
+    #fundovendas {
+        flex-direction: column-reverse;
+        min-height: fit-content;
+        width: 95vw;
+        margin-top: 130px;
+
+    }
+
+    .secall .app .fundovendas .divesq .fundotable {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+        gap: 10px;
+        max-width: 100%;
+    }
+
+    .secall .app .fundovendas .divesq .pitem {
+        font-size: 13px;
+        color: #4E4E4E;
+        margin: 0;
+        text-indent: 10px;
+        width: 100%;
+        display: flex;
+        text-align: left;
+
+    }
+
+    .secall .app .fundovendas .divesq .pcomanda {
+        display: flex;
+        gap: 5px;
+    }
+
+    .secall .app .fundovendas .divesq .pcomanda p {
+        margin: 0;
+        display: none;
+    }
+
+
+    .secall .app .fundovendas .divesq .fundoitem {
+        min-width: 100px;
+        margin: auto;
+    }
+
+    .secall .app .fundovendas .buts {
+        display: flex;
+        gap: 30px;
+        padding-top: 40px;
+        margin-top: 40px;
+        transform: translateY(35px);
+    }
+
+    .secall .app .fundovendas .divesq {
+        margin-top: 50px;
+    }
+
+    .secall .app .fundovendas .divdir {
+        margin-bottom: 40px;
+    }
+
+    #adc1 {
+        margin-top: 90px;
+    }
+
+    .secall .app .fundovendas .divdir .buts button {
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .secall .app .fundovendas .divdir .buts .bt1 {
+        height: fit-content;
+        padding: 10px 10px;
+    }
+
+
+
+
+}
+
+
+
+@media (max-width: 1250px) {
+
+    #fundopreto {
+        display: none;
+        width: 100vw;
+        height: 100vh;
+    }
+
+
+    .secall .app .fundopreto .popup {
+        width: 95%;
+        height: 80%;
+        background-color: white;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 20px;
+    }
+
+
+
+    .secall .app .fundopreto2 {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+
+    }
+
+    .secall .app .fundopreto2 .popupprod {
+        width: 95%;
+        height: fit-content ;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 20px;
+    }
+
+
+
+    .secall .app .fundopreto2 .popupprod .topo {
+        width: 100%;
+        max-height: 0px;
+        display: flex;
+        justify-content: end;
+        align-items: end;
+        overflow: visible;
+    }
+
+    .secall .app .fundopreto2 .popupprod .topo i {
+        margin-right: 20px;
+        font-size: 30px;
+        cursor: pointer;
+        translate: 0px 50px;
+        transform: rotate(45deg);
+    }
+
+    .secall .app .fundopreto2 .popupprod .descricao {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 20px;
+        width: 90%;
+    }
+
+    .secall .app .fundopreto2 .popupprod .descricao .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: start;
+        gap: 10px;
+    }
+
+    .secall .app .fundopreto2 .popupprod .descricao img {
+        border-radius: 10px;
+        border: 2px solid rgb(221, 221, 221);
+    }
+
+    .secall .app .fundopreto2 .popupprod .descricao .info .p1 {
+        font-size: 13px;
+        margin: 0;
+        color: #000000bd;
+    }
+
+
+    .secall .app .fundopreto2 .popupprod .descricao .info .p2 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .secall .app .fundopreto2 .popupprod .ingredientes {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        margin: 0px auto;
+        max-height: 160px;
+        overflow-y: auto;
+    }
+
+    .secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar {
+        background-color: #e7e7e7ce;
+        border-radius: 10px;
+        width: 10px;
+        padding: 3px;
+    }
+
+    .secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.281);
+        border-radius: 10px;
+    }
+
+
+    .secall .app .fundopreto2 .popupprod .ingredientes .titulo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        position: sticky;
+        top: 0;
+        background-color: white;
+    }
+
+    .secall .app .fundopreto2 .popupprod .ingredientes .titulo img {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+    }
+
+
+    .secall .app .fundopreto2 .popupprod .ingredientes .conteudo {
+        display: flex;
+        max-width: 100%;
+        flex-wrap: wrap;
+        font-size: 14px;
+    }
+
+    .secall .app .fundopreto2 .popupprod .ingredientes .conteudo p {
+        min-width: 33%;
+        max-width: 33%;
+        overflow: hidden;
+        margin: 10px 0px;
+    }
+
+
+
+    .secall .app .fundopreto2 .popupprod .alergias {
+        background-color: #E6FF56;
+        padding: 5px 0px;
+        border-radius: 0px 0px 10px 10px;
+        display: flex;
+        min-width: 100%;
+    }
+
+    .secall .app .fundopreto2 .popupprod .alergias .divicon {
+        display: flex;
+        font-size: 30px;
+        width: 30px;
+        margin-left: 20px;
+        min-height: 100%;
+        align-items: center;
+    }
+
+    .secall .app .fundopreto2 .popupprod .alergias .conteudo {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: auto;
+        width: 80%;
+        flex-wrap: wrap;
+        background-color: rgb(240, 102, 102);
+    }
+
+    .secall .app .fundopreto2 .popupprod .alergias .conteudo p {
+        margin: 0;
+        max-width: fit-content;
+        font-size: 14px;
+        background-color: plum;
+    }
+
+
 }
