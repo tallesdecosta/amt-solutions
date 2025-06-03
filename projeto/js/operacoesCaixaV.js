@@ -64,11 +64,13 @@ async function inserirCaixa() {
 
                 td5 = '<td>R$ ' + valor3 + '</td>'
 
+                td6 = '<td title="'+ response[i].obs +'" class="obsOp"> ... </td>'
+
                 tbody.innerHTML += tr
 
                 tr = document.getElementById('trcaixa' + response[i].id_op)
 
-                tr.innerHTML = td1 + td2 + td3 + td4 + td5
+                tr.innerHTML = td1 + td2 + td3 + td4 + td5 + td6
             }
         }
     }

@@ -536,6 +536,8 @@ async function abrirprod(id) {
             for (i in response) {
                 element1.innerHTML = '<p class="p2" id="nomedoprod">' + response[i].nome + '</p>'
                 element2.innerHTML = '<p class="p2">' + response[i].categoria + '</p>'
+
+                document.getElementById('fotoProd').src = `../img/${response[i].imagem}`
             }
         }
     }

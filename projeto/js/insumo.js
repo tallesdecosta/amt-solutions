@@ -1,36 +1,36 @@
 // --------------- Funções relacionadas ao cadastro do INSUMO --------------- //
 
 // Receber dados do cadastro de insumos
-async function chamarPHP(){
+async function chamarPHP() {
   const filtro = document.getElementById('inputPesquisa').value;
   let url = `../php/insumo.php?filtro=${filtro}`;
 
-  try{
+  try {
     const resposta = await fetch(url);
 
-    if(!resposta.ok){
+    if (!resposta.ok) {
       throw new Error(`HTTP error! status: ${resposta.status}`)
-    }else{
+    } else {
       return resposta.json();
     }
 
-  }catch(erro){
+  } catch (erro) {
     console.log("Erro ao buscar API: " + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 }
 
 // Tratativa dos dados dos insumos
-async function tratarResposta(){
+async function tratarResposta() {
   dados = await chamarPHP();
 
-  if(dados){
+  if (dados) {
 
-    if(dados.erro){
-      alert(dados.resposta);
-      console.log("Erro: " + dados.erro); 
-    }else{
-      
+    if (dados.erro) {
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
+      console.log("Erro: " + dados.erro);
+    } else {
+
       const tbody = document.getElementById('tabela-corpo');
       tbody.innerHTML = '';
 
@@ -49,7 +49,7 @@ async function tratarResposta(){
         <td>${item.qntMinima}</td>
         `;
 
-         // Mostra os dados do cadastro ao clicar na linha
+        // Mostra os dados do cadastro ao clicar na linha
         linha.addEventListener('click', () => {
           window.itemSelecionado = item;
           window.adicionandoNovo = false;
@@ -68,7 +68,7 @@ async function tratarResposta(){
 };
 
 // Botão salvar method POST
-async function btnSalvar(){
+async function btnSalvar() {
   if (!validarCampos()) return;
   // Pegar os valores dos campos do cadastro
   const nome = document.getElementById("nome").value;
@@ -76,7 +76,7 @@ async function btnSalvar(){
   const qntMinima = document.getElementById("qntMinima").value;
   const inspReceb = document.getElementById("inspReceb").value;
   const localizacao = document.getElementById("localizacao").value;
-  
+
   // Dados que serão enviados para o PHP
   let dadosEnviar = {
     nome,
@@ -87,70 +87,76 @@ async function btnSalvar(){
   };
 
   // Verificar se o usuário selecionou o botão adicionar ou editar
-  if(!window.adicionandoNovo && window.itemSelecionado){
+  if (!window.adicionandoNovo && window.itemSelecionado) {
     // Se o usuário selecionou o botão editar, então o id do insumo será incluido em dadosEnviar. 
     dadosEnviar.id = window.itemSelecionado.id_insumo;
   };
-  
-  try{
+
+  try {
     const response = await fetch("../php/insumo.php", {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dadosEnviar)
     })
 
     const resultado = await response.json();
-    
-    if(window.adicionandoNovo){
-      alert('Inserido com sucesso!');
-    }else{
-      alert('Salvo com sucesso!');
+
+    if (window.adicionandoNovo) {
+      alerta(1, 1, "Inserido com sucesso!", 1)
+    } else {
+      alerta(1, 1, "Salvo com sucesso!", 1)
     }
 
-    tratarResposta();
-    limparCampos();
-    window.adicionandoNovo = false;
-    window.itemSelecionado = null;
-    window.location.reload();
-  
-  }catch(erro){
+    document.getElementById("confirmAlerta").addEventListener("click", async () => {
+      tratarResposta();
+      limparCampos();
+      window.adicionandoNovo = false;
+      window.itemSelecionado = null;
+      window.location.reload();
+    })
+
+
+
+  } catch (erro) {
     console.error('Erro ao buscar API: ' + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde.");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 };
 
 // Botão deletar
-async function btnDeletar(){
+async function btnDeletar() {
   // Verificar se algum item foi selecionado
   if (!window.itemSelecionado) {
-    alert('Selecione um item antes.');
+    alerta(2, 2, "Selecione um item para excluir", 1)
     return;
   }
 
   // Confirmação se deseja deletar
-  if (!confirm('Tem certeza que deseja excluir este item?')) return;
+  alerta(2, 2, "Tem certeza que deseja excluir este item?", 2)
 
-  try {
-    const resposta = await fetch(`../php/insumo.php?id=${window.itemSelecionado.id_insumo}`, {
-      method: 'DELETE'
-    });
+  document.getElementById("confirmAlerta").addEventListener("click", async () => {
+    try {
+      const resposta = await fetch(`../php/insumo.php?id=${window.itemSelecionado.id_insumo}`, {
+        method: 'DELETE'
+      });
 
-    const resultado = await resposta.json();
+      const resultado = await resposta.json();
 
-    if (!resposta.ok) {
-      alert(resultado.erro || "Erro ao deletar produto.");
-      return;
+      if (!resposta.ok) {
+        (0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
+        return;
+      }
+
+      alerta(1, 1, "Excluído com sucesso!", 1)
+      tratarResposta();
+      limparCampos();
+      window.itemSelecionado = null;
+
+    } catch (erro) {
+      console.error('Erro ao buscar API: ' + erro);
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
-    
-    alert('Excluído com sucesso!');
-    tratarResposta();
-    limparCampos();
-    window.itemSelecionado = null;
-
-  } catch (erro) {
-    console.error('Erro ao buscar API: ' + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde.");
-  }
+  })
 };
 
 // --------------- Botões div cadastro INSUMO --------------- //
@@ -166,7 +172,7 @@ document.getElementById('btn-adicionar').addEventListener('click', () => {
 // Botão habilita editar cadastro insumo
 document.getElementById('btn-editar').addEventListener('click', () => {
   if (!window.itemSelecionado) {
-    alert('Selecione um item para editar');
+    alerta(2, 2, "Selecione um item para editar", 1)
     return;
   }
   habilitarCampos();
@@ -215,11 +221,84 @@ function validarCampos() {
   for (let i = 0; i < camposObrigatorios.length; i++) {
     const campo = document.getElementById(camposObrigatorios[i]);
     if (!campo.value) {
-      alert("Todos os campos do formulário são obrigatórios!");
-      campo.reportValidity(); 
+      alerta(2, 2, "Todos os campos do formulário são obrigatórios!", 1);
+      campo.reportValidity();
       campo.focus();
       return false;
     }
   }
   return true;
+}
+
+
+
+
+
+
+
+function alerta(icone, cor, text, nBotoes) {
+
+  let icones = ['bi bi-cone-striped', 'bi bi-check-circle-fill', 'bi bi-exclamation-diamond-fill'] // 0 = cone, 1 = check, 2 = alert
+
+  let cores = ['#d0ae3f', '#73df77', '#ebeb31', '#dd3f3f']// 0 = laranja, 1 = verder, 2 = amarelo, 3 = vermelho
+
+  let alerta = document.getElementById('alertaPadrão')
+
+  let body = document.querySelector('body')
+
+  body.style.overflow = 'hidden'
+
+  alerta.style.display = 'flex'
+
+  let p = document.getElementById('pAlerta')
+  let i = document.getElementById('iconeAlerta')
+
+  i.className = icones[icone]
+  i.style.color = `${cores[cor]}`
+  p.innerText = text
+
+  if (nBotoes == 2) {
+
+    let botoes = document.getElementById('botoesAlerta')
+
+    but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+    but2 = '<button class="but2" id="cancelAlerta">Cancelar</button>'
+
+    botoes.innerHtml = but1 + but2
+
+    botoes.style.justifyContent = 'center'
+
+    let cancel = document.getElementById('cancelAlerta')
+
+    cancel.addEventListener("click", () => {
+
+      alerta.style.display = 'none'
+
+      body.style.overflow = 'auto'
+
+    })
+
+  } else if (nBotoes == 1) {
+
+    let botoes = document.getElementById('botoesAlerta')
+
+    but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+
+    botoes.innerHTML = but1
+
+    botoes.style.justifyContent = 'end'
+
+    but1 = document.getElementById("confirmAlerta")
+
+    but1.innerText = 'OK'
+
+    but1.addEventListener("click", () => {
+
+      alerta.style.display = 'none'
+
+      body.style.overflow = 'auto'
+
+    })
+  }
+
 }

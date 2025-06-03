@@ -1,45 +1,45 @@
 // --------------- Funções relacionadas ao cadastro do LOTE --------------- //
 
 // Receber dados do cadastro de lotes
-async function mostrarLotes(){
+async function mostrarLotes() {
   const filtro = document.getElementById('inputPesquisa').value;
   const url = `../php/produtoLote.php?filtro=${encodeURIComponent(filtro)}`;
-  
+
   try {
     const resposta = await fetch(url);
 
-    if(!resposta.ok){
+    if (!resposta.ok) {
       throw new Error(`HTTP error! status: ${resposta.status}`);
-    }else{
+    } else {
       return resposta.json();
     }
-  }catch(erro){
+  } catch (erro) {
     console.log("Erro ao buscar API: " + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 }
 
 // Tratativa dos dados dos lotes
-async function tratarRespostaLotes(idProduto){
+async function tratarRespostaLotes(idProduto) {
   lotes = await mostrarLotes(idProduto);
 
-  if(lotes){
-    if(lotes.erro){
-      alert(lotes.resposta);
+  if (lotes) {
+    if (lotes.erro) {
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
       console.log("Erro: " + lotes.erro);
-    }else{
+    } else {
       const tbody = document.querySelector('#tabela-lote-corpo');
       tbody.innerHTML = '';
 
       lotes.forEach((lote, index) => {
         // Insere linha com os dados na tabela tbody
         const linha = document.createElement('tr');
-        
+
         // Verifica se o lote está vencido
         const hoje = new Date();
         const dataVencimento = new Date(lote.vencimento);
         const estaVencido = dataVencimento < hoje;
-        
+
         const classe = (index % 2 === 0) ? 'linhaWhiteLote' : 'linhaGrayLote';
         linha.classList.add(classe);
 
@@ -76,7 +76,7 @@ async function tratarRespostaLotes(idProduto){
 }
 
 // Botão salvar LOTE method POST e PUT
-async function btnSalvarLote(){
+async function btnSalvarLote() {
   if (!validarCampos()) return;
   // Pegar os valores dos campos do cadastro de Lote
   let id_produto = document.getElementById("id_produto").value;
@@ -87,12 +87,12 @@ async function btnSalvarLote(){
 
   // Verifica se todos os campos estão preenchidos
   if (!id_produto || !lote || !vencimento || !fornecedor || !quantidade) {
-    alert("Preencha todos os campos do lote do produto.");
+    alerta(2, 2, "Preencha todos os campos do lote do produto.", 1)
     return;
   }
 
   // Dados que serão enviados para o PHP
-  
+
   const loteData = {
     id_produto,
     lote,
@@ -122,7 +122,7 @@ async function btnSalvarLote(){
   });
 
   if (naoInsumo) {
-    alert("Preencha corretamente os campos dos insumos adicionados.");
+    alerta(0, 0, "Preencha corretamente os campos dos insumos adicionados.", 1)
     return;
   }
 
@@ -137,10 +137,10 @@ async function btnSalvarLote(){
       const resJson = await resLote.json();
 
       if (!resJson.id_Lote) {
-        alert('Erro ao inserir lote: ' + (resJson.erro || 'Resposta inesperada'));
+        alerta(2, 3, "Erro ao inserir o lote.", 1)
         return;
       }
-      alert('Lote inserido com sucesso!');
+      alerta(1, 1, "Lote inserido com sucesso!", 1)
 
       if (insumos.length > 0) {
         // Só envia insumos se tiver algum preenchido
@@ -165,7 +165,7 @@ async function btnSalvarLote(){
     } else {
       // Editar lote existente
       if (!window.loteSelecionado || !window.loteSelecionado.id_Lote) {
-        alert("Nenhum lote selecionado para edição.");
+        alerta(2, 2, "Nenhum lote selecionado para edição.", 1)
         return;
       }
 
@@ -179,59 +179,64 @@ async function btnSalvarLote(){
       const resJson = await resLote.json();
 
       if (resJson.status !== 'sucesso') {
-        alert('Erro ao atualizar lote: ' + (resJson.erro || 'Resposta inesperada'));
+        alerta(2, 3, "Erro ao atualizar o lote.", 1)
         return;
       }
-      alert('Lote atualizado com sucesso!');
+      alerta(1, 1, "Lote atualizado com sucesso!", 1)
 
-      const resInsumos = await fetch('../php/produtoLoteInsumos.php', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id_produtoLote: loteData.id_Lote,
-          insumos: insumos,
-          insumosRemovidos: Array.from(window.insumosRemovidos || [])
-        })
-      });
-      const resInsumosJson = await resInsumos.json();
-      console.log('Insumos atualizados com sucesso:', resInsumosJson);
+      document.getElementById("confirmAlerta").addEventListener("click", async () => {
 
-      tratarRespostaLotes();
-      limparCampos();
-      window.loteSelecionado = null;
+        const resInsumos = await fetch('../php/produtoLoteInsumos.php', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id_produtoLote: loteData.id_Lote,
+            insumos: insumos,
+            insumosRemovidos: Array.from(window.insumosRemovidos || [])
+          })
+        });
+        const resInsumosJson = await resInsumos.json();
+        console.log('Insumos atualizados com sucesso:', resInsumosJson);
+
+        tratarRespostaLotes();
+        limparCampos();
+        window.loteSelecionado = null;
+      })
+
+
     }
   } catch (err) {
     console.error('Erro ao salvar lote:', err);
-    alert('Erro ao salvar lote. Veja o console para detalhes.');
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 
 }
 
 // Receber dados do insumo cadastrado no lote do produto
-async function carregarInsumosVinculados(idLote){
+async function carregarInsumosVinculados(idLote) {
   try {
     const resposta = await fetch(`../php/produtoLoteInsumos.php?id_lote=${idLote}`);
 
-    if(!resposta.ok){
+    if (!resposta.ok) {
       throw new Error(`HTTP error! status: ${resposta.status}`);
-    }else{
+    } else {
       return resposta.json();
     }
-  }catch(erro){
+  } catch (erro) {
     console.log("Erro ao buscar API: " + erro);
-    alert("Estamos passando por problemas de conexão, por favor tente novamente mais tarde");
+    alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
   }
 }
 
 // Tratativa dos dados dos insumos do lote do produto
-async function tratarInsumosVinculados(idLote){
+async function tratarInsumosVinculados(idLote) {
   insumos = await carregarInsumosVinculados(idLote);
 
-  if(insumos){
-    if(insumos.erro){
-      alert(insumos.resposta);
+  if (insumos) {
+    if (insumos.erro) {
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
       console.log("Erro: " + insumos.erro);
-    }else{
+    } else {
       const container = document.getElementById('lista-insumos');
       container.innerHTML = '';
 
@@ -263,32 +268,36 @@ async function tratarInsumosVinculados(idLote){
 // Botão Deletar
 async function btnDeletarLote() {
   // Verificar se algum item foi selecionado
-  if(!window.loteSelecionado){
-    alert('Selecione um lote antes!');
+  if (!window.loteSelecionado) {
+    alerta(2, 2, "Selecione o lote que deseja excluir.", 1)
     return;
   }
 
   // Confirmação se deseja deletar
-  if(!confirm('Tem certeza que deseja excluir este lote?')) return;
+  alerta(2, 2, "Tem certeza que deseja excluir?.", 1)
 
-  try {
-    const res = await fetch(`../php/produtoLote.php?id=${window.loteSelecionado.id_Lote}`, {
-      method: 'DELETE'
-    });
-    const resJson = await res.json();
+  document.getElementById("confirmAlerta").addEventListener("click", async () => {
+    try {
+      const res = await fetch(`../php/produtoLote.php?id=${window.loteSelecionado.id_Lote}`, {
+        method: 'DELETE'
+      });
+      const resJson = await res.json();
 
-    if (resJson.status === 'sucesso') {
-      alert('Lote excluído com sucesso!');
-      tratarRespostaLotes();
-      limparCampos();
-      window.loteSelecionado = null;
-    } else {
-      alert(resJson.mensagem || 'Erro ao deletar o lote.');
+      if (resJson.status === 'sucesso') {
+        alerta(2, 2, "Lote excluido com sucesso!", 1)
+        tratarRespostaLotes();
+        limparCampos();
+        window.loteSelecionado = null;
+      } else {
+        alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
+      }
+    } catch (err) {
+      console.error('Erro ao deletar o lote:', err);
+      alerta(0, 0, "Estamos com problemas de conexão, por favor tente novamente mais tarde.", 1)
     }
-  } catch(err) {
-    console.error('Erro ao deletar o lote:', err);
-    alert('Erro ao deletar o lote. Veja o console para detalhes.');
-  }
+  })
+
+
 };
 
 // Botão ADICIONAR
@@ -302,7 +311,7 @@ document.getElementById("btn-adicionarLote").addEventListener("click", () => {
 // Botão EDITAR
 document.getElementById("btn-editarLote").addEventListener('click', () => {
   if (!window.loteSelecionado) {
-    alert('Selecione um lote para editar');
+    alerta(2, 2, "Selecione um lote para editar.", 1)
     return;
   }
   habilitarCamposLote();
@@ -402,7 +411,7 @@ document.getElementById('buttonPesquisa').addEventListener('click', () => {
 });
 
 // Função limpar campos
-function limparCampos(){
+function limparCampos() {
   const inputsLotes = document.querySelectorAll('.descricaoLote input');
   inputsLotes.forEach(input => {
     input.value = '';
@@ -422,9 +431,9 @@ function limparCampos(){
   });
 
   const tbody = document.getElementById("tabela-lote-corpo");
-  tbody.innerHTML = ""; 
+  tbody.innerHTML = "";
 
-  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "none";}); 
+  document.querySelectorAll("#spanL").forEach(spanL => { spanL.style.display = "none"; });
   document.getElementById('btn-adicionarInsumo').style.display = 'none';
   document.getElementById('btn-salvarLote').style.display = 'none';
 }
@@ -433,7 +442,7 @@ function limparCampos(){
 function habilitarCamposLote() {
   document.querySelectorAll('.descricaoLote input').forEach(input => input.removeAttribute('disabled'));
   document.querySelectorAll('.descricaoLote select').forEach(select => select.removeAttribute('disabled'));
-  document.querySelectorAll("#spanL").forEach(spanL => {spanL.style.display = "";});
+  document.querySelectorAll("#spanL").forEach(spanL => { spanL.style.display = ""; });
   document.querySelectorAll("#btn-adicionarInsumo").forEach(btnInsumo => btnInsumo.removeAttribute('disabled'));
 
   document.querySelectorAll('#lista-insumos .insumo-item').forEach(item => {
@@ -454,8 +463,7 @@ function validarCampos() {
   for (let i = 0; i < camposObrigatorios.length; i++) {
     const campo = document.getElementById(camposObrigatorios[i]);
     if (!campo.value) {
-      alert("Todos os campos do formulário são obrigatórios!");
-      campo.reportValidity(); 
+      campo.reportValidity();
       campo.focus();
       return false;
     }
@@ -473,10 +481,82 @@ fetch('../php/get_produtos.php')
       option.value = item.id_produto;
       option.textContent = item.nome;
       selectProduto.appendChild(option);
-      
+
       console.log("Executado produtos");
     });
   });
 
 
 window.onload = tratarRespostaLotes;
+
+
+
+
+
+
+function alerta(icone, cor, text, nBotoes) {
+
+  let icones = ['bi bi-cone-striped', 'bi bi-check-circle-fill', 'bi bi-exclamation-diamond-fill'] // 0 = cone, 1 = check, 2 = alert
+
+  let cores = ['#d0ae3f', '#73df77', '#ebeb31', '#dd3f3f']// 0 = laranja, 1 = verder, 2 = amarelo, 3 = vermelho
+
+  let alerta = document.getElementById('alertaPadrão')
+
+  let body = document.querySelector('body')
+
+  body.style.overflow = 'hidden'
+
+  alerta.style.display = 'flex'
+
+  let p = document.getElementById('pAlerta')
+  let i = document.getElementById('iconeAlerta')
+
+  i.className = icones[icone]
+  i.style.color = `${cores[cor]}`
+  p.innerText = text
+
+  if (nBotoes == 2) {
+
+    let botoes = document.getElementById('botoesAlerta')
+
+    but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+    but2 = '<button class="but2" id="cancelAlerta">Cancelar</button>'
+
+    botoes.innerHtml = but1 + but2
+
+    botoes.style.justifyContent = 'center'
+
+    let cancel = document.getElementById('cancelAlerta')
+
+    cancel.addEventListener("click", () => {
+
+      alerta.style.display = 'none'
+
+      body.style.overflow = 'auto'
+
+    })
+
+  } else if (nBotoes == 1) {
+
+    let botoes = document.getElementById('botoesAlerta')
+
+    but1 = '<button class="but1" id="confirmAlerta">Confirmar</button>'
+
+    botoes.innerHTML = but1
+
+    botoes.style.justifyContent = 'end'
+
+    but1 = document.getElementById("confirmAlerta")
+
+    but1.innerText = 'OK'
+
+    but1.addEventListener("click", () => {
+
+      alerta.style.display = 'none'
+
+      body.style.overflow = 'auto'
+
+    })
+  }
+
+}
