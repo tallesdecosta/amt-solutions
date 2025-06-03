@@ -559,7 +559,7 @@ input::-webkit-outer-spin-button {
 
 
 
-.secall .app .fundopreto {
+.fundopreto {
     width: 96vw;
     height: 92vh;
     z-index: 2;
@@ -572,7 +572,7 @@ input::-webkit-outer-spin-button {
     align-items: center;
 }
 
-.secall .app .fundopreto .popup {
+.fundopreto .popup {
     width: 60%;
     height: 80%;
     background-color: white;
@@ -583,7 +583,7 @@ input::-webkit-outer-spin-button {
     border-radius: 20px;
 }
 
-.secall .app .fundopreto .popup .agrupar {
+.fundopreto .popup .agrupar {
     width: 80%;
     border-radius: 10px;
     height: 60%;
@@ -594,13 +594,13 @@ input::-webkit-outer-spin-button {
 
 
 
-.secall .app .fundopreto .popup .divinp2 {
+.fundopreto .popup .divinp2 {
     display: flex;
     width: 100%;
     border-radius: 10px 0px 0px 10px;
 }
 
-.secall .app .fundopreto .popup .divlupa2 {
+.fundopreto .popup .divlupa2 {
     width: 10%;
     height: 35px;
     display: flex;
@@ -612,7 +612,7 @@ input::-webkit-outer-spin-button {
     cursor: pointer;
 }
 
-.secall .app .fundopreto .popup input {
+.fundopreto .popup input {
     width: 90%;
     padding-left: 5%;
     border-radius: 10px 0px 0px 10px;
@@ -620,11 +620,11 @@ input::-webkit-outer-spin-button {
     border-right: none;
 }
 
-.secall .app .fundopreto .popup input::placeholder {
+.fundopreto .popup input::placeholder {
     text-align: center;
 }
 
-.secall .app .fundopreto .popup .fundotabela {
+.fundopreto .popup .fundotabela {
     overflow-y: auto;
     overflow-x: hidden;
     display: block;
@@ -636,27 +636,27 @@ input::-webkit-outer-spin-button {
 }
 
 
-.secall .app .fundopreto .popup .fundotabela::-webkit-scrollbar {
+.fundopreto .popup .fundotabela::-webkit-scrollbar {
     background-color: #e7e7e7ce;
     border-radius: 10px;
     width: 10px;
     padding: 3px;
 }
 
-.secall .app .fundopreto .popup .fundotabela::-webkit-scrollbar-thumb {
+.fundopreto .popup .fundotabela::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.281);
     border-radius: 10px;
 }
 
 
 
-.secall .app .fundopreto .popup .produtos {
+.fundopreto .popup .produtos {
     min-width: 100%;
     border-spacing: 0px;
     position: relative;
 }
 
-.secall .app .fundopreto .popup .produtos .tr1 th {
+.fundopreto .popup .produtos .tr1 th {
     background-color: #dbdbdb;
     font-size: 13px;
     padding: 10px 10px;
@@ -670,25 +670,25 @@ input::-webkit-outer-spin-button {
 }
 
 
-.secall .app .fundopreto .popup .produtos .tr1 .th3 {
+.fundopreto .popup .produtos .tr1 .th3 {
     text-align: left;
     padding: 10px 0px;
     text-indent: 20px;
 }
 
-.secall .app .fundopreto .popup .produtos .tr1 .th5 {
+.fundopreto .popup .produtos .tr1 .th5 {
     padding: 10px 0px;
     text-align: center;
     max-width: 50px;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem {
+.fundopreto .popup .produtos .tritem {
     min-width: 100%;
     background-color: white;
 }
 
 
-.secall .app .fundopreto .popup .produtos .tritem td {
+.fundopreto .popup .produtos .tritem td {
     border-bottom: 0.5px solid #00000060;
     font-size: 14px;
     padding: 10px 20px;
@@ -700,16 +700,16 @@ input::-webkit-outer-spin-button {
 
 
 
-.secall .app .fundopreto .popup .produtos .tritem .check {
+.fundopreto .popup .produtos .tritem .check {
     width: 15%;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .id {
+.fundopreto .popup .produtos .tritem .id {
     width: 5%;
     text-align: center;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .prod {
+.fundopreto .popup .produtos .tritem .prod {
     max-width: 120px;
     min-width: 120px;
     text-align: left;
@@ -717,13 +717,13 @@ input::-webkit-outer-spin-button {
     overflow: hidden;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .qntd {
+.fundopreto .popup .produtos .tritem .qntd {
     width: 15%;
     padding: 10px 0px;
     text-align: center;
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .qntd input {
+.fundopreto .popup .produtos .tritem .qntd input {
     height: 30px;
     width: 40px;
     border-radius: 5px;
@@ -732,7 +732,7 @@ input::-webkit-outer-spin-button {
 
 }
 
-.secall .app .fundopreto .popup .produtos .tritem .valor {
+.fundopreto .popup .produtos .tritem .valor {
     max-width: 50px;
     text-align: center;
     font-size: 13px;
@@ -740,14 +740,14 @@ input::-webkit-outer-spin-button {
 
 
 
-.secall .app .fundopreto .popup .buts {
+.fundopreto .popup .buts {
     display: flex;
     justify-content: end;
     gap: 30px;
     width: 80%;
 }
 
-.secall .app .fundopreto .popup .buts button {
+.fundopreto .popup .buts button {
     padding: 5px 15px;
     border-radius: 10px;
     border: 1px solid rgb(161, 161, 161);
@@ -757,25 +757,25 @@ input::-webkit-outer-spin-button {
     box-shadow: 0px 2px 2px #a3a3a3;
 }
 
-.secall .app .fundopreto .popup .buts .adcbut {
+.fundopreto .popup .buts .adcbut {
     background-color: white;
     color: #33ad0d;
     border: 1.5px solid #33ad0d;
 }
 
-.secall .app .fundopreto .popup .buts .cancelar {
+.fundopreto .popup .buts .cancelar {
     background-color: white;
     color: #525252;
     border: 1.5px solid #525252;
 }
 
-.secall .app .fundopreto .popup .buts .adcbut:hover {
+.fundopreto .popup .buts .adcbut:hover {
     color: white;
     background-color: #33ad0d;
     border: 1.5px solid #33ad0d;
 }
 
-.secall .app .fundopreto .popup .buts .cancelar:hover {
+.fundopreto .popup .buts .cancelar:hover {
     color: white;
     background-color: #525252;
     border: 1.5px solid #525252;
@@ -785,7 +785,7 @@ input::-webkit-outer-spin-button {
 
 
 
-.secall .app .fundopreto2 {
+.fundopreto2 {
     width: 96vw;
     height: 92vh;
     z-index: 2;
@@ -799,7 +799,7 @@ input::-webkit-outer-spin-button {
 
 }
 
-.secall .app .fundopreto2 .popupprod {
+.fundopreto2 .popupprod {
     width: 50%;
     min-height: 70%;
     background-color: white;
@@ -809,7 +809,7 @@ input::-webkit-outer-spin-button {
     justify-content: space-between;
 }
 
-.secall .app .fundopreto2 .popupprod .topo {
+.fundopreto2 .popupprod .topo {
     width: 100%;
     max-height: 0px;
     display: flex;
@@ -819,7 +819,7 @@ input::-webkit-outer-spin-button {
 
 }
 
-.secall .app .fundopreto2 .popupprod .topo i {
+.fundopreto2 .popupprod .topo i {
     margin-right: 20px;
     font-size: 30px;
     cursor: pointer;
@@ -827,13 +827,13 @@ input::-webkit-outer-spin-button {
     transform: rotate(45deg);
 }
 
-.secall .app .fundopreto2 .popupprod .descricao {
+.fundopreto2 .popupprod .descricao {
     display: flex;
     justify-content: space-evenly;
     align-items: end;
 }
 
-.secall .app .fundopreto2 .popupprod .descricao .info {
+.fundopreto2 .popupprod .descricao .info {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -841,24 +841,24 @@ input::-webkit-outer-spin-button {
     gap: 10px;
 }
 
-.secall .app .fundopreto2 .popupprod .descricao img {
+.fundopreto2 .popupprod .descricao img {
     border-radius: 10px;
     border: 2px solid rgb(221, 221, 221);
 }
 
-.secall .app .fundopreto2 .popupprod .descricao .info .p1 {
+.fundopreto2 .popupprod .descricao .info .p1 {
     font-size: 13px;
     margin: 0;
     color: #000000bd;
 }
 
 
-.secall .app .fundopreto2 .popupprod .descricao .info .p2 {
+.fundopreto2 .popupprod .descricao .info .p2 {
     font-size: 16px;
     margin: 0;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes {
+.fundopreto2 .popupprod .ingredientes {
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -867,20 +867,20 @@ input::-webkit-outer-spin-button {
     overflow-y: auto;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar {
+.fundopreto2 .popupprod .ingredientes::-webkit-scrollbar {
     background-color: #e7e7e7ce;
     border-radius: 10px;
     width: 10px;
     padding: 3px;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar-thumb {
+.fundopreto2 .popupprod .ingredientes::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.281);
     border-radius: 10px;
 }
 
 
-.secall .app .fundopreto2 .popupprod .ingredientes .titulo {
+.fundopreto2 .popupprod .ingredientes .titulo {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -890,21 +890,21 @@ input::-webkit-outer-spin-button {
     background-color: white;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes .titulo img {
+.fundopreto2 .popupprod .ingredientes .titulo img {
     width: 20px;
     height: 20px;
     margin: 0;
 }
 
 
-.secall .app .fundopreto2 .popupprod .ingredientes .conteudo {
+.fundopreto2 .popupprod .ingredientes .conteudo {
     display: flex;
     max-width: 100%;
     flex-wrap: wrap;
     font-size: 14px;
 }
 
-.secall .app .fundopreto2 .popupprod .ingredientes .conteudo p {
+.fundopreto2 .popupprod .ingredientes .conteudo p {
     min-width: 33%;
     max-width: 33%;
     overflow: hidden;
@@ -913,14 +913,14 @@ input::-webkit-outer-spin-button {
 
 
 
-.secall .app .fundopreto2 .popupprod .alergias {
+.fundopreto2 .popupprod .alergias {
     background-color: #E6FF56;
     padding: 5px 0px;
     border-radius: 0px 0px 10px 10px;
     display: flex;
 }
 
-.secall .app .fundopreto2 .popupprod .alergias .divicon {
+.fundopreto2 .popupprod .alergias .divicon {
     display: flex;
     font-size: 30px;
     width: 30px;
@@ -929,7 +929,7 @@ input::-webkit-outer-spin-button {
     align-items: center;
 }
 
-.secall .app .fundopreto2 .popupprod .alergias .conteudo {
+.fundopreto2 .popupprod .alergias .conteudo {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -938,7 +938,7 @@ input::-webkit-outer-spin-button {
     flex-wrap: wrap;
 }
 
-.secall .app .fundopreto2 .popupprod .alergias .conteudo p {
+.fundopreto2 .popupprod .alergias .conteudo p {
     margin: 0;
     max-width: 30%;
     font-size: 14px;
@@ -1186,14 +1186,14 @@ input::-webkit-outer-spin-button {
 
 
     .comandas .fundotable {
-        width: 95vw
+        width: 95vw;
     }
 
 
     .secall .app .comandas .fundotable .fundotabela {
         overflow: auto;
         border-radius: 0px 0px 10px 10px;
-        max-height: 300px;
+        height: 300px;
     }
 
     .secall .app .comandas .fundocomandas {
@@ -1255,6 +1255,7 @@ input::-webkit-outer-spin-button {
     .secall .app .fundovendas .divesq .fundoitem {
         min-width: 100px;
         margin: auto;
+        overflow: auto;
     }
 
     .secall .app .fundovendas .buts {
@@ -1302,10 +1303,12 @@ input::-webkit-outer-spin-button {
         display: none;
         width: 100vw;
         height: 100vh;
+        position: fixed;
+        z-index: 6;
     }
 
 
-    .secall .app .fundopreto .popup {
+    .fundopreto .popup {
         width: 95%;
         height: 80%;
         background-color: white;
@@ -1315,19 +1318,28 @@ input::-webkit-outer-spin-button {
         flex-direction: column;
         border-radius: 20px;
     }
+    .fundopreto .popup .fundotabela {
+        height: 400px;
+        overflow: auto;
+    }
+    .fundopreto .popup .agrupar {
+        gap: 20px;
+    }
 
 
 
-    .secall .app .fundopreto2 {
-        display: flex;
+    .fundopreto2 {
+        display: none;
         width: 100vw;
         height: 100vh;
+        position: fixed;
+        z-index: 6;
 
     }
 
-    .secall .app .fundopreto2 .popupprod {
+    .fundopreto2 .popupprod {
         width: 95%;
-        height: fit-content ;
+        height: fit-content;
         background-color: white;
         display: flex;
         justify-content: space-between;
@@ -1338,7 +1350,7 @@ input::-webkit-outer-spin-button {
 
 
 
-    .secall .app .fundopreto2 .popupprod .topo {
+    .fundopreto2 .popupprod .topo {
         width: 100%;
         max-height: 0px;
         display: flex;
@@ -1347,7 +1359,7 @@ input::-webkit-outer-spin-button {
         overflow: visible;
     }
 
-    .secall .app .fundopreto2 .popupprod .topo i {
+    .fundopreto2 .popupprod .topo i {
         margin-right: 20px;
         font-size: 30px;
         cursor: pointer;
@@ -1355,7 +1367,7 @@ input::-webkit-outer-spin-button {
         transform: rotate(45deg);
     }
 
-    .secall .app .fundopreto2 .popupprod .descricao {
+    .fundopreto2 .popupprod .descricao {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -1364,7 +1376,7 @@ input::-webkit-outer-spin-button {
         width: 90%;
     }
 
-    .secall .app .fundopreto2 .popupprod .descricao .info {
+    .fundopreto2 .popupprod .descricao .info {
         display: flex;
         flex-direction: column;
         justify-content: left;
@@ -1372,24 +1384,24 @@ input::-webkit-outer-spin-button {
         gap: 10px;
     }
 
-    .secall .app .fundopreto2 .popupprod .descricao img {
+    .fundopreto2 .popupprod .descricao img {
         border-radius: 10px;
         border: 2px solid rgb(221, 221, 221);
     }
 
-    .secall .app .fundopreto2 .popupprod .descricao .info .p1 {
+    .fundopreto2 .popupprod .descricao .info .p1 {
         font-size: 13px;
         margin: 0;
         color: #000000bd;
     }
 
 
-    .secall .app .fundopreto2 .popupprod .descricao .info .p2 {
+    .fundopreto2 .popupprod .descricao .info .p2 {
         font-size: 16px;
         margin: 0;
     }
 
-    .secall .app .fundopreto2 .popupprod .ingredientes {
+    .fundopreto2 .popupprod .ingredientes {
         display: flex;
         flex-direction: column;
         width: 70%;
@@ -1398,20 +1410,20 @@ input::-webkit-outer-spin-button {
         overflow-y: auto;
     }
 
-    .secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar {
+    .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar {
         background-color: #e7e7e7ce;
         border-radius: 10px;
         width: 10px;
         padding: 3px;
     }
 
-    .secall .app .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar-thumb {
+    .fundopreto2 .popupprod .ingredientes::-webkit-scrollbar-thumb {
         background-color: rgba(0, 0, 0, 0.281);
         border-radius: 10px;
     }
 
 
-    .secall .app .fundopreto2 .popupprod .ingredientes .titulo {
+    .fundopreto2 .popupprod .ingredientes .titulo {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -1421,21 +1433,21 @@ input::-webkit-outer-spin-button {
         background-color: white;
     }
 
-    .secall .app .fundopreto2 .popupprod .ingredientes .titulo img {
+    .fundopreto2 .popupprod .ingredientes .titulo img {
         width: 20px;
         height: 20px;
         margin: 0;
     }
 
 
-    .secall .app .fundopreto2 .popupprod .ingredientes .conteudo {
+    .fundopreto2 .popupprod .ingredientes .conteudo {
         display: flex;
         max-width: 100%;
         flex-wrap: wrap;
         font-size: 14px;
     }
 
-    .secall .app .fundopreto2 .popupprod .ingredientes .conteudo p {
+    .fundopreto2 .popupprod .ingredientes .conteudo p {
         min-width: 33%;
         max-width: 33%;
         overflow: hidden;
@@ -1444,7 +1456,7 @@ input::-webkit-outer-spin-button {
 
 
 
-    .secall .app .fundopreto2 .popupprod .alergias {
+    .fundopreto2 .popupprod .alergias {
         background-color: #E6FF56;
         padding: 5px 0px;
         border-radius: 0px 0px 10px 10px;
@@ -1452,7 +1464,7 @@ input::-webkit-outer-spin-button {
         min-width: 100%;
     }
 
-    .secall .app .fundopreto2 .popupprod .alergias .divicon {
+    .fundopreto2 .popupprod .alergias .divicon {
         display: flex;
         font-size: 30px;
         width: 30px;
@@ -1461,22 +1473,37 @@ input::-webkit-outer-spin-button {
         align-items: center;
     }
 
-    .secall .app .fundopreto2 .popupprod .alergias .conteudo {
+    .fundopreto2 .popupprod .alergias .conteudo {
         display: flex;
         justify-content: center;
         gap: 30px;
         margin: auto;
         width: 80%;
         flex-wrap: wrap;
-        background-color: rgb(240, 102, 102);
     }
 
-    .secall .app .fundopreto2 .popupprod .alergias .conteudo p {
+    .fundopreto2 .popupprod .alergias .conteudo p {
         margin: 0;
         max-width: fit-content;
         font-size: 14px;
-        background-color: plum;
     }
 
 
+}
+
+
+
+@media (min-width: 1000px) and (max-width: 1250px){
+    .alertapadrao {
+        position: fixed !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: rgba(0, 0, 0, 0.789) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 5 !important;
+    }
+    
 }

@@ -776,3 +776,13 @@ label{
         height: 94vh;
     }
 }
+
+
+
+@media (min-width: 1000px) and (max-width: 1250px){
+    .alertapadrao {
+        width: 100VW;
+        height: 100vh;
+    }
+    
+}
