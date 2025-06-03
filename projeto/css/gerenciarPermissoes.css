@@ -339,4 +339,17 @@
         width: 100%!important;
     }
 
+    .infos {
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .popup{
+        top: 200px; 
+        padding: 0px!important;
+    }
+
+    .popup {
+        margin-right: 15px;
+    }
 }
