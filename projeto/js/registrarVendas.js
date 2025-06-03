@@ -306,6 +306,10 @@ async function registrovenda(op, filtro, tabela, id) {
 
 async function abrirprods() {
     let element = document.getElementById('fundopreto');
+    let element2 = document.querySelector('body');
+
+    element2.style.overflow = 'hidden'
+
     element.style.display = 'flex'
 
     let resultado = await verprodutos();
@@ -400,6 +404,8 @@ async function abrirprods() {
 
         valorTotal()
 
+        element2.style.overflow = 'auto'
+
 
     })
 
@@ -439,10 +445,18 @@ function valorTotal() {
 // Botão cancelar que fecha o popup dos produtos
 
 function cancelar() {
+
     let element = document.getElementById('fundopreto');
+
     element.style.display = 'none'
+
     let tbody = document.getElementById('tbody');
+
     tbody.innerHTML = '<tbody id="tbody"> </tbody>'
+
+    let element2 = document.querySelector('body');
+
+    element2.style.overflow = 'auto'
 }
 
 // Função async que retorna os produtos
@@ -482,6 +496,10 @@ function fecharprod() {
     let element = document.getElementById('fundopreto2');
 
     element.style.display = 'none';
+
+    let body = document.querySelector('body');
+
+    body.style.overflow = 'auto'
 }
 
 // Função para abrir o popup de visualizar produto da comanda
@@ -489,6 +507,9 @@ function fecharprod() {
 async function abrirprod(id) {
 
     let element = document.getElementById('fundopreto2');
+    let body = document.querySelector('body');
+
+    body.style.overflow = 'hidden'
 
     element.style.display = 'flex';
 
@@ -781,6 +802,9 @@ function deletaritem(id) {
         elementoPai.remove()
 
         valorTotal()
+
+
+        body.style.overflow = 'auto'
     })
 
 
@@ -1038,6 +1062,10 @@ async function resDeletarCmd() {
                     }
                 }
             }
+
+            let body = document.querySelector('body')
+
+            body.style.overflow = 'auto'
         })
 
     }
@@ -1333,6 +1361,10 @@ function alerta(icone, cor, text, nBotoes) {
 
     let alerta = document.getElementById('alertaPadrão')
 
+    let body = document.querySelector('body')
+
+    body.style.overflow = 'hidden'
+
     alerta.style.display = 'flex'
 
     let p = document.getElementById('pAlerta')
@@ -1356,7 +1388,10 @@ function alerta(icone, cor, text, nBotoes) {
         let cancel = document.getElementById('cancelAlerta')
 
         cancel.addEventListener("click", () => {
+
             alerta.style.display = 'none'
+
+            body.style.overflow = 'auto'
 
         })
 
@@ -1375,7 +1410,10 @@ function alerta(icone, cor, text, nBotoes) {
         but1.innerText = 'OK'
 
         but1.addEventListener("click", () => {
+
             alerta.style.display = 'none'
+
+            body.style.overflow = 'auto'
 
         })
     }
