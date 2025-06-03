@@ -1,116 +1,133 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <link id="link1" rel="stylesheet" href="../css/nav.css">
+    <link id="link1" rel="stylesheet" href="../css/nav.css">
 
-        <link rel="stylesheet" href="../css/moduloVendas.css">
+    <link rel="stylesheet" href="../css/moduloVendas.css">
 
-        <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../css/all.css">
 
-        <link rel="stylesheet" href="../css/despesas.css">
+    <link rel="stylesheet" href="../css/despesas.css">
 
-        <title>Gestão de despesas</title>
+    <link rel="stylesheet" href="../css/popups.css">
 
-    </head>
+    <title>Gestão de despesas</title>
 
-    <body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); iniciar();">
-        <div id="bg-blur" style="position:absolute; width:100vw; height:100vh; z-index:2;"></div>
-        <div class="container1" id="container1">
-            <div class="logo">
-                <img src="../img/account.png" width="80px" height="30px" alt>
-            </div>    
+</head>
 
-            <div class="perfil" id="perfil" >
-                <div class="topo">
-                    <div class="username" id="username">
-                        <p class="p1" id="p1"></p>
-                        <p class="p2" id="p2"></p>
-                    </div>
-                    <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
-                </div>
-                <div class="conteudo" id="conteudosair" style="position: relative;z-index: 1000;" onclick="logout();">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <button>Sair</button>
-                </div>
-            </div>
-
+<body onload="esta_logado(); checarAcesso('financeiro'); getInfo(); iniciar();">
+    <div id="bg-blur" style="position:absolute; width:100vw; height:100vh; z-index:2;"></div>
+    <div class="container1" id="container1">
+        <div class="logo">
+            <img src="../img/account.png" width="80px" height="30px" alt>
         </div>
 
-        <section class="secall">
-            <nav class="navegation">
-                <div class="modulos alinha">
-                    <i class="bi bi-boxes"></i>
+        <div class="perfil" id="perfil">
+            <div class="topo">
+                <div class="username" id="username">
+                    <p class="p1" id="p1"></p>
+                    <p class="p2" id="p2"></p>
                 </div>
-                <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)"
-                    onmouseover="aparecertool(1)" onmouseleave="escondertool(1)">
-                    <i class="bi bi-cash-coin"></i>
-                </div>
-                <div class="icone alinha" id="icon2" nome="estoque"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-box-seam"></i>
-                </div>
-                <div class="icone alinha" id="icon3"  nome="financeiro"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-piggy-bank"></i>
-                </div>
-                <div class="icone alinha" id="icon4"  nome="gestao"
-                onclick="podeAcessar(this)">
-                    <i class="bi bi-clipboard2-data"></i>
-                </div>
-            </nav>
-            <div class="tooltips">
-                <div class="top"></div>
-                <div class="tool" id="tool1">
-                    <div class="ponta aparecer"></div>
-                    <div class="balao aparecer">
-                        <p>Financeiro</p>
-                    </div>
+                <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
+            </div>
+            <div class="conteudo" id="conteudosair" style="position: relative;z-index: 1000;" onclick="logout();">
+                <i class="bi bi-box-arrow-left"></i>
+                <button>Sair</button>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="secall">
+        <nav class="navegation">
+            <div class="modulos alinha">
+                <i class="bi bi-boxes"></i>
+            </div>
+            <div class="icone alinha" nome="vendas" id="icon1" onclick="podeAcessar(this)" onmouseover="aparecertool(1)"
+                onmouseleave="escondertool(1)">
+                <i class="bi bi-cash-coin"></i>
+            </div>
+            <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <div class="icone alinha" id="icon3" nome="financeiro" onclick="podeAcessar(this)">
+                <i class="bi bi-piggy-bank"></i>
+            </div>
+            <div class="icone alinha" id="icon4" nome="gestao" onclick="podeAcessar(this)">
+                <i class="bi bi-clipboard2-data"></i>
+            </div>
+        </nav>
+        <div class="tooltips">
+            <div class="top"></div>
+            <div class="tool" id="tool1">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Financeiro</p>
                 </div>
             </div>
-            <div class="main-before" style="display: flex; justify-content: center; align-items: center; width: 100vw; ">
-                <main>
-                    <h1>Gestão de despesas</h1>
-                    <div class="main-wrapper">
-                        <div class="resumo-tipo-wrapper" style="display: flex; justify-content: space-between; flex-direction: column; width: 22%;">
-                            <section class="total-despesas bento">
-                                <h2>Resumo de despesas</h2>
-                                <div>
-                                    <p style="font-size:14px;"><span id="resumo" style="color: #8C0000;">R$0,0</span> em despesas abertas</p>
-                                </div>
-                            </section>
-                            <section class="tipos-despesas-container bento">
-                                <div style="padding: 19px; display:flex; gap:5px; flex-direction:column;" >
-                                    <h2>Tipos de despesas cadastradas</h2> 
-                                    <div style="display: flex; gap: 5px; cursor: pointer; border: 1px solid #399E45; width: fit-content; padding:4px; border-radius:5px;" onclick="document.getElementById('tipo-wrapper').style.display ='block'; document.getElementById('bg-blur').style.display ='block';">
-                                        <img src="../img/add_circle.svg" alt="">
-                                    <p style="font-size: 14px;">Novo tipo</p>
-                                    </div>
-                                    
-                                    
-                                </div>
-                                
-                                <section style="overflow-y: auto;" class="tipos-despesas" id="tipos-despesas">
+        </div>
 
-                                </section>
+        <div class="alertapadrao" id="alertaPadrão">
+            <div class="alerta">
+                <i class="bi bi-cone-striped" id="iconeAlerta"></i>
+                <p id="pAlerta"> </p>
+                <div class="botoes" id="botoesAlerta">
+                    <button class="but1" id="confirmAlerta">Confirmar</button>
+                    <button class="but2" id="cancelAlerta">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-before" style="display: flex; justify-content: center; align-items: center; width: 100vw; ">
+            <main>
+                <h1>Gestão de despesas</h1>
+                <div class="main-wrapper">
+                    <div class="resumo-tipo-wrapper"
+                        style="display: flex; justify-content: space-between; flex-direction: column; width: 22%;">
+                        <section class="total-despesas bento">
+                            <h2>Resumo de despesas</h2>
+                            <div>
+                                <p style="font-size:14px;"><span id="resumo" style="color: #8C0000;">R$0,0</span> em
+                                    despesas abertas</p>
+                            </div>
+                        </section>
+                        <section class="tipos-despesas-container bento">
+                            <div style="padding: 19px; display:flex; gap:5px; flex-direction:column;">
+                                <h2>Tipos de despesas cadastradas</h2>
+                                <div style="display: flex; gap: 5px; cursor: pointer; border: 1px solid #399E45; width: fit-content; padding:4px; border-radius:5px;"
+                                    onclick="document.getElementById('tipo-wrapper').style.display ='block'; document.getElementById('bg-blur').style.display ='block';">
+                                    <img src="../img/add_circle.svg" alt="">
+                                    <p style="font-size: 14px;">Novo tipo</p>
+                                </div>
+
+
+                            </div>
+
+                            <section style="overflow-y: auto;" class="tipos-despesas" id="tipos-despesas">
+
                             </section>
-                        </div>
-                        <section class="report">
-                        
+                        </section>
+                    </div>
+                    <section class="report">
+
                         <div class="filter-wrapper bento">
-                            <div style="display: flex; padding: 19px; justify-content: space-between;" >
+                            <div style="display: flex; padding: 19px; justify-content: space-between;">
                                 <h2>Despesas abertas</h2>
-                                <div style="display: flex; gap: 5px; border: 1px solid #399E45; width: fit-content; padding: 4px; border-radius:5px;" style="cursor:pointer;" onclick="document.getElementById('despesa-wrapper').style.display ='block'; document.getElementById('bg-blur').style.display ='block'; mostrarTipoDespesaCriarDespesa();" class="btn-add-wrapper">
+                                <div style="display: flex; gap: 5px; border: 1px solid #399E45; width: fit-content; padding: 4px; border-radius:5px;"
+                                    style="cursor:pointer;"
+                                    onclick="document.getElementById('despesa-wrapper').style.display ='block'; document.getElementById('bg-blur').style.display ='block'; mostrarTipoDespesaCriarDespesa();"
+                                    class="btn-add-wrapper">
                                     <button><img src="../img/add_circle.svg" alt=""></button>
                                     <p style="font-size: 14px;">Nova despesa</p>
                                 </div>
-                            
+
                             </div>
 
                             <div style="overflow-y: auto;">
@@ -134,14 +151,14 @@
 
                                 </table>
 
-                            </div>            
-                            
+                            </div>
+
                         </div>
                         <div class="report-wrapper bento" id="report-wrapper">
                             <div style="padding: 19px;">
                                 <h2>Despesas fechadas</h2>
                             </div>
-                            
+
                             <div style="overflow-y: auto;">
 
                                 <table>
@@ -163,119 +180,125 @@
 
                                 </table>
 
-                            </div>  
-                        </div>
-                        </section>
-                    </div>
-                    <div class="popup-wrapper bento" id="popup-wrapper">
-                        <div class="popup">
-                            <div style="display: flex; justify-content:space-between; ">
-                                <h2>Detalhes da despesa</h2>
-                                <button onclick="document.getElementById('popup-wrapper').style.display = 'none'; document.getElementById('bg-blur').style.display = 'none';" style="cursor: pointer;"><b>X</b></button>
                             </div>
-                            
-                            <br>
-                            <label for="descritivo">Descritivo:</label>
-                            <br>
-                            <input type="text" id="descritivo" name="descritivo" required>
-                            <br>
-                            <br>
-                            <label for="valor">Valor da despesa:</label>
-                            <br>
-                            <input type="number" id="valor" name="valor" required>
-                            <br>
-                            <br>
-                            <label for="data-início">Quando essa dívida iniciou?</label>
-                            <br>
-                            <input type="date" name="data-inicio" id="data-inicio" required> 
-                            <br>
-                            <br>
-                            <label for="data-fim">Até quando a despesa deve ser paga?</label>
-                            <br>
-                            <input type="date" name="data-fim" id="data-fim" required>
-                            <br>
-                            <br>
-                            <label for="status">Está paga?</label>
-                            <input type="checkbox" name="status" id="status" required>
-                            <br>
-                            <br>
-                            <label for="tipo-despesa-select-novo">Qual o tipo de despesa?</label>
-                            <br>
-                            <select name="tipo-despesa-select-alterar" id="tipo-despesa-select-alterar" required>
-
-                            </select>
-                            <br>
-                            <br>
-                            <input type="submit" onclick="alterarDespesa();" id="alterar-despesa" value="Alterar dados">
                         </div>
-                    </div>
-
-                    <div class="despesa-wrapper bento" id="despesa-wrapper">
-                        <div class="popup">
-                            <div style="display: flex; justify-content:space-between; ">
-                                <h2>Nova despesa</h2>
-                                <button onclick="document.getElementById('despesa-wrapper').style.display = 'none'; document.getElementById('bg-blur').style.display = 'none';" style="cursor: pointer;"><b>X</b></button>
-                            </div>
-                            
-                            <br>
-                            <label for="descritivo">Descritivo:</label>
-                            <br>
-                            <input type="text" id="descritivo-novo" name="descritivo" required> 
-                            <br>
-                            <br>
-                            <label for="valor">Valor da despesa:</label>
-                            <br>
-                            <input type="number" id="valor-novo" name="valor" required>
-                            <br>
-                            <br>
-                            <label for="data-início">Quando essa dívida iniciou?</label>
-                            <br>
-                            <input type="date" name="data-inicio" id="data-inicio-novo" required>
-                            <br>
-                            <br>
-                            <label for="data-fim">Até quando a despesa deve ser paga?</label>
-                            <br>
-                            <input type="date" name="data-fim" id="data-fim-novo" required>
-                            <br>
-                            <br>
-                            <label for="tipo-despesa-select-novo">Qual o tipo de despesa?</label>
-                            <br>
-                            <select name="tipo-despesa-select-novo" id="tipo-despesa-select-novo" required>
-
-                            </select>
-                            
-                            <br>
-                            <br>
-                            <input type="submit" onclick="addDespesa();" id="alterar-despesa" value="Cadastrar despesa">
+                    </section>
+                </div>
+                <div class="popup-wrapper bento" id="popup-wrapper">
+                    <div class="popup">
+                        <div style="display: flex; justify-content:space-between; ">
+                            <h2>Detalhes da despesa</h2>
+                            <button
+                                onclick="document.getElementById('popup-wrapper').style.display = 'none'; document.getElementById('bg-blur').style.display = 'none';"
+                                style="cursor: pointer;"><b>X</b></button>
                         </div>
-                    </div>
 
-                    <div class="tipo-wrapper bento" id="tipo-wrapper">
-                        <div class="popup">
-                            <div style="display: flex; justify-content:space-between; ">
-                                <h2>Criar tipo de despesa</h2>
-                                <button onclick="document.getElementById('tipo-wrapper').style.display = 'none'; document.getElementById('bg-blur').style.display = 'none';" style="cursor: pointer;"><b>X</b></button>
-                            </div>
-                            
-                            <br>
-                            <label for="nome-tipo-despesa-nova">Nome da nova despesa:</label>
-                            <br>
-                            <input type="text" id="nome-tipo-despesa-nova" name="nome-tipo-despesa-nova" required>
-                            <br>
-                            <br>
-                            <input type="submit" onclick="addTipoDespesa();" id="alterar-despesa" value="Criar novo tipo">
+                        <br>
+                        <label for="descritivo">Descritivo:</label>
+                        <br>
+                        <input type="text" id="descritivo" name="descritivo" required>
+                        <br>
+                        <br>
+                        <label for="valor">Valor da despesa:</label>
+                        <br>
+                        <input type="number" id="valor" name="valor" required>
+                        <br>
+                        <br>
+                        <label for="data-início">Quando essa dívida iniciou?</label>
+                        <br>
+                        <input type="date" name="data-inicio" id="data-inicio" required>
+                        <br>
+                        <br>
+                        <label for="data-fim">Até quando a despesa deve ser paga?</label>
+                        <br>
+                        <input type="date" name="data-fim" id="data-fim" required>
+                        <br>
+                        <br>
+                        <label for="status">Está paga?</label>
+                        <input type="checkbox" name="status" id="status" required>
+                        <br>
+                        <br>
+                        <label for="tipo-despesa-select-novo">Qual o tipo de despesa?</label>
+                        <br>
+                        <select name="tipo-despesa-select-alterar" id="tipo-despesa-select-alterar" required>
+
+                        </select>
+                        <br>
+                        <br>
+                        <input type="submit" onclick="alterarDespesa();" id="alterar-despesa" value="Alterar dados">
+                    </div>
+                </div>
+
+                <div class="despesa-wrapper bento" id="despesa-wrapper">
+                    <div class="popup">
+                        <div style="display: flex; justify-content:space-between; ">
+                            <h2>Nova despesa</h2>
+                            <button
+                                onclick="document.getElementById('despesa-wrapper').style.display = 'none'; document.getElementById('bg-blur').style.display = 'none';"
+                                style="cursor: pointer;"><b>X</b></button>
                         </div>
-                    </div>
-                    
-                </main>
-                
-            </div>
-            
-            
-        </section>
-        
 
-    </body>
+                        <br>
+                        <label for="descritivo">Descritivo:</label>
+                        <br>
+                        <input type="text" id="descritivo-novo" name="descritivo" required>
+                        <br>
+                        <br>
+                        <label for="valor">Valor da despesa:</label>
+                        <br>
+                        <input type="number" id="valor-novo" name="valor" required>
+                        <br>
+                        <br>
+                        <label for="data-início">Quando essa dívida iniciou?</label>
+                        <br>
+                        <input type="date" name="data-inicio" id="data-inicio-novo" required>
+                        <br>
+                        <br>
+                        <label for="data-fim">Até quando a despesa deve ser paga?</label>
+                        <br>
+                        <input type="date" name="data-fim" id="data-fim-novo" required>
+                        <br>
+                        <br>
+                        <label for="tipo-despesa-select-novo">Qual o tipo de despesa?</label>
+                        <br>
+                        <select name="tipo-despesa-select-novo" id="tipo-despesa-select-novo" required>
+
+                        </select>
+
+                        <br>
+                        <br>
+                        <input type="submit" onclick="addDespesa();" id="alterar-despesa" value="Cadastrar despesa">
+                    </div>
+                </div>
+
+                <div class="tipo-wrapper bento" id="tipo-wrapper">
+                    <div class="popup">
+                        <div style="display: flex; justify-content:space-between; ">
+                            <h2>Criar tipo de despesa</h2>
+                            <button
+                                onclick="document.getElementById('tipo-wrapper').style.display = 'none'; document.getElementById('bg-blur').style.display = 'none';"
+                                style="cursor: pointer;"><b>X</b></button>
+                        </div>
+
+                        <br>
+                        <label for="nome-tipo-despesa-nova">Nome da nova despesa:</label>
+                        <br>
+                        <input type="text" id="nome-tipo-despesa-nova" name="nome-tipo-despesa-nova" required>
+                        <br>
+                        <br>
+                        <input type="submit" onclick="addTipoDespesa();" id="alterar-despesa" value="Criar novo tipo">
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+
+    </section>
+
+
+</body>
 
 </html>
 
