@@ -207,8 +207,6 @@ function limparCampos() {
     select.setAttribute('disabled', true);
   });
 
-  const tbody = document.getElementById("tabela-lote-corpo");
-  tbody.innerHTML = "";
   document.querySelectorAll("#spanL").forEach(spanL => { spanL.style.display = "none"; });
   document.getElementById('btn-salvarLote').style.display = 'none';
 }

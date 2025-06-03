@@ -175,7 +175,7 @@ document.getElementById('btn-editar').addEventListener('click', () => {
 
 // Botão Pesquisa 
 document.getElementById('buttonPesquisa').addEventListener('click', () => {
-  chamarPHP();
+  tratarResposta();
   limparCampos();
 });
 
