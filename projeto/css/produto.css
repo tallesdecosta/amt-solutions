@@ -1,18 +1,34 @@
 .secall{
     min-height: 100vh;
+    flex-direction: row;
     height: auto;
     display: flex;
-    width: 98vw;
+    width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
-.navegation{
-    background-color: white;
-    width: 4vw;
-    min-height: 100vh;
-    height: auto;
-    box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.192);
+.tooltips {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  z-index: 1000;
+  pointer-events: none;
 }
 
+.navegation {
+  background-color: white;
+  width: 5vw;
+  min-width: 60px;
+  min-height: 100vh;
+  height: auto;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.192);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
 
 .navegation .icone{
     height: 50px;
@@ -22,6 +38,7 @@
     justify-content: center;
     color: black;   
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .alinha{
@@ -34,8 +51,7 @@
     cursor: pointer !important;
 }
 
-/* Botão */
-
+/* Botão padrão */
 .buttonPadrao {
   padding: 0.7em 3em;
   font-size: 12px;
@@ -43,12 +59,13 @@
   letter-spacing: 2.5px;
   font-weight: 500;
   color: #000;
-  background-color: rgb(248,244,244);
+  background-color: rgb(248, 244, 244);
   border: none;
   border-radius: 45px;
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
+  white-space: nowrap;
 }
 
 .buttonPadrao:hover {
@@ -66,41 +83,40 @@
     background-color: rgb(248,244,244)
 }
 
-.btnRemoverAlergia{
+#btnRemoverAlergia{
     background-color: rgb(255, 85, 85)
 }
 
-.buttonSalvar{
-    width: 100%;
-    display: flex;
-    padding: 0px 50px;
-    justify-content: right;
+.buttonSalvar {
+  width: 100%;
+  display: flex;
+  padding: 0 50px;
+  justify-content: flex-end;
+  box-sizing: border-box;
 }
 
 #btn-salvar{
     background-color: rgb(82, 136, 93)
 }
 
-
-/* */
-
 button:hover{
     cursor: pointer;
 }
 
 /*      SECTION DO CONTEUDO      */
-.container1{
-    width: 98vw;
+.container1 {
+  width: 100vw;
+  box-sizing: border-box;
 }
 
-.secall .app{
-    display: flex;
-    flex-direction: column;
-    width: 96vw;
-    padding: 50px 70px 50px 50px;
-    gap: 40px;
+.secall .app {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 60px);
+  padding: 30px 20px;
+  gap: 40px;
+  box-sizing: border-box;
 }
-
 
 .secall .app .titulo{
     justify-items: center;
@@ -112,11 +128,11 @@ button:hover{
     margin: 0;
 }
 
-
-.secall .app .buttonItens{
-    display: flex;
-    justify-content: right;
-    gap: 10px;
+.secall .app .buttonItens {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .secall .app .descricaoItem{
@@ -124,12 +140,13 @@ button:hover{
     flex-wrap: wrap;
     width: auto;
     height: auto;
-    padding: 40px 1px 40px 10px;
+    padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     border-collapse: collapse;
-    gap: 50px 15px;
+    gap: 20px 15px;
+    box-sizing: border-box;
 }
 
 .secall .app .descricaoItem .descricaoItemImg{
@@ -188,7 +205,7 @@ button:hover{
 }
 
 .secall .app .descricaoItem input:disabled, select:disabled{
-    min-width: 182px;
+    min-width: 150px;
     border: none;
     background-color: transparent;
     color: black;
@@ -197,7 +214,7 @@ button:hover{
 }
 
 .secall .app .descricaoItem input:enabled, select:enabled{
-    min-width: 182px;
+    min-width: 150px;
     border: none;
     background-color: rgb(227, 227, 227);
     color: black;
@@ -207,65 +224,6 @@ button:hover{
 
 .descricaoItem input:focus{
     outline-color: rgb(149, 158, 255);
-}
-
-/**/
-
-.secall .app .descricaoLote{
-    display: flex;
-    flex-wrap: wrap;
-    width: auto;
-    height: auto;
-    padding: 40px 20px 40px 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-collapse: collapse;
-    gap: 50px 15px;
-}
-
-.secall .app .descricaoLote label{
-    color: rgb(153, 153, 153);
-    font-size: 15px;
-}
-
-.secall .app .descricaoLote input:disabled, select:disabled{
-    min-width: 182px;
-    border: none;
-    background-color: transparent;
-    color: black;
-    font-size: 17px;
-    border-radius: 10px;
-}
-
-.secall .app .descricaoLote input:enabled, select:enabled{
-    min-width: 182px;
-    border: none;
-    background-color: rgb(227, 227, 227);
-    color: black;
-    font-size: 17px;
-    border-radius: 10px;
-}
-
-.descricaoLote input:focus{
-    outline-color: rgb(149, 158, 255);
-}
-
-.insumosUtilizados{
-    width: 100%;
-    max-width: 100%;
-    min-height: 50%;
-    overflow-x: auto;
-    flex-direction: column;
-    gap: 12px; 
-    justify-content: left;
-    justify-items: left;
-}
-
-.insumo-item{
-  display: flex;
-  gap: 8px; 
-  padding: 6px;
 }
 
 .produtoAlergias{
@@ -285,42 +243,49 @@ button:hover{
   padding: 6px;
 }
 
-/**/
-
-.secall .app .barraPesquisa{
-    display: flex;
-    width: 370px;
-    min-height: 51px;
-    border: 1px solid rgb(150, 148, 148);
-    border-radius: 30px;
-    border-collapse: collapse;
+.secall .app .barraPesquisa {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  min-height: 51px;
+  border: 1px solid rgb(150, 148, 148);
+  border-radius: 30px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.secall .app .barraPesquisa .barraPesquisaButton{
-    height: 55px;
-    width: 10%;
-    height: 100%;
-    height: 100%;
-    background-color: rgb(241,241,241);
+.secall .app .barraPesquisa .barraPesquisaButton {
+  background-color: rgb(241, 241, 241);
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .secall .app .barraPesquisaButton, #buttonPesquisa{
-    background-color: rgb(241,241,241);
-    height: 100%;
-    width: 100%;
-    border-top-left-radius: 30px;
-    border-end-start-radius: 30px;
-    border: none;
+  background-color: rgb(241, 241, 241);
+  height: 100%;
+  width: 100%;
+  border: none;
+  cursor: pointer;
 }
 
-.barraPesquisaInput{
-    width: 90%;
-    height: 100%;
-    display: flex;
+.barraPesquisaInput {
+  width: 90%;
+  background-color: white;
+  border: none;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  box-sizing: border-box;
 }
 
-.barraPesquisaInput input:focus{
-    outline: none;
+.barraPesquisaInput input:focus {
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .barraPesquisaInput, #inputPesquisa{
@@ -332,51 +297,85 @@ button:hover{
 }
 
 .secall .app .tabelaContainer {
-    width: 100%;
-    max-width: 100%;
-    min-height: 50%;
-    overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  min-height: 50vh;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
-.secall .app .tabelaContainer table{
+.secall .app table {
     width: 100%;
     max-width: 100%;
+    border-collapse: collapse;
     border: 1px solid rgb(150, 148, 148);
     border-radius: 10px;
-    border-spacing: 0px;
-    padding: 10px 0px 10px 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    table-layout: auto;
+    min-width: 600px;
 }
 
 .secall .app .tabelaContainer table, .thInsumo{
-    background-color: rgb(232,228,228);
-    height: 62px;
-    color: rgb(78,78,78);
-    font-size: 20px;
-    text-align: center;
+  padding: 10px 15px;
+  text-align: center;
+  color: rgb(78, 78, 78);
+  font-size: 16px;
+  height: 45px;
+  border-bottom: 1px solid rgb(150, 148, 148);
+}
+
+.secall .app table th,
+.secall .app table td {
+  padding: 10px 15px;
+  text-align: center;
+  color: rgb(78, 78, 78);
+  font-size: 16px;
+  height: 45px;
+  border-bottom: 1px solid rgb(150, 148, 148);
+}
+
+.secall .app table th {
+  background-color: rgb(232, 228, 228);
+  font-weight: 600;
 }
 
 .secall .app .tabelaContainerLotes {
-    width: 100%;
-    max-width: 100%;
-    min-height: 50%;
-    overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  min-height: 50vh;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
 .secall .app .tabelaContainerLotes table{
     width: 100%;
     max-width: 100%;
+    border-collapse: collapse;
     border: 1px solid rgb(150, 148, 148);
     border-radius: 10px;
-    border-spacing: 0px;
-    padding: 10px 0px 10px 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    table-layout: auto;
+    min-width: 600px;
 }
 
 .secall .app .tabelaContainerLotes table, .thLote{
-    background-color: rgb(232,228,228);
-    height: 30px;
-    color: rgb(78,78,78);
-    font-size: 16px;
-    text-align: center;
+  padding: 10px 15px;
+  text-align: center;
+  color: rgb(78, 78, 78);
+  font-size: 16px;
+  height: 45px;
+  border-bottom: 1px solid rgb(150, 148, 148);
+}
+
+.secall .app table th {
+  background-color: rgb(232, 228, 228);
+  font-weight: 600;
 }
 
 .secall .app .linhaWhite{
@@ -413,4 +412,125 @@ button:hover{
 
 #spanL{
     color: red;
+}
+
+
+@media (max-width: 1024px) {
+  .navegation {
+    width: 60px;
+    flex-shrink: 0;
+    min-width: 50px;
+    
+  }
+
+  .secall .app {
+    padding: 20px 15px;
+  }
+
+  .buttonPadrao {
+    padding: 0.5em 2em;
+    font-size: 11px;
+  }
+
+  .secall .app .titulo p {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .navegation {
+    width: 100%;
+    height: 50px;
+    min-height: unset;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .secall {
+    flex-direction: column;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .secall .app {
+    width: 100%;
+    padding: 30% 10px;
+    box-sizing: border-box;
+  }
+
+  .secall .app .titulo p {
+    margin-top: 0;
+  }
+
+  .secall .app .sectionDescricaoItem,
+  .secall .app .descricaoItem {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .buttonPadrao {
+    width: 100%;
+    padding: 0.8em 0;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+  }
+
+  .secall .app .buttonItens {
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .secall .app .tabelaContainer {
+    min-height: auto;
+  }
+
+  .secall .app table {
+    min-width: 100%;
+    font-size: 14px;
+  }
+
+  .secall .app table th,
+  .secall .app table td {
+    padding: 8px 10px;
+  }
+
+  .secall .app .descricaoItemImg {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .picture {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    max-width: 300px;
+  }
+
+  .picture_img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 480px) {
+  .secall .app .titulo p {
+    font-size: 24px;
+  }
+
+  .buttonPadrao {
+    font-size: 12px;
+  }
+
+  .secall .app .barraPesquisa {
+    max-width: 100%;
+    width: 100%;
+  }
 }
