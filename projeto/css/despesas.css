@@ -177,6 +177,7 @@ img, button {
 
     .main-wrapper {
         flex-direction: column!important;
+        height: 110vh!important;
     }
 
     .report {
