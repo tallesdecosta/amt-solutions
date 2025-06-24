@@ -70,6 +70,8 @@ body {
     gap: 0px;
     align-items: center;
     margin: 20px 0px 10px 0px;
+    width: fit-content !important;
+    cursor: pointer;
 
 }
 
