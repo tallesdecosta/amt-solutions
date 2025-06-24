@@ -36,9 +36,9 @@
                 </div>
                 <i class="bi bi-person-circle usericon" id="usericon" onclick="abrirperfil()"></i>
             </div>
-            <div class="conteudo" id="conteudosair">
+            <div class="conteudo" id="conteudosair"  onclick="logout();">
                 <i class="bi bi-box-arrow-left"></i>
-                <a style="position: relative;z-index: 1000;" onclick="logout();">Sair</a>
+                <a style="position: relative;z-index: 1000;">Sair</a>
             </div>
         </div>
 
@@ -53,13 +53,16 @@
                 onmouseleave="escondertool(1)">
                 <i class="bi bi-cash-coin"></i>
             </div>
-            <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)">
+            <div class="icone alinha" id="icon2" nome="estoque" onclick="podeAcessar(this)"
+                onmouseover="aparecertool(2)" onmouseleave="escondertool(2)">
                 <i class="bi bi-box-seam"></i>
             </div>
-            <div class="icone alinha" id="icon3" nome="financeiro" onclick="podeAcessar(this)">
+            <div class="icone alinha" id="icon3" nome="financeiro" onclick="podeAcessar(this)"
+                onmouseover="aparecertool(3)" onmouseleave="escondertool(3)">
                 <i class="bi bi-piggy-bank"></i>
             </div>
-            <div class="icone alinha" id="icon4" nome="gestao" onclick="podeAcessar(this)">
+            <div class="icone alinha" id="icon4" nome="gestao" onclick="podeAcessar(this)" onmouseover="aparecertool(4)"
+                onmouseleave="escondertool(4)">
                 <i class="bi bi-clipboard2-data"></i>
             </div>
         </nav>
@@ -69,6 +72,24 @@
                 <div class="ponta aparecer"></div>
                 <div class="balao aparecer">
                     <p>Vendas</p>
+                </div>
+            </div>
+            <div class="tool" id="tool2">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Estoque</p>
+                </div>
+            </div>
+            <div class="tool" id="tool3">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Financeiro</p>
+                </div>
+            </div>
+            <div class="tool" id="tool4">
+                <div class="ponta aparecer"></div>
+                <div class="balao aparecer">
+                    <p>Negócio</p>
                 </div>
             </div>
         </div>
